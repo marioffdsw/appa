@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
         button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText( MainActivity.this, "cambiooooo0000!", Toast.LENGTH_SHORT );
+                Toast toast = Toast.makeText( MainActivity.this, "cambio Mario!", Toast.LENGTH_SHORT );
                 toast.show();
             } // end method onClick
         });
