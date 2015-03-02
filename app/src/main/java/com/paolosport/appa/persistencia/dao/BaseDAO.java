@@ -11,9 +11,6 @@ import java.util.ArrayList;
 
 abstract class BaseDAO < T > {
 
-    private String TAG = "BaseDao";
-    protected enum Estado { ERROR_INSERTAR, INSERTADO };
-
     static final private String TAG = "BaseDao";
     static public enum Estado { ERROR_INSERTAR, INSERTADO, ERROR_ACTUALIZAR, ACTUALIZADO };
 
