@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
+import com.paolosport.appa.persistencia.entities.Marca;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ abstract class BaseDAO < T > {
         dbHelper.close();
     } // end method close
 
-    abstract String create( T element );
+    abstract String create(T element);
     abstract String update( T element );
     abstract T retrieve();
     abstract ArrayList<T> retrieveAll();
