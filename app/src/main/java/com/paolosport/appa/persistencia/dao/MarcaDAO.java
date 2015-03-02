@@ -17,7 +17,7 @@ public class MarcaDAO extends BaseDAO <Marca> {
     }
 
     @Override
-    public String create(Marca marca) {
+    public Estado create(Marca marca) {
         String sql = "INSERT into marca values("+
             marca.getId() +"," +
             marca.getNombre() +"," +
@@ -27,16 +27,27 @@ public class MarcaDAO extends BaseDAO <Marca> {
             db.execSQL(sql);
             close();
         }
-        catch (exeption e){
-            Log.w(TAG, "error insertar");
+        catch (Exception e){
+            return Estado.ERROR_INSERTAR;
         }
-        return null;
-
+        return Estado.INSERTADO;
     }
 
     @Override
-    String update() {
-        return null;
+    public Estado update(Marca marca) {
+        String sql = "Update into marca values("+
+                marca.getId() +"," +
+                marca.getNombre() +"," +
+                marca.getUrl() + ")";
+        try {
+            open();
+            db.execSQL(sql);
+            close();
+        }
+        catch (Exception e){
+            return Estado.ERROR_INSERTAR;
+        }
+        return Estado.INSERTADO;
     }
 
     @Override
