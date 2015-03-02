@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 abstract class BaseDAO < T > {
 
+    static protected String TABLE_NAME;
+
+
     static final private String TAG = "BaseDao";
     static public enum Estado { ERROR_INSERTAR, INSERTADO, ERROR_ACTUALIZAR, ACTUALIZADO };
 
@@ -18,9 +21,9 @@ abstract class BaseDAO < T > {
     AdminSQLiteOpenHelper dbHelper;
     SQLiteDatabase db;
 
-    public BaseDAO(Context context) {
+    public BaseDAO(Context context, AdminSQLiteOpenHelper helper) {
         this.context = context;
-        dbHelper = new AdminSQLiteOpenHelper( context );
+        dbHelper = helper;
     } // end constructor
 
     public BaseDAO open(){
@@ -35,8 +38,8 @@ abstract class BaseDAO < T > {
     } // end method close
 
     abstract Estado create( T element );
-    abstract String update( T element );
-    abstract T retrieve();
+    abstract Estado update( T element );
+    abstract T retrieve( String key );
     abstract ArrayList<T> retrieveAll();
     abstract String delete( T element );
 
