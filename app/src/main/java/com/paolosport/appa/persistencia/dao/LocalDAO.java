@@ -124,5 +124,5 @@ public class LocalDAO extends  BaseDAO<Local>{
         } // end catch
 
         return Estado.ELIMINADO;
-    }
+    } // end method delete
 } // end class LocalDAO
