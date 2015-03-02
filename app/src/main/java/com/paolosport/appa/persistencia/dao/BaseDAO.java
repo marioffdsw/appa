@@ -32,10 +32,10 @@ abstract class BaseDAO < T > {
         dbHelper.close();
     } // end method close
 
-    abstract String create(  );
-    abstract String update(  );
+    abstract String create( T element );
+    abstract String update( T element );
     abstract T retrieve();
     abstract ArrayList<T> retrieveAll();
-    abstract String delete();
+    abstract String delete( T element );
 
 } // end class BaseDAO
