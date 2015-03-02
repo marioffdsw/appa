@@ -120,7 +120,7 @@ public class LocalDAO extends  BaseDAO<Local>{
             db.delete( TABLE_NAME, KEY_ID + "=" + local.getId(), null );
         }
         catch( Exception e ){
-            return Estado.ERROR_ELIMINAR
+            return Estado.ERROR_ELIMINAR;
         } // end catch
 
         return Estado.ELIMINADO;
