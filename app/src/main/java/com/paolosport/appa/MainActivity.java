@@ -6,27 +6,38 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
+import com.paolosport.appa.persistencia.dao.LocalDAO;
+import com.paolosport.appa.persistencia.entities.Local;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    EditText txtIDLocal;
+    EditText txtNombreLocal;
+    TextView txtListaLocales;
+
+    AdminSQLiteOpenHelper helper;
+    LocalDAO localDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton button = (ImageButton) findViewById( R.id.Button );
+        txtIDLocal = (EditText) findViewById( R.id.txtIDLocal );
+        txtNombreLocal = (EditText) findViewById( R.id.txtNombreLocal );
+        txtListaLocales = (TextView) findViewById( R.id.txtListaLocales );
 
-        button.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast toast = Toast.makeText( MainActivity.this, "cambio Mario!", Toast.LENGTH_SHORT );
-                toast.show();
-            } // end method onClick
-        });
-
+        helper = new AdminSQLiteOpenHelper( this );
+        localDAO = new LocalDAO( this, helper );
     }
 
 
@@ -51,4 +62,31 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void guardarLocal(){
+        String id = txtIDLocal.getText().toString();
+        String nombre = txtNombreLocal.getText().toString();
+
+        Local local = new Local( id, nombre );
+
+        localDAO.open();
+        localDAO.create( local );
+        localDAO.close();
+
+    } // end method guardarLocal
+
+    public void mostrarEntradas(){
+
+        ArrayList<Local> listaLocales;
+        localDAO.open();
+        listaLocales = localDAO.retrieveAll();
+        localDAO.close();
+
+        StringBuilder sb = new StringBuilder();
+        for( Local local: listaLocales ){
+            sb.append( "ID: " ).append(local.getId()).append( " Nombre: " ).append(local.getNombre() ).append( "\n\n" );
+        }
+
+        txtListaLocales.setText( sb.toString() );
+    } // end method mostrarEntradas
 }
