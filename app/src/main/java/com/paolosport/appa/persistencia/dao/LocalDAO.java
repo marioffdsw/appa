@@ -107,14 +107,22 @@ public class LocalDAO extends  BaseDAO<Local>{
                 String name = cursor.getString(1);
 
                 local = new Local(id, name);
+                listaLocales.add(local);
             } while( cursor.moveToNext() );
         }
 
-        return local;
+        return listaLocales;
     }
 
     @Override
-    public String delete( Local local ) {
-        return null;
-    }
+    public Estado delete( Local local ) {
+        try{
+            db.delete( TABLE_NAME, KEY_ID + "=" + local.getId(), null );
+        }
+        catch( Exception e ){
+            return Estado.ERROR_ELIMINAR;
+        } // end catch
+
+        return Estado.ELIMINADO;
+    } // end method delete
 } // end class LocalDAO
