@@ -2,6 +2,7 @@ package com.paolosport.appa.persistencia.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
@@ -10,16 +11,18 @@ import java.util.ArrayList;
 
 abstract class BaseDAO < T > {
 
-    private String TAG = "BaseDao";
-    protected enum Estado { ERROR_INSERTAR, INSERTADO };
+    static protected String TABLE_NAME;
+
+    static final private String TAG = "BaseDao";
+    static public enum Estado { ERROR_INSERTAR, INSERTADO, ERROR_ACTUALIZAR, ACTUALIZADO };
 
     final Context context;
     AdminSQLiteOpenHelper dbHelper;
     SQLiteDatabase db;
 
-    public BaseDAO(Context context) {
+    public BaseDAO(Context context, AdminSQLiteOpenHelper helper) {
         this.context = context;
-        dbHelper = new AdminSQLiteOpenHelper( context );
+        dbHelper = helper;
     } // end constructor
 
     public BaseDAO open(){
@@ -34,8 +37,8 @@ abstract class BaseDAO < T > {
     } // end method close
 
     abstract Estado create( T element );
-    abstract String update( T element );
-    abstract T retrieve();
+    abstract Estado update( T element );
+    abstract T retrieve( String key );
     abstract ArrayList<T> retrieveAll();
     abstract String delete( T element );
 

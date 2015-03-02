@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
-    static final String DATABASE_NAME = "db_appa";
+    static final String DATABASE_NAME = "appa.db";
     static final int DATABASE_VERSION = 1;
 
 
