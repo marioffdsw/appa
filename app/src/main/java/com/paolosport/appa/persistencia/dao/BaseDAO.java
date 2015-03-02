@@ -13,6 +13,7 @@ abstract class BaseDAO < T > {
 
     static protected String TABLE_NAME;
 
+
     static final private String TAG = "BaseDao";
     static public enum Estado { ERROR_INSERTAR, INSERTADO, ERROR_ACTUALIZAR, ACTUALIZADO };
 
