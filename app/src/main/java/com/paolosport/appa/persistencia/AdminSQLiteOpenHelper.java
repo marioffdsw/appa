@@ -24,7 +24,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     static final String CREATE_TABLE_LOCAL = "CREATE TABLE local(" +
             "id             TEXT        PRIMARY KEY," +
-            "nombre         TEXT        NOT NULL," +
+            "nombre         TEXT        NOT NULL" +
             ")";
 
     static final String DROP_TABLE_LOCAL = "DROP TABLE local IF EXIST";
@@ -41,7 +41,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
             "codigo         TEXT        PRIMARY KEY," +
             "description    TEXT," +
             "talla          INTEGER     NOT NULL," +
-            "fecha          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL" +
+            "fecha          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL," +
             "empleado       TEXT        NOT NULL," +
             "local          TEXT        NOT NULL," +
             "marca          TEXT        NOT NULL," +
