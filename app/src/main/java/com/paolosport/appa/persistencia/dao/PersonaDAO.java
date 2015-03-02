@@ -1,36 +1,40 @@
 package com.paolosport.appa.persistencia.dao;
 
+/**
+ * Created by Andres on 02/03/2015.
+ */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.entities.Local;
 import com.paolosport.appa.persistencia.entities.Marca;
+import com.paolosport.appa.persistencia.entities.Persona;
 
 import java.util.ArrayList;
 
-/**
- * Created by Andres on 02/03/2015.
- */
-public class MarcaDAO extends BaseDAO <Marca> {
+public class PersonaDAO extends BaseDAO <Persona> {
 
-    static final String TABLE_NAME = "marca";
-    static final String KEY_ID = "id";
+    static final String TABLE_NAME = "persona";
+    static final String KEY_CEDULA = "cedula";
     static final String KEY_NOMBRE = "nombre";
+    static final String KEY_TELEFONO = "telefono";
     static final String KEY_URL = "url";
 
-    public MarcaDAO(Context context, AdminSQLiteOpenHelper adminSQLiteOpenHelper) {
+
+    public PersonaDAO(Context context, AdminSQLiteOpenHelper adminSQLiteOpenHelper) {
         super(context,adminSQLiteOpenHelper);
     }
 
     @Override
-    public Estado create(Marca marca) {
-        String sql = "INSERT into marca values("+
-            marca.getId() +"," +
-            marca.getNombre() +"," +
-            marca.getUrl() + ")";
+    public Estado create(Persona persona) {
+        String sql = "INSERT into Persona values("+
+                persona.getCedula() +"," +
+                persona.getNombre() +"," +
+                persona.getTelefono() +"," +
+                persona.getUrl() + ")";
         try {
             open();
             db.execSQL(sql);
@@ -43,14 +47,14 @@ public class MarcaDAO extends BaseDAO <Marca> {
     }
 
     @Override
-    public Estado update(Marca marca) {
+    public Estado update(Persona persona) {
         try{
             ContentValues updateValues = new ContentValues();
-            updateValues.put(KEY_NOMBRE, marca.getNombre());
-            updateValues.put(KEY_URL, marca.getUrl());
+            updateValues.put(KEY_NOMBRE, persona.getNombre());
+            updateValues.put(KEY_TELEFONO, persona.getNombre());
+            updateValues.put(KEY_URL, persona.getNombre());
 
-
-            db.update(TABLE_NAME, updateValues, KEY_ID + "=" + marca.getId(), null);
+            db.update(TABLE_NAME, updateValues, KEY_CEDULA + "=" + persona.getCedula(), null);
         }
         catch( Exception e ){
             return Estado.ERROR_ACTUALIZAR;
@@ -59,38 +63,40 @@ public class MarcaDAO extends BaseDAO <Marca> {
         return Estado.ACTUALIZADO;}
 
     @Override
-    public Marca retrieve( String id ) {
+    public Persona retrieve( String id ) {
 
         Cursor cursor = db.query(TABLE_NAME,                // FROM
-                new String[]{KEY_ID, KEY_NOMBRE,KEY_URL},   // SELECT
-                KEY_ID + "=" + id, null,                    // WHERE
+                new String[]{KEY_CEDULA, KEY_NOMBRE,KEY_TELEFONO,KEY_URL},   // SELECT
+                KEY_CEDULA + "=" + id, null,                    // WHERE
                 null,                                       // GROUP BY
                 null,                                       // HAVING
                 null,                                       // ORDER BY
                 null                                        // LIMIT
         );
 
-        Marca marca = null;
+        Persona persona = null;
 
         if ( cursor != null ){ // ha encontrado el local con la id entregada
             cursor.moveToFirst();
 
             id = cursor.getString(0);
             String name = cursor.getString(1);
-            String url = cursor.getString(2);
+            String tel = cursor.getString(2);
+            String url = cursor.getString(3);
 
-            marca = new Marca( id, name ,url );
+
+            persona = new Persona( id, name ,tel, url );
         }
 
-        return marca;
+        return persona;
     } // end method retrieve
 
 
     @Override
-    public ArrayList<Marca> retrieveAll() {
+    public ArrayList<Persona> retrieveAll() {
 
         Cursor cursor = db.query(TABLE_NAME,                // FROM
-                new String[]{KEY_ID, KEY_NOMBRE,KEY_URL},   // SELECT
+                new String[]{KEY_CEDULA, KEY_NOMBRE, KEY_TELEFONO, KEY_URL},   // SELECT
                 null, null,                                 // WHERE
                 null,                                       // GROUP BY
                 null,                                       // HAVING
@@ -98,9 +104,9 @@ public class MarcaDAO extends BaseDAO <Marca> {
                 null                                        // LIMIT
         );
 
-        Marca marca = null;
+        Persona persona = null;
 
-        ArrayList listaMarcas = new ArrayList<Marca>();
+        ArrayList listaPersonas = new ArrayList<Persona>();
         if ( cursor != null ){ // ha encontrado el local con la id entregada
             cursor.moveToFirst();
 
@@ -108,21 +114,22 @@ public class MarcaDAO extends BaseDAO <Marca> {
             do {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
-                String url = cursor.getString(2);
+                String tel = cursor.getString(2);
+                String url = cursor.getString(3);
 
-                marca = new Marca(id, name, url);
-                listaMarcas.add(marca);
+                persona = new Persona(id, name, tel, url);
+                listaPersonas.add(persona);
             } while( cursor.moveToNext() );
         }
 
-        return listaMarcas;
+        return listaPersonas;
     }
 
     @Override
-    public Estado delete(Marca marca) {
+    public Estado delete(Persona persona) {
         try
         {
-            db.delete( TABLE_NAME, KEY_ID + "=" + marca.getId(), null );
+            db.delete( TABLE_NAME, KEY_CEDULA + "=" + persona.getCedula(), null );
         }
         catch (Exception e){
             return Estado.ERROR_ELIMINAR;
@@ -131,3 +138,4 @@ public class MarcaDAO extends BaseDAO <Marca> {
         return Estado.ELIMINADO;
     }
 }
+
