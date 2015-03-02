@@ -15,7 +15,9 @@ abstract class BaseDAO < T > {
 
 
     static final private String TAG = "BaseDao";
-    static public enum Estado { ERROR_INSERTAR, INSERTADO, ERROR_ACTUALIZAR, ACTUALIZADO };
+    static public enum Estado { ERROR_INSERTAR, INSERTADO,
+        ERROR_ACTUALIZAR, ACTUALIZADO,
+        ERROR_ELIMINAR, ELIMINADO };
 
     final Context context;
     AdminSQLiteOpenHelper dbHelper;
@@ -41,6 +43,6 @@ abstract class BaseDAO < T > {
     abstract Estado update( T element );
     abstract T retrieve( String key );
     abstract ArrayList<T> retrieveAll();
-    abstract String delete( T element );
+    abstract Estado delete( T element );
 
 } // end class BaseDAO
