@@ -12,6 +12,7 @@ import java.util.ArrayList;
 abstract class BaseDAO < T > {
 
     private String TAG = "BaseDao";
+    protected enum Estado { ERROR_INSERTAR, INSERTADO };
 
     final Context context;
     AdminSQLiteOpenHelper dbHelper;
@@ -33,7 +34,7 @@ abstract class BaseDAO < T > {
         dbHelper.close();
     } // end method close
 
-    abstract String create(T element);
+    abstract String create( T element );
     abstract String update( T element );
     abstract T retrieve();
     abstract ArrayList<T> retrieveAll();
