@@ -7,23 +7,75 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    public AdminSQLiteOpenHelper(Context context, String nombre, CursorFactory factory, int version) {
-        super(context, nombre, factory, version);
-    }
+    /** DATA BASE HELPER PARAMETERS */
+    static final String DATABASE_NAME = "db_appa";
+    static final int DATABASE_VERSION = 1;
+
+
+    /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
+    static final String CREATE_TABE_PERSONA = "CREATE TABLE persona (" +
+            "cedula         TEXT         PRIMARY KEY," +
+            "nombre         TEXT            NOT NULL," +
+            "telefono       TEXT," +
+            "foto           TEXT" + // uri de la foto, en los recursos
+            ")";
+
+    static final String DROP_TABLE_PERSONA = "DROP TABLE persona IF EXIST";
+
+    static final String CREATE_TABLE_LOCAL = "CREATE TABLE local(" +
+            "id             TEXT        PRIMARY KEY," +
+            "nombre         TEXT        NOT NULL," +
+            ")";
+
+    static final String DROP_TABLE_LOCAL = "DROP TABLE local IF EXIST";
+
+    static final String CREATE_TABLE_MARCA = "CREATE TABLE marca(" +
+            "id             TEXT        PRIMARY KEY," +
+            "nombre         TEXT        NOT NULL," +
+            "logo           TEXT" + // URI del bitmap del recurso
+            ")";
+
+    static final String DROP_TABLE_MARCA = "DROP TABLE marca IF EXIST";
+
+    static final String CREATE_TABLE_PRESTAMOS = "CREATE TABLE prestamos(" +
+            "codigo         TEXT        PRIMARY KEY," +
+            "description    TEXT," +
+            "talla          INTEGER     NOT NULL," +
+            "fecha          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL" +
+            "empleado       TEXT        NOT NULL," +
+            "local          TEXT        NOT NULL," +
+            "marca          TEXT        NOT NULL," +
+            "FOREIGN KEY ( empleado ) REFERENCES persona( cedula )," +
+            "FOREIGN KEY ( local) REFERENCES local( id )" +
+            "FOREIGN KEY ( marca ) REFERENCES marca( id )" +
+            ")";
+
+    static final String DROP_TABLE_PRESTAMOS = "DROP TABLE prestamos IF EXIST";
+
+    // constructor, just call superclass constructor
+    public AdminSQLiteOpenHelper( Context context ){
+        super( context, DATABASE_NAME, null, DATABASE_VERSION  );
+    } // end constructor
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table persona(dni integer primary key, nombre text, colegio text, nromesa integer)");
-        db.execSQL("create table prestamos(dni integer primary key, nombre text, colegio text, nromesa integer)");
-        db.execSQL("create table local(dni integer primary key, nombre text, colegio text, nromesa integer)");
-        db.execSQL("create table local(dni integer primary key, nombre text, colegio text, nromesa integer)");
-        db.execSQL("create table marca(dni integer primary key, nombre text, colegio text, nromesa integer)");
-        db.execSQL("create table marca(dni integer primary key, nombre text, colegio text, nromesa integer)");
+        // creating database
+        db.execSQL( CREATE_TABE_PERSONA );
+        db.execSQL( CREATE_TABLE_LOCAL );
+        db.execSQL( CREATE_TABLE_MARCA );
+        db.execSQL( CREATE_TABLE_PRESTAMOS );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAnte, int versionNue) {
-        db.execSQL("drop table if exists votantes");
-        db.execSQL("create table votantes(dni integer primary key, nombre text, colegio text, nromesa integer)");
+
+        // drop every database table
+        db.execSQL( DROP_TABLE_PRESTAMOS );
+        db.execSQL( DROP_TABLE_LOCAL );
+        db.execSQL( DROP_TABLE_MARCA );
+        db.execSQL( DROP_TABLE_PERSONA );
+
+        // re-create tables
+        onCreate( db );
     }
 }
