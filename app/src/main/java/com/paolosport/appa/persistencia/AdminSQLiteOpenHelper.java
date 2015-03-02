@@ -1,4 +1,4 @@
-package com.paolosport.appa;
+package com.paolosport.appa.persistencia;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,9 +13,12 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table votantes(dni integer primary key, nombre text, colegio text, nromesa integer)");
-        db.execSQL("create table votantes(dni integer primary key, nombre text, colegio text, nromesa integer)");
-
+        db.execSQL("create table persona(dni integer primary key, nombre text, colegio text, nromesa integer)");
+        db.execSQL("create table prestamos(dni integer primary key, nombre text, colegio text, nromesa integer)");
+        db.execSQL("create table local(dni integer primary key, nombre text, colegio text, nromesa integer)");
+        db.execSQL("create table local(dni integer primary key, nombre text, colegio text, nromesa integer)");
+        db.execSQL("create table marca(dni integer primary key, nombre text, colegio text, nromesa integer)");
+        db.execSQL("create table marca(dni integer primary key, nombre text, colegio text, nromesa integer)");
     }
 
     @Override
