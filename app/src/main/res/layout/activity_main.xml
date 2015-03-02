@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnGuardar"
             android:text="@string/btnGuardar"
-            android:onClick="GuardarLocal" />
+            android:onClick="guardarLocal" />
 
         <Button
             android:layout_width="wrap_content"

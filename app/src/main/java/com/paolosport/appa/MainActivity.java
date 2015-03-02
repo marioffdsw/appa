@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void guardarLocal(){
+    public void guardarLocal( View view ){
         String id = txtIDLocal.getText().toString();
         String nombre = txtNombreLocal.getText().toString();
 
@@ -75,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
 
     } // end method guardarLocal
 
-    public void mostrarEntradas(){
+    public void mostrarEntradas( View view ){
 
         ArrayList<Local> listaLocales;
         localDAO.open();
