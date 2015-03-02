@@ -2,17 +2,20 @@ package com.paolosport.appa.persistencia.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
-import com.paolosport.appa.persistencia.entities.Marca;
 
 import java.util.ArrayList;
 
 abstract class BaseDAO < T > {
 
     private String TAG = "BaseDao";
-    public static enum Estado { ERROR_INSERTAR, INSERTADO };
+    protected enum Estado { ERROR_INSERTAR, INSERTADO };
+
+    static final private String TAG = "BaseDao";
+    static public enum Estado { ERROR_INSERTAR, INSERTADO, ERROR_ACTUALIZAR, ACTUALIZADO };
 
     final Context context;
     AdminSQLiteOpenHelper dbHelper;
