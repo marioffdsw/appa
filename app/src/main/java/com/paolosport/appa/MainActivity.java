@@ -16,7 +16,9 @@ import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.entities.Local;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -93,5 +95,17 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
     }
 
+
+    public void mostrarFecha( View view ){
+        java.util.Date dateUtil = new java.util.Date();
+        Timestamp date = new Timestamp( dateUtil.getTime() );
+
+        txtFecha.setText( date.toString() );
+    } // end method mostrarFecha
+
+    public void prestamos ( View view ){
+        Intent i = new Intent(this, ActivityPrestamos.class );
+        startActivity(i);
+    }
 
 }

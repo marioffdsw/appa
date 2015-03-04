@@ -36,9 +36,8 @@ public class PersonaDAO extends BaseDAO <Persona> {
                 persona.getTelefono() +"," +
                 persona.getUrl() + ")";
         try {
-            open();
+
             db.execSQL(sql);
-            close();
         }
         catch (Exception e){
             return Estado.ERROR_INSERTAR;

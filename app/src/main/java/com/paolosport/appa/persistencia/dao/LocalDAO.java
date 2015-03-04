@@ -15,7 +15,7 @@ public class LocalDAO extends  BaseDAO<Local>{
 
     static final String TABLE_NAME = "local";
     static final String KEY_ID = "id";
-    static String KEY_NOMBRE = "nombre";
+    static final String KEY_NOMBRE = "nombre";
 
     public LocalDAO(Context context, AdminSQLiteOpenHelper adminSQLiteOpenHelper ) {
         super(context, adminSQLiteOpenHelper );

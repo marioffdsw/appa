@@ -1,17 +1,18 @@
 package com.paolosport.appa.persistencia.entities;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Prestamo {
     private String codigo;
     private String descripcion;
     private int talla;
-    private Date fecha;
+    private Timestamp fecha;
     private Persona empleado;
     private Local local;
     private Marca marca;
 
-    public Prestamo(String codigo, String descripcion, int talla, Date fecha, Persona empleado, Local local, Marca marca) {
+    public Prestamo(String codigo, String descripcion, int talla, Timestamp fecha, Persona empleado, Local local, Marca marca) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.talla = talla;
@@ -45,11 +46,11 @@ public class Prestamo {
         this.talla = talla;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

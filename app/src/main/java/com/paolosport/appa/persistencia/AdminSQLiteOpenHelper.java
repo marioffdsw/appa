@@ -39,7 +39,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     static final String CREATE_TABLE_PRESTAMOS = "CREATE TABLE prestamos(" +
             "codigo         TEXT        PRIMARY KEY," +
-            "description    TEXT," +
+            "descripcion    TEXT," +
             "talla          INTEGER     NOT NULL," +
             "fecha          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL," +
             "empleado       TEXT        NOT NULL," +

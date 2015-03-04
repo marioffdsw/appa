@@ -12,6 +12,7 @@ import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.entities.Marca;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 
@@ -20,6 +21,7 @@ public class ActivityMarca extends ActionBarActivity {
     EditText txtIDMarca;
     EditText txtNombreMarca;
     EditText txtURL;
+    TextView txtFecha;
 
     TextView txtListaMarcas;
 
@@ -35,6 +37,7 @@ public class ActivityMarca extends ActionBarActivity {
         txtNombreMarca = (EditText) findViewById( R.id.txtNombreMarca );
         txtURL = (EditText) findViewById( R.id.txtURL );
         txtListaMarcas = (TextView) findViewById( R.id.txtListaMarcas );
+        txtFecha = (TextView) findViewById( R.id.txtFecha );
 
         helper = new AdminSQLiteOpenHelper( this );
         marcaDAO = new MarcaDAO( this, helper );
@@ -93,11 +96,11 @@ public class ActivityMarca extends ActionBarActivity {
 
         String id = txtIDMarca.getText().toString();
         Marca marca;
-        marcaDAO.open();
+
         try {
+            marcaDAO.open();
             marca = marcaDAO.retrieve(id);
             marcaDAO.close();
-            txtListaMarcas.setText("");
             txtListaMarcas.setText(marca.getNombre());
         }
         catch (Exception e){}
