@@ -9,8 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
-import com.paolosport.appa.persistencia.entities.Local;
-import com.paolosport.appa.persistencia.entities.Marca;
 import com.paolosport.appa.persistencia.entities.Persona;
 
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class PersonaDAO extends BaseDAO <Persona> {
     static final String KEY_CEDULA = "cedula";
     static final String KEY_NOMBRE = "nombre";
     static final String KEY_TELEFONO = "telefono";
-    static final String KEY_URL = "url";
+    static final String KEY_URL = "foto";
 
 
     public PersonaDAO(Context context, AdminSQLiteOpenHelper adminSQLiteOpenHelper) {
@@ -30,19 +28,20 @@ public class PersonaDAO extends BaseDAO <Persona> {
 
     @Override
     public Estado create(Persona persona) {
-        String sql = "INSERT into Persona values("+
-                persona.getCedula() +"," +
-                persona.getNombre() +"," +
-                persona.getTelefono() +"," +
-                persona.getUrl() + ")";
-        try {
-            open();
-            db.execSQL(sql);
-            close();
+
+        try{
+            ContentValues initialValues = new ContentValues();
+            initialValues.put( KEY_CEDULA, persona.getCedula() );
+            initialValues.put( KEY_NOMBRE, persona.getNombre() );
+            initialValues.put(KEY_TELEFONO, persona.getTelefono());
+            initialValues.put(KEY_URL, persona.getUrl());
+
+            db.insert( TABLE_NAME, null, initialValues );
         }
-        catch (Exception e){
+        catch( Exception e ){
             return Estado.ERROR_INSERTAR;
-        }
+        } // end catch
+
         return Estado.INSERTADO;
     }
 
@@ -51,8 +50,8 @@ public class PersonaDAO extends BaseDAO <Persona> {
         try{
             ContentValues updateValues = new ContentValues();
             updateValues.put(KEY_NOMBRE, persona.getNombre());
-            updateValues.put(KEY_TELEFONO, persona.getNombre());
-            updateValues.put(KEY_URL, persona.getNombre());
+            updateValues.put(KEY_TELEFONO, persona.getTelefono());
+            updateValues.put(KEY_URL, persona.getUrl());
 
             db.update(TABLE_NAME, updateValues, KEY_CEDULA + "=" + persona.getCedula(), null);
         }

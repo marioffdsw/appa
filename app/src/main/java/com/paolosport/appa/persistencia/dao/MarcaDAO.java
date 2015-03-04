@@ -19,7 +19,7 @@ public class MarcaDAO extends BaseDAO <Marca> {
     static final String TABLE_NAME = "marca";
     static final String KEY_ID = "id";
     static final String KEY_NOMBRE = "nombre";
-    static final String KEY_URL = "url";
+    static final String KEY_URL = "logo";
 
     public MarcaDAO(Context context, AdminSQLiteOpenHelper adminSQLiteOpenHelper) {
         super(context,adminSQLiteOpenHelper);
