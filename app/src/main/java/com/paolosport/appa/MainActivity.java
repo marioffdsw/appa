@@ -16,6 +16,7 @@ import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.entities.Local;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -23,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
     EditText txtIDLocal;
     EditText txtNombreLocal;
     TextView txtListaLocales;
+    TextView txtFecha;
 
     AdminSQLiteOpenHelper helper;
     LocalDAO localDAO;
@@ -35,9 +37,22 @@ public class MainActivity extends ActionBarActivity {
         txtIDLocal = (EditText) findViewById( R.id.txtIDLocal );
         txtNombreLocal = (EditText) findViewById( R.id.txtNombreLocal );
         txtListaLocales = (TextView) findViewById( R.id.txtListaLocales );
+        txtFecha = (TextView) findViewById( R.id.txtFecha );
 
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
+
+        Button btnFecha = (Button) findViewById( R.id.btnFecha );
+        btnFecha.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Date date = new Date( System.currentTimeMillis() );
+
+            double anio = date.getSeconds();
+
+                txtFecha.setText( String.valueOf( anio ) );
+            }
+        });
     }
 
 
