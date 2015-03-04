@@ -11,4 +11,10 @@
     <string name="lblNombreLocal">Introduce el Nombre del Local:</string>
     <string name="btnGuardar">Guardar</string>
     <string name="btnMostrar">Mostrar Entradas</string>
+    <string name="title_activity_marca">marca</string>
+    <string name="title_activity_local">Local</string>
+    <string name="title_activity_activity_local">ActivityLocal</string>
+    <string name="title_activity_activity_marca">ActivityMarca</string>
+    <string name="title_activity_activity_persona">ActivityPersona</string>
+
 </resources>

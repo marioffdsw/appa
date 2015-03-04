@@ -4,6 +4,7 @@ package com.paolosport.appa.persistencia.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.entities.Local;
@@ -59,8 +60,9 @@ public class LocalDAO extends  BaseDAO<Local>{
     // Asume que la base de datos ha sido abierta previamente
     @Override
     public Local retrieve( String id ) {
-
-        Cursor cursor = db.query(TABLE_NAME,            // FROM
+        Cursor cursor= null;
+        try{
+        cursor = db.query(TABLE_NAME,            // FROM
                 new String[]{KEY_ID, KEY_NOMBRE},       // SELECT
                 KEY_ID + "=" + id, null,               // WHERE
                 null,                                   // GROUP BY
@@ -68,6 +70,9 @@ public class LocalDAO extends  BaseDAO<Local>{
                 null,                                   // ORDER BY
                 null                                    // LIMIT
         );
+        }
+        catch (Exception e){
+            Log.i(TAG, "NO HAY REGISTROS");}
 
         Local local = null;
 
@@ -102,13 +107,16 @@ public class LocalDAO extends  BaseDAO<Local>{
             cursor.moveToFirst();
 
             // itera por todas las filas de la tabla y crea los objetos
-            do {
-                String id = cursor.getString(0);
-                String name = cursor.getString(1);
+            try {
+                do {
+                    String id = cursor.getString(0);
+                    String name = cursor.getString(1);
 
-                local = new Local(id, name);
-                listaLocales.add(local);
-            } while( cursor.moveToNext() );
+                    local = new Local(id, name);
+                    listaLocales.add(local);
+                } while (cursor.moveToNext());
+            }
+            catch (Exception e){}
         }
 
         return listaLocales;

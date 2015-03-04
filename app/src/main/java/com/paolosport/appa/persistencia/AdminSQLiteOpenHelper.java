@@ -13,7 +13,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
-    static final String CREATE_TABE_PERSONA = "CREATE TABLE persona (" +
+    static final String CREATE_TABlE_PERSONA = "CREATE TABLE persona (" +
             "cedula         TEXT         PRIMARY KEY," +
             "nombre         TEXT            NOT NULL," +
             "telefono       TEXT," +
@@ -32,7 +32,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     static final String CREATE_TABLE_MARCA = "CREATE TABLE marca(" +
             "id             TEXT        PRIMARY KEY," +
             "nombre         TEXT        NOT NULL," +
-            "logo           TEXT" + // URI del bitmap del recurso
+            "logo           TEXT " + // URI del bitmap del recurso
             ")";
 
     static final String DROP_TABLE_MARCA = "DROP TABLE marca IF EXIST";
@@ -60,7 +60,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // creating database
-        db.execSQL( CREATE_TABE_PERSONA );
+        db.execSQL( CREATE_TABlE_PERSONA );
         db.execSQL( CREATE_TABLE_LOCAL );
         db.execSQL( CREATE_TABLE_MARCA );
         db.execSQL( CREATE_TABLE_PRESTAMOS );
