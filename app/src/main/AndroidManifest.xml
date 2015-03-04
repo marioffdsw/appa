@@ -16,14 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Local"
+            android:label="@string/title_activity_local" >
+        </activity>
+        <activity
+            android:name=".ActivityLocal"
+            android:label="@string/title_activity_activity_local" >
+        </activity>
+        <activity
+            android:name=".ActivityMarca"
+            android:label="@string/title_activity_activity_marca" >
+        </activity>
+        <activity
+            android:name=".ActivityPersona"
+            android:label="@string/title_activity_activity_persona" >
+        </activity>
     </application>
-    <activity
-        android:name=".ActivityPrestamos"
-        android:label="@string/title_activity_activity_prestamos" >
-    </activity>
-    <activity
-        android:name=".MainActivity2"
-        android:label="@string/title_activity_main_activity2" >
-    </activity>
 
 </manifest>

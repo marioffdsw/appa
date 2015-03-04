@@ -65,15 +65,18 @@ public class PersonaDAO extends BaseDAO <Persona> {
     @Override
     public Persona retrieve( String id ) {
 
-        Cursor cursor = db.query(TABLE_NAME,                // FROM
-                new String[]{KEY_CEDULA, KEY_NOMBRE,KEY_TELEFONO,KEY_URL},   // SELECT
-                KEY_CEDULA + "=" + id, null,                    // WHERE
-                null,                                       // GROUP BY
-                null,                                       // HAVING
-                null,                                       // ORDER BY
-                null                                        // LIMIT
-        );
-
+        Cursor cursor= null;
+        try {
+            cursor = db.query(TABLE_NAME,                // FROM
+                    new String[]{KEY_CEDULA, KEY_NOMBRE, KEY_TELEFONO, KEY_URL},   // SELECT
+                    KEY_CEDULA + "=" + id, null,                    // WHERE
+                    null,                                       // GROUP BY
+                    null,                                       // HAVING
+                    null,                                       // ORDER BY
+                    null                                        // LIMIT
+            );
+        }
+        catch (Exception e){}
         Persona persona = null;
 
         if ( cursor != null ){ // ha encontrado el local con la id entregada
@@ -111,15 +114,18 @@ public class PersonaDAO extends BaseDAO <Persona> {
             cursor.moveToFirst();
 
             // itera por todas las filas de la tabla y crea los objetos
-            do {
-                String id = cursor.getString(0);
-                String name = cursor.getString(1);
-                String tel = cursor.getString(2);
-                String url = cursor.getString(3);
+            try {
+                do {
+                    String id = cursor.getString(0);
+                    String name = cursor.getString(1);
+                    String tel = cursor.getString(2);
+                    String url = cursor.getString(3);
 
-                persona = new Persona(id, name, tel, url);
-                listaPersonas.add(persona);
-            } while( cursor.moveToNext() );
+                    persona = new Persona(id, name, tel, url);
+                    listaPersonas.add(persona);
+                } while (cursor.moveToNext());
+            }
+            catch (Exception e){}
         }
 
         return listaPersonas;

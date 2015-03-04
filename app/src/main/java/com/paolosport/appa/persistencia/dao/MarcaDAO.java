@@ -27,18 +27,19 @@ public class MarcaDAO extends BaseDAO <Marca> {
 
     @Override
     public Estado create(Marca marca) {
-        String sql = "INSERT into marca values("+
-            marca.getId() +"," +
-            marca.getNombre() +"," +
-            marca.getUrl() + ")";
-        try {
-            open();
-            db.execSQL(sql);
-            close();
+
+        try{
+            ContentValues initialValues = new ContentValues();
+            initialValues.put( KEY_ID, marca.getId() );
+            initialValues.put( KEY_NOMBRE, marca.getNombre() );
+            initialValues.put(KEY_URL, marca.getUrl());
+
+            db.insert( TABLE_NAME, null, initialValues );
         }
-        catch (Exception e){
+        catch( Exception e ){
             return Estado.ERROR_INSERTAR;
-        }
+        } // end catch
+
         return Estado.INSERTADO;
     }
 
@@ -60,15 +61,19 @@ public class MarcaDAO extends BaseDAO <Marca> {
 
     @Override
     public Marca retrieve( String id ) {
-
-        Cursor cursor = db.query(TABLE_NAME,                // FROM
-                new String[]{KEY_ID, KEY_NOMBRE,KEY_URL},   // SELECT
-                KEY_ID + "=" + id, null,                    // WHERE
-                null,                                       // GROUP BY
-                null,                                       // HAVING
-                null,                                       // ORDER BY
-                null                                        // LIMIT
-        );
+        Cursor cursor= null;
+        try {
+             cursor = db.query(TABLE_NAME,                // FROM
+                    new String[]{KEY_ID, KEY_NOMBRE, KEY_URL},   // SELECT
+                    KEY_ID + "=" + id, null,                    // WHERE
+                    null,                                       // GROUP BY
+                    null,                                       // HAVING
+                    null,                                       // ORDER BY
+                    null                                        // LIMIT
+            );
+        }
+        catch (Exception e){
+            Log.i(TAG, "NO HAY REGISTROS");}
 
         Marca marca = null;
 
@@ -89,14 +94,14 @@ public class MarcaDAO extends BaseDAO <Marca> {
     @Override
     public ArrayList<Marca> retrieveAll() {
 
-        Cursor cursor = db.query(TABLE_NAME,                // FROM
-                new String[]{KEY_ID, KEY_NOMBRE,KEY_URL},   // SELECT
-                null, null,                                 // WHERE
-                null,                                       // GROUP BY
-                null,                                       // HAVING
-                null,                                       // ORDER BY
-                null                                        // LIMIT
-        );
+            Cursor cursor = db.query(TABLE_NAME,                // FROM
+                    new String[]{KEY_ID, KEY_NOMBRE, KEY_URL},   // SELECT
+                    null, null,                                 // WHERE
+                    null,                                       // GROUP BY
+                    null,                                       // HAVING
+                    null,                                       // ORDER BY
+                    null                                        // LIMIT
+            );
 
         Marca marca = null;
 
@@ -105,14 +110,17 @@ public class MarcaDAO extends BaseDAO <Marca> {
             cursor.moveToFirst();
 
             // itera por todas las filas de la tabla y crea los objetos
-            do {
-                String id = cursor.getString(0);
-                String name = cursor.getString(1);
-                String url = cursor.getString(2);
+            try {
+                do {
+                    String id = cursor.getString(0);
+                    String name = cursor.getString(1);
+                    String url = cursor.getString(2);
 
-                marca = new Marca(id, name, url);
-                listaMarcas.add(marca);
-            } while( cursor.moveToNext() );
+                    marca = new Marca(id, name, url);
+                    listaMarcas.add(marca);
+                } while (cursor.moveToNext());
+            }
+            catch (Exception e){}
         }
 
         return listaMarcas;

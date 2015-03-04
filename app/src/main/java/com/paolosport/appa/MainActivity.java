@@ -1,5 +1,6 @@
 package com.paolosport.appa;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +17,6 @@ import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.entities.Local;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -78,30 +78,20 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void guardarLocal( View view ){
-        String id = txtIDLocal.getText().toString();
-        String nombre = txtNombreLocal.getText().toString();
+    public void local(View view) {
+        Intent i = new Intent(this, ActivityLocal.class );
+        startActivity(i);
+    }
 
-        Local local = new Local( id, nombre );
+    public void marca(View view) {
+        Intent i = new Intent(this, ActivityMarca.class );
+        startActivity(i);
+    }
 
-        localDAO.open();
-        localDAO.create( local );
-        localDAO.close();
+    public void persona(View view) {
+        Intent i = new Intent(this, ActivityPersona.class );
+        startActivity(i);
+    }
 
-    } // end method guardarLocal
 
-    public void mostrarEntradas( View view ){
-
-        ArrayList<Local> listaLocales;
-        localDAO.open();
-        listaLocales = localDAO.retrieveAll();
-        localDAO.close();
-
-        StringBuilder sb = new StringBuilder();
-        for( Local local: listaLocales ){
-            sb.append( "ID: " ).append(local.getId()).append( " Nombre: " ).append(local.getNombre() ).append( "\n\n" );
-        }
-
-        txtListaLocales.setText( sb.toString() );
-    } // end method mostrarEntradas
 }
