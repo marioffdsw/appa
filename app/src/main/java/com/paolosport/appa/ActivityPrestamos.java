@@ -27,9 +27,6 @@ import java.util.Date;
 
 public class ActivityPrestamos extends ActionBarActivity {
 
-    EditText txtMarca;
-    EditText txtEmpleado;
-    EditText txtLocal;
     EditText txtCodigo;
     EditText txtTalla;
     EditText txtDescripcion;
@@ -37,6 +34,7 @@ public class ActivityPrestamos extends ActionBarActivity {
     CheckBox radioLocal;
     CheckBox radioMarca;
     TextView txtListaPrestamos;
+    TextView txtCantidad;
 
     AdminSQLiteOpenHelper helper;
     LocalDAO localDAO;
@@ -51,9 +49,6 @@ public class ActivityPrestamos extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_prestamos);
 
-        txtMarca = (EditText) findViewById( R.id.txtMarca );
-        txtEmpleado = (EditText) findViewById( R.id.txtEmpleado );
-        txtLocal = (EditText) findViewById( R.id.txtLocal );
         txtCodigo = (EditText) findViewById( R.id.txtCodigo);
         txtTalla = (EditText) findViewById( R.id.txtTalla );
         txtDescripcion = (EditText) findViewById( R.id.txtDescripcion );
@@ -61,7 +56,7 @@ public class ActivityPrestamos extends ActionBarActivity {
         radioMarca = (CheckBox) findViewById( R.id.radioMarca );
         radioLocal = (CheckBox) findViewById( R.id.radioLocal);
         txtListaPrestamos = (TextView) findViewById( R.id.txtListaPrestamos );
-
+        txtCantidad = (TextView) findViewById( R.id.txtCantidad );
 
         helper = new AdminSQLiteOpenHelper(this);
         localDAO = new LocalDAO( this, helper );
@@ -109,42 +104,52 @@ public class ActivityPrestamos extends ActionBarActivity {
             empleado = new Persona( "108529072", "Mario F. Florez", "3150000000", "mario.jpg" );
         }
         else{
+
             empleado = new Persona( "99999990", "Homer Simpson", "555555555", "homero.jpg" );
+
         }
 
         if (radioMarca.isChecked()){
+
             marca = new Marca( "1", "Mike", "nike.jpg" );
         }
         else{
             marca = new Marca( "2", "Pumba", "pumba.jpg" );
         }
 
-        if( radioLocal.isChecked() )
+        if( radioLocal.isChecked() ) {
             local = new Local( "1", "Local 101" );
-        else
+        }
+        else {
             local = new Local( "2", "Local 204" );
+        }
 
-        prestamoDAO.open();
+        personaDAO.open();
         try {
             personaDAO.create( empleado );
         }
         catch(Exception e) {
             Log.w( TAG, " error con empleado");
         }
+        personaDAO.close();
 
+        localDAO.open();
         try {
             localDAO.create( local );
         }
         catch ( Exception e ) {
             Log.w( TAG, "error con local");
         }
+        localDAO.close();
 
+        marcaDAO.open();
         try{
             marcaDAO.create( marca );
         }
         catch ( Exception e){
             Log.w( TAG ,"error con marca");
         }
+        marcaDAO.close();;
 
         String codigo = txtCodigo.getText().toString();
         String descripcion = txtDescripcion.getText().toString();
@@ -154,6 +159,7 @@ public class ActivityPrestamos extends ActionBarActivity {
 
         Prestamo prestamo = new Prestamo( codigo, descripcion, talla, fecha, empleado, local, marca );
 
+        prestamoDAO.open();
         prestamoDAO.create(prestamo);
         prestamoDAO.close();
 
@@ -162,6 +168,8 @@ public class ActivityPrestamos extends ActionBarActivity {
     public void mostrar( View view ){
         ArrayList<Prestamo> listaPrestamos;
 
+        Log.i( "appa", "ActivityPrestamos.mostrar()" );
+
         prestamoDAO.open();
         listaPrestamos = prestamoDAO.retrieveAll();
         prestamoDAO.close();
@@ -169,6 +177,7 @@ public class ActivityPrestamos extends ActionBarActivity {
         StringBuilder sb = new StringBuilder();
 
         if(listaPrestamos!=null  && !listaPrestamos.isEmpty()){
+            txtCantidad.setText( String.valueOf( listaPrestamos.size() ) );
             for( Prestamo prestamo: listaPrestamos ){
                 sb.append( "Empledo: " ).append( prestamo.getEmpleado().getNombre() ).append( " cedula: " ).append( prestamo.getEmpleado().getCedula() )
                     .append( "\nMarca: " ).append( prestamo.getMarca().getNombre() ).append( "\n" )

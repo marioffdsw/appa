@@ -14,9 +14,7 @@ import com.paolosport.appa.persistencia.entities.Prestamo;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-/**
- * Created by mario on 2/03/15.
- */
+
 public class PrestamoDAO extends BaseDAO<Prestamo>{
 
     static final String TABLE_NAME = "prestamos";
@@ -53,6 +51,8 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
         try{
 
+            Log.i( TAG + " prestamo", "PrestamoDAO.create()" );
+
             ContentValues initialValues = new ContentValues();
             initialValues.put( KEY_CODIGO, prestamo.getCodigo() );
             initialValues.put( KEY_DESCRIPCION, prestamo.getDescripcion() );
@@ -68,6 +68,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             return Estado.ERROR_INSERTAR;
         } // end catch
 
+        Log.i( TAG + "prestamos", "Insercion correcta PrestamoDAO.create()" );
         return Estado.INSERTADO;
     }
 
@@ -165,16 +166,25 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
                     String descripcion = cursor.getString(1);
                     Integer talla = cursor.getInt(2);
                     Timestamp fecha = formatearFecha( cursor.getString( 3 ) );
+
+                    personaDAO.open();
                     Persona empleado = personaDAO.retrieve( cursor.getString( 4 ) );
+                    personaDAO.close();
+
+                    localDAO.open();
                     Local local = localDAO.retrieve( cursor.getString( 5 ) );
+                    localDAO.close();
+
+                    marcaDAO.open();
                     Marca marca = marcaDAO.retrieve( cursor.getString( 6 ) );
+                    marcaDAO.close();
 
                     prestamo = new Prestamo( key, descripcion, talla, fecha, empleado, local, marca );
                     listaPrestamos.add(prestamo);
                 } while (cursor.moveToNext());
             }
             catch (Exception e){
-
+                e.printStackTrace();
             }
         }
 
