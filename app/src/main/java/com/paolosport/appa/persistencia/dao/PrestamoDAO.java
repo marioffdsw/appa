@@ -114,6 +114,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             );
         }
         catch (Exception e){
+            e.printStackTrace();
             Log.i(TAG, "NO HAY REGISTROS");}
 
         Prestamo prestamo = null;
@@ -125,9 +126,15 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             String descripcion = cursor.getString(1);
             Integer talla = cursor.getInt(2);
             Timestamp fecha = formatearFecha( cursor.getString( 3 ) );
+            personaDAO.open();
             Persona empleado = personaDAO.retrieve( cursor.getString( 4 ) );
+            personaDAO.close();
+            localDAO.open();
             Local local = localDAO.retrieve( cursor.getString( 5 ) );
+            localDAO.close();
+            marcaDAO.open();
             Marca marca = marcaDAO.retrieve( cursor.getString( 6 ) );
+            marcaDAO.close();
 
             prestamo = new Prestamo( key, descripcion, talla, fecha, empleado, local, marca );
         }
@@ -197,6 +204,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             db.delete( TABLE_NAME, KEY_CODIGO + "=" + prestamo.getCodigo(), null );
         }
         catch( Exception e ){
+            e.printStackTrace();
             return Estado.ERROR_ELIMINAR;
         } // end catch
 
@@ -213,4 +221,4 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
         return new Timestamp( anio, mes, dia, hora, minutos, segundos, 0 );
     } // end method formatearFecha
-} // end class PrestamoDAO
+} // end class FPrestamoDAO

@@ -179,6 +179,7 @@ public class ActivityPrestamos extends ActionBarActivity {
         if(listaPrestamos!=null  && !listaPrestamos.isEmpty()){
             txtCantidad.setText( String.valueOf( listaPrestamos.size() ) );
             for( Prestamo prestamo: listaPrestamos ){
+                sb.append( "Codigo: ").append(prestamo.getCodigo());
                 sb.append( "Empledo: " ).append( prestamo.getEmpleado().getNombre() ).append( " cedula: " ).append( prestamo.getEmpleado().getCedula() )
                     .append( "\nMarca: " ).append( prestamo.getMarca().getNombre() ).append( "\n" )
                     .append( "Local: " ).append( prestamo.getLocal().getNombre() ).append( "\n" )
@@ -193,4 +194,23 @@ public class ActivityPrestamos extends ActionBarActivity {
 
         txtListaPrestamos.setText( sb.toString() );
     } // end method mostrar
+
+    public void eliminar( View view ){
+        String codigo = txtCodigo.getText().toString();
+        Prestamo prestamo;
+
+        try {
+            prestamoDAO.open();
+            prestamo = prestamoDAO.retrieve( codigo );
+            prestamoDAO.close();
+
+            prestamoDAO.open();
+            prestamoDAO.delete(prestamo);
+            prestamoDAO.close();
+
+            mostrar(view);
+        }
+        catch (Exception e){}
+
+    } // end method eliminar
 } // end class ActivityPrestamos
