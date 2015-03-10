@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
+import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
+import com.paolosport.appa.persistencia.dao.LocalDAO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
