@@ -36,6 +36,10 @@
             android:name=".activities.InterfazPrestamos"
             android:label="@string/title_activity_interfaz_prestamos" >
         </activity>
+        <activity
+            android:name=".ActivityPrestamos"
+            android:label="@string/title_activity_activity_prestamos" >
+        </activity>
     </application>
 
 </manifest>

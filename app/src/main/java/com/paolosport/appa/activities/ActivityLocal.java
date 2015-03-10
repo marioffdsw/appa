@@ -32,6 +32,8 @@ public class ActivityLocal extends ActionBarActivity {
     AdminSQLiteOpenHelper helper;
     LocalDAO localDAO;
 
+    boolean bandera = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

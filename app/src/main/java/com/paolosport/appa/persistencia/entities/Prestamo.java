@@ -1,22 +1,25 @@
 package com.paolosport.appa.persistencia.entities;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Prestamo {
     private String codigo;
     private String descripcion;
     private int talla;
-    private Date fecha;
-    private String empleado;
-    private String local;
+    private Timestamp fecha;
+    private Persona empleado;
+    private Local local;
+    private Marca marca;
 
-    public Prestamo(String codigo, String descripcion, int talla, Date fecha, String empleado, String local) {
+    public Prestamo(String codigo, String descripcion, int talla, Timestamp fecha, Persona empleado, Local local, Marca marca) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.talla = talla;
         this.fecha = fecha;
         this.empleado = empleado;
         this.local = local;
+        this.marca = marca;
     }
 
     public String getCodigo() {
@@ -43,27 +46,35 @@ public class Prestamo {
         this.talla = talla;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 
-    public String getEmpleado() {
+    public Persona getEmpleado() {
         return empleado;
     }
 
-    public void setEmpleado(String empleado) {
+    public void setEmpleado(Persona empleado) {
         this.empleado = empleado;
     }
 
-    public String getLocal() {
+    public Local getLocal() {
         return local;
     }
 
-    public void setLocal(String local) {
+    public void setLocal(Local local) {
         this.local = local;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 }

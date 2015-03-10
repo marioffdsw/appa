@@ -12,7 +12,6 @@ import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.entities.Persona;
 
 import java.util.ArrayList;
-
 public class PersonaDAO extends BaseDAO <Persona> {
 
     static final String TABLE_NAME = "persona";
@@ -75,11 +74,13 @@ public class PersonaDAO extends BaseDAO <Persona> {
                     null                                        // LIMIT
             );
         }
-        catch (Exception e){}
+        catch (Exception e){
+            e.printStackTrace();
+        }
         Persona persona = null;
 
-        if ( cursor != null ){ // ha encontrado el local con la id entregada
-            cursor.moveToFirst();
+        if ( cursor.moveToFirst() ){ // ha encontrado el local con la id entregada
+
 
             id = cursor.getString(0);
             String name = cursor.getString(1);
@@ -109,8 +110,7 @@ public class PersonaDAO extends BaseDAO <Persona> {
         Persona persona = null;
 
         ArrayList listaPersonas = new ArrayList<Persona>();
-        if ( cursor != null ){ // ha encontrado el local con la id entregada
-            cursor.moveToFirst();
+        if (  cursor.moveToFirst() ){ // ha encontrado el local con la id entregada
 
             // itera por todas las filas de la tabla y crea los objetos
             try {

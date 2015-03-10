@@ -18,6 +18,7 @@ import com.paolosport.appa.persistencia.entities.Marca;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerMarca;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class ActivityMarca extends ActionBarActivity {
@@ -26,6 +27,7 @@ public class ActivityMarca extends ActionBarActivity {
     EditText txtNombreMarca;
     EditText txtURL;
     private android.widget.Spinner spinner;
+    TextView txtFecha;
 
     TextView txtListaMarcas;
 
@@ -41,6 +43,7 @@ public class ActivityMarca extends ActionBarActivity {
         txtNombreMarca = (EditText) findViewById( R.id.txtNombreMarca );
         txtURL = (EditText) findViewById( R.id.txtURL );
         txtListaMarcas = (TextView) findViewById( R.id.txtListaMarcas );
+        txtFecha = (TextView) findViewById( R.id.txtFecha );
 
         helper = new AdminSQLiteOpenHelper( this );
         marcaDAO = new MarcaDAO( this, helper );
@@ -141,9 +144,9 @@ public class ActivityMarca extends ActionBarActivity {
         Marca marca;
         marcaDAO.open();
         try {
+            marcaDAO.open();
             marca = marcaDAO.retrieve(id);
             marcaDAO.close();
-            txtListaMarcas.setText("");
             txtListaMarcas.setText(marca.getNombre());
         }
         catch (Exception e){}

@@ -11,15 +11,44 @@ import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends ActionBarActivity {
 
+    EditText txtIDLocal;
+    EditText txtNombreLocal;
+    TextView txtListaLocales;
+    TextView txtFecha;
 
+    AdminSQLiteOpenHelper helper;
+    LocalDAO localDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        txtIDLocal = (EditText) findViewById( R.id.txtIDLocal );
+        txtNombreLocal = (EditText) findViewById( R.id.txtNombreLocal );
+        txtListaLocales = (TextView) findViewById( R.id.txtListaLocales );
+        txtFecha = (TextView) findViewById( R.id.txtFecha );
+
+        helper = new AdminSQLiteOpenHelper( this );
+        localDAO = new LocalDAO( this, helper );
+
+        Button btnFecha = (Button) findViewById( R.id.btnFecha );
+        btnFecha.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Date date = new Date( System.currentTimeMillis() );
+
+            double anio = date.getSeconds();
+
+                txtFecha.setText( String.valueOf( anio ) );
+            }
+        });
     }
 
 
@@ -54,5 +83,17 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
     }
 
+
+    public void mostrarFecha( View view ){
+        java.util.Date dateUtil = new java.util.Date();
+        Timestamp date = new Timestamp( dateUtil.getTime() );
+
+        txtFecha.setText( date.toString() );
+    } // end method mostrarFecha
+
+    public void prestamos ( View view ){
+        Intent i = new Intent(this, ActivityPrestamos.class );
+        startActivity(i);
+    }
 
 }

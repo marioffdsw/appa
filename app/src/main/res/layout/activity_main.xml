@@ -10,9 +10,16 @@
     android:orientation="vertical">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lblIdLocal"/>
+
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="wrap_content"
@@ -39,13 +46,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PRESTAMOS"
-            android:id="@+id/btnPrestamos" />
+            android:id="@+id/btnPrestamos"
+            android:onClick="prestamos"/>
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtListaLocales"/>
+            android:id="@+id/btnFecha"
+            android:text="Fecha" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnDate"
+            android:text="Date"
+            android:onClick="mostrarFecha" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFecha"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtListaLocales"/>
 
 </LinearLayout>
