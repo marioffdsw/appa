@@ -1,9 +1,11 @@
-package com.paolosport.appa;
+package com.paolosport.appa.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.paolosport.appa.R;
 
 
 public class InterfazPrestamos extends ActionBarActivity {

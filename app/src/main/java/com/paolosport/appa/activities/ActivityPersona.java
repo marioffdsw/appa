@@ -1,4 +1,4 @@
-package com.paolosport.appa;
+package com.paolosport.appa.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.entities.Persona;

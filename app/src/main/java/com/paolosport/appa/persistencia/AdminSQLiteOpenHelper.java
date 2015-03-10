@@ -27,6 +27,13 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
             "nombre         TEXT        NOT NULL" +
             ")";
 
+    static final String INSERT_TABLE_LOCAL = "INSERT INTO local (id, nombre) VALUES "+
+            "('1','CC. 16'),"+
+            "('2','CC. PONTEVEDRA' ),"+
+            "('3','CC. ANDES L.102'),"+
+            "('4','CC. UNICENTRO'),"+
+            "('5','CC. ANDES L.123');";
+
     static final String DROP_TABLE_LOCAL = "DROP TABLE local IF EXIST";
 
     static final String CREATE_TABLE_MARCA = "CREATE TABLE marca(" +
@@ -34,6 +41,21 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
             "nombre         TEXT        NOT NULL," +
             "logo           TEXT " + // URI del bitmap del recurso
             ")";
+
+
+    static final String INSERT_TABLE_MARCA = "INSERT INTO marca (id, nombre, logo) VALUES "+
+                                             "('1','adidas','adidas'),"+
+                                             "('2','puma','puma' ),"+
+                                             "('3','lecoq','lecoq'),"+
+                                             "('4','Lacoste','lacoste' ),"+
+                                             "('5','Nike','nike'),"+
+                                             "('6','New Balance','nb'),"+
+                                             "('7','Converse','converse'),"+
+                                             "('8','Cat','cat'),"+
+                                             "('9','Merrell','merrell'),"+
+                                             "('10','HH','hh'),"+
+                                             "('11','Timberland','timberland');";
+
 
     static final String DROP_TABLE_MARCA = "DROP TABLE marca IF EXIST";
 
@@ -64,6 +86,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( CREATE_TABLE_LOCAL );
         db.execSQL( CREATE_TABLE_MARCA );
         db.execSQL( CREATE_TABLE_PRESTAMOS );
+        db.execSQL( INSERT_TABLE_MARCA );
+        db.execSQL( INSERT_TABLE_LOCAL );
     }
 
     @Override

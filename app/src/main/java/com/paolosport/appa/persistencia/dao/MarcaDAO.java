@@ -138,4 +138,6 @@ public class MarcaDAO extends BaseDAO <Marca> {
 
         return Estado.ELIMINADO;
     }
+
+
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="a">#ff8fffab</color>
+    <color name="b">#8019fffa</color>
+    <color name="c">#ffbbc3ff</color>
+    <color name="d">#80ffc200</color>
+    <color name="e">#ffffd6f4</color>
+    <color name="f">#80ff0005</color>
+    <color name="g">#ffb5ff87</color>
+    <color name="h">#8070f8ff</color>
+
+
+    <array name="arregloColor">
+        <item>@color/a</item>
+        <item>@color/b</item>
+        <item>@color/c</item>
+        <item>@color/d</item>
+        <item>@color/e</item>
+        <item>@color/f</item>
+        <item>@color/g</item>
+        <item>@color/h</item>
+
+    </array>
+</resources>

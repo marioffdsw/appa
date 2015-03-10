@@ -1,16 +1,23 @@
-package com.paolosport.appa;
+package com.paolosport.appa.activities;
 
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.paolosport.appa.spinnerLocalPaquete.SpinnerAdapterLocal;
+import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.entities.Local;
+import com.paolosport.appa.spinnerLocalPaquete.SpinnerLocal;
+import com.paolosport.appa.spinnerMarcaPaquete.SpinnerMarca;
 
 import java.util.ArrayList;
 
@@ -20,6 +27,7 @@ public class ActivityLocal extends ActionBarActivity {
     EditText txtIDLocal;
     EditText txtNombreLocal;
     TextView txtListaLocales;
+    private android.widget.Spinner spinner;
 
     AdminSQLiteOpenHelper helper;
     LocalDAO localDAO;
@@ -33,8 +41,16 @@ public class ActivityLocal extends ActionBarActivity {
         txtNombreLocal = (EditText) findViewById( R.id.txtNombreLocal );
         txtListaLocales = (TextView) findViewById( R.id.txtListaLocales );
 
+
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
+
+        try{
+            localDAO.open();
+            DatosPorDefecto();
+            localDAO.close();
+        }
+        catch (Exception e){e.printStackTrace();}
     }
 
 
@@ -50,8 +66,48 @@ public class ActivityLocal extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void DatosPorDefecto() {
+        localDAO.open();
+
+        ArrayList<Local> listaLocales = localDAO.retrieveAll();
+
+
+        ArrayList<SpinnerLocal> items = new ArrayList<SpinnerLocal>();
+        int[] colores = getResources().getIntArray(R.array.arregloColor);
+
+        Resources r = this.getResources();
+
+        int i=0;
+        for(Local local:listaLocales) {
+            items.add(new SpinnerLocal(local.getNombre(), colores[i]));
+            i++;
+            //muestra nombre de la marca y el nombre del url de la marca q obligatoriamente debe coincidir con el nombre del recurso
+        }
+
+       // SpinnerAdapterLocal colorSpinner = new SpinnerAdapterLocal(this, items);
+        //prueba.setAdapter(colorSpinner);
+        //prueba.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        spinner = (android.widget.Spinner) findViewById(R.id.spinnerLocal);
+        spinner.setAdapter(new SpinnerAdapterLocal(this,items));
+        localDAO.close();
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                Toast.makeText(adapterView.getContext(), ((SpinnerLocal) adapterView.getItemAtPosition(position)).getName(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
+
     }
 
     public void guardar( View view ){

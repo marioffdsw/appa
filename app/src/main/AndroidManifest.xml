@@ -21,19 +21,19 @@
             android:label="@string/title_activity_local" >
         </activity>
         <activity
-            android:name=".ActivityLocal"
+            android:name=".activities.ActivityLocal"
             android:label="@string/title_activity_activity_local" >
         </activity>
         <activity
-            android:name=".ActivityMarca"
+            android:name=".activities.ActivityMarca"
             android:label="@string/title_activity_activity_marca" >
         </activity>
         <activity
-            android:name=".ActivityPersona"
+            android:name=".activities.ActivityPersona"
             android:label="@string/title_activity_activity_persona" >
         </activity>
         <activity
-            android:name=".InterfazPrestamos"
+            android:name=".activities.InterfazPrestamos"
             android:label="@string/title_activity_interfaz_prestamos" >
         </activity>
     </application>

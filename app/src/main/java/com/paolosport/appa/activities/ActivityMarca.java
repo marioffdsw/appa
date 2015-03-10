@@ -1,25 +1,31 @@
-package com.paolosport.appa;
+package com.paolosport.appa.activities;
 
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.entities.Marca;
+import com.paolosport.appa.spinnerMarcaPaquete.SpinnerMarca;
+import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
 
 import java.util.ArrayList;
-
 
 public class ActivityMarca extends ActionBarActivity {
 
     EditText txtIDMarca;
     EditText txtNombreMarca;
     EditText txtURL;
+    private android.widget.Spinner spinner;
 
     TextView txtListaMarcas;
 
@@ -38,6 +44,13 @@ public class ActivityMarca extends ActionBarActivity {
 
         helper = new AdminSQLiteOpenHelper( this );
         marcaDAO = new MarcaDAO( this, helper );
+
+        try{
+        marcaDAO.open();
+        DatosPorDefecto();
+        marcaDAO.close();
+        }
+        catch (Exception e){e.printStackTrace();}
     }
 
     @Override
@@ -53,6 +66,39 @@ public class ActivityMarca extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void DatosPorDefecto() {
+        marcaDAO.open();
+
+        ArrayList<Marca> listaMarcasSpinner = marcaDAO.retrieveAll();
+        ArrayList<SpinnerMarca> items = new ArrayList<SpinnerMarca>();
+
+        Resources r = this.getResources();
+
+        for(Marca marca:listaMarcasSpinner) {
+            items.add(new SpinnerMarca(marca.getNombre(),r.getIdentifier(marca.getUrl(),"drawable",getPackageName())));
+            //muestra nombre de la marca y el nombre del url de la marca q obligatoriamente debe coincidir con el nombre del recurso
+        }
+        marcaDAO.close();
+
+        spinner = (android.widget.Spinner) findViewById(R.id.spinner);
+        spinner.setAdapter(new SpinnerAdapterMarca(this,items));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                Toast.makeText(adapterView.getContext(), ((SpinnerMarca) adapterView.getItemAtPosition(position)).getName(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //nothing
+            }
+        });
     }
 
     public void guardarMarca( View view ){
