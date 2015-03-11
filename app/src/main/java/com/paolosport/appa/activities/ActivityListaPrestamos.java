@@ -7,20 +7,15 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,26 +36,31 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class ActivityList extends ActionBarActivity {
+public class ActivityListaPrestamos extends ActionBarActivity {
 
     FiltrosFragment filtrosFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_list);
+        setContentView(R.layout.activity_lista_Prestamos);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /** Se configura el FiltrosFragment */
+        // se crea un nuevo FiltrosFragment
         filtrosFrag = new FiltrosFragment();
 
+        // se usa el fragmentManager y se comienza una transaccion para incluir el fragment en
+        // en la Activity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         fragmentTransaction.add(R.id.fragment_container, filtrosFrag);
+
+        // se hacepta los cambios para que se ejecute la transacción
         fragmentTransaction.commit();
         fragmentManager.executePendingTransactions();
 
-
+        /** Se crea, los objetos de gestion de la base de datos */
         AdminSQLiteOpenHelper adminSQLiteOpenHelper = new AdminSQLiteOpenHelper(getApplicationContext());
         MarcaDAO marcaDAO = new MarcaDAO(getApplicationContext(), adminSQLiteOpenHelper);
         LocalDAO localDAO = new LocalDAO(getApplicationContext(), adminSQLiteOpenHelper);
@@ -113,7 +113,7 @@ public class ActivityList extends ActionBarActivity {
                 getString(R.string.from_gallery),
                 getString(R.string.cancel)};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityList.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityListaPrestamos.this);
 
         builder.setTitle(getString(R.string.choose_image));
         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -184,15 +184,14 @@ public class ActivityList extends ActionBarActivity {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
-                // Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Bitmap thumbnail = null;
                 try {
-                    Uri uri = Uri.parse( "file://" + picturePath );
+                    Uri uri = Uri.parse("file://" + picturePath);
                     thumbnail = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                // Log.w("path of image from gallery......******************.........", picturePath + "");
+
                 filtrosFrag.publishImage(thumbnail);
             }
         }

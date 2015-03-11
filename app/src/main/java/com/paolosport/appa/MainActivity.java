@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.paolosport.appa.activities.ActivityList;
+import com.paolosport.appa.activities.ActivityListaPrestamos;
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
     //TODO cambiar la signatura del metodo, y del boton asociado
     // el metodo debera cambiar de lugar al refactorizar la app para un mejor flujo de trabajo
     public void listaPrestamos( View view ){
-        Intent i = new Intent( this, ActivityList.class );
+        Intent i = new Intent( this, ActivityListaPrestamos.class );
         startActivity( i );
     } // fin del metodo listarPrestamos
 } // fin de la activity Main

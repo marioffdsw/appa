@@ -36,15 +36,11 @@
             android:label="@string/title_activity_activity_persona" >
         </activity>
         <activity
-            android:name=".activities.InterfazPrestamos"
-            android:label="@string/title_activity_interfaz_prestamos" >
-        </activity>
-        <activity
             android:name=".ActivityPrestamos"
             android:label="@string/title_activity_activity_prestamos" >
         </activity>
         <activity
-            android:name=".activities.ActivityList"
+            android:name=".activities.ActivityListaPrestamos"
             android:label="@string/title_activity_activity_list" >
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
