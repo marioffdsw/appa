@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.paolosport.appa.activities.ActivityList;
 import com.paolosport.appa.activities.ActivityLocal;
@@ -17,16 +14,8 @@ import com.paolosport.appa.activities.ActivityPersona;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends ActionBarActivity {
-
-    EditText txtIDLocal;
-    EditText txtNombreLocal;
-    TextView txtListaLocales;
-    TextView txtFecha;
 
     AdminSQLiteOpenHelper helper;
     LocalDAO localDAO;
@@ -36,25 +25,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txtIDLocal = (EditText) findViewById( R.id.txtIDLocal );
-        txtNombreLocal = (EditText) findViewById( R.id.txtNombreLocal );
-        txtListaLocales = (TextView) findViewById( R.id.txtListaLocales );
-        txtFecha = (TextView) findViewById( R.id.txtFecha );
-
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
-
-        Button btnFecha = (Button) findViewById( R.id.btnFecha );
-        btnFecha.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Date date = new Date( System.currentTimeMillis() );
-
-            double anio = date.getSeconds();
-
-                txtFecha.setText( String.valueOf( anio ) );
-            }
-        });
     }
 
 
@@ -74,30 +46,51 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /** el metodo local, lanza una activity que permite introducir
+     *  información sobre un nuevo empleado */
+    //TODO cambiar la signatura del metodo, y del boton asociado
+    // el metodo debera cambiar de lugar al refactorizar la app para un mejor flujo de trabajo
     public void local(View view) {
         Intent i = new Intent(this, ActivityLocal.class );
         startActivity(i);
     }
 
+    /** el metodo marca, lanza una activity que permite introducir
+     *  información sobre un nuevo empleado */
+    //TODO cambiar la signatura del metodo, y del boton asociado
+    // el metodo debera cambiar de lugar al refactorizar la app para un mejor flujo de trabajo
     public void marca(View view) {
         Intent i = new Intent(this, ActivityMarca.class );
         startActivity(i);
-    }
+    } // fin del metodo marca
 
-    public void persona(View view) {
+    /** el metodo persona, lanza una activity que permite introducir
+     *  información sobre un nuevo empleado */
+        //TODO cambiar la signatura del metodo, y del boton asociado
+        // el metodo debera cambiar de lugar al refactorizar la app para un mejor flujo de trabajo
+      public void persona(View view) {
         Intent i = new Intent(this, ActivityPersona.class );
         startActivity(i);
-    }
+    } // fin del metodo persona
 
 
+    /** el metodo prestamos, lanza una activity que permite introducir
+     *  información sobre un nuevo empleado */
+    //TODO cambiar la signatura del metodo, y del boton asociado
+    // el metodo debera cambiar de lugar al refactorizar la app para un mejor flujo de trabajo
     public void prestamos ( View view ){
         Intent i = new Intent(this, ActivityPrestamos.class );
         startActivity(i);
-    }
+    } // fin del metodo prestamos
 
+
+    /** el metodo listaPrestamos, lanza una activity que permite introducir
+     *  información sobre un nuevo empleado */
+    //TODO cambiar la signatura del metodo, y del boton asociado
+    // el metodo debera cambiar de lugar al refactorizar la app para un mejor flujo de trabajo
     public void listaPrestamos( View view ){
         Intent i = new Intent( this, ActivityList.class );
         startActivity( i );
-    }
-
-}
+    } // fin del metodo listarPrestamos
+} // fin de la activity Main

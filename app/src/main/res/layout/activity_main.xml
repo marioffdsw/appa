@@ -2,76 +2,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lblIdLocal"/>
+        android:text="locales"
+        android:id="@+id/btnLocal"
+        android:onClick="local" />
 
-
-    <LinearLayout
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="marca"
+        android:id="@+id/btnMarca"
+        android:onClick="marca" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="locales"
-            android:id="@+id/btnLocal"
-            android:onClick="local" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="marca"
-            android:id="@+id/btnMarca"
-            android:onClick="marca" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PERSONA"
-            android:id="@+id/btnPersona"
-            android:onClick="persona" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PRESTAMOS"
-            android:id="@+id/btnPrestamos"
-            android:onClick="prestamos"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnFecha"
-            android:text="Fecha" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnDate"
-            android:text="Lista Prestamos"
-            android:onClick="listaPrestamos" />
-
-    </LinearLayout>
-
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtFecha"/>
+        android:text="PERSONA"
+        android:id="@+id/btnPersona"
+        android:onClick="persona" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtListaLocales"/>
+        android:text="PRESTAMOS"
+        android:id="@+id/btnPrestamos"
+        android:onClick="prestamos"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDate"
+        android:text="Lista Prestamos"
+        android:onClick="listaPrestamos" />
 
 </LinearLayout>

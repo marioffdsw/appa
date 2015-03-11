@@ -43,7 +43,6 @@ public class ActivityMarca extends ActionBarActivity {
         txtNombreMarca = (EditText) findViewById( R.id.txtNombreMarca );
         txtURL = (EditText) findViewById( R.id.txtURL );
         txtListaMarcas = (TextView) findViewById( R.id.txtListaMarcas );
-        txtFecha = (TextView) findViewById( R.id.txtFecha );
 
         helper = new AdminSQLiteOpenHelper( this );
         marcaDAO = new MarcaDAO( this, helper );
