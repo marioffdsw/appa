@@ -154,8 +154,8 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         // verifica si el resultado es correcto o fue cancelada la operacion
         if (resultCode == RESULT_OK) {
 
-            // verifica el codigo de solicitud, con este se sabe si la imagen resultado viene
-            // de la galeria o de la camara y se procesa adecuadamente
+            /** verifica el codigo de solicitud, con este se sabe si la imagen resultado viene
+             *  de la galeria o de la camara y se procesa adecuadamente */
             if (requestCode == 1) { // el bitmap viene de la camara
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
@@ -187,7 +187,7 @@ public class ActivityListaPrestamos extends ActionBarActivity {
                     f.delete(); // se elimina el archivo temporal
                     OutputStream outFile = null;
 
-                    // se guarda el archivo
+                    // se guarda el archivo en la carpeta de la app asignada por el sistema
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
@@ -204,7 +204,9 @@ public class ActivityListaPrestamos extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == 2) {
+            } // fin de if
+            else if (requestCode == 2) { /** si se obtiene el resultado de la galeria de imagenes */
+
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
@@ -213,6 +215,7 @@ public class ActivityListaPrestamos extends ActionBarActivity {
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = null;
+
                 try {
                     Uri uri = Uri.parse("file://" + picturePath);
                     thumbnail = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
@@ -220,8 +223,9 @@ public class ActivityListaPrestamos extends ActionBarActivity {
                     e.printStackTrace();
                 }
 
+                // se publica la imagen el el fragment para ser mostrada
                 filtrosFrag.publishImage(thumbnail);
-            }
-        }
-    }
-}
+            } // fin else if ( codigo de respuesta )
+        } // fin de else (respuesta correcta)
+    } // fin del metodo onActivityResult
+} // fin de la ActivityListaPrestamos
