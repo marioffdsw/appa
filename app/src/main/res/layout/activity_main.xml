@@ -59,8 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnDate"
-            android:text="Date"
-            android:onClick="mostrarFecha" />
+            android:text="Lista Prestamos"
+            android:onClick="listaPrestamos" />
 
     </LinearLayout>
 

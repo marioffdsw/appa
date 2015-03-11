@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.paolosport.appa.activities.ActivityList;
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
@@ -89,16 +90,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void mostrarFecha( View view ){
-        java.util.Date dateUtil = new java.util.Date();
-        Timestamp date = new Timestamp( dateUtil.getTime() );
-
-        txtFecha.setText( date.toString() );
-    } // end method mostrarFecha
-
     public void prestamos ( View view ){
         Intent i = new Intent(this, ActivityPrestamos.class );
         startActivity(i);
+    }
+
+    public void listaPrestamos( View view ){
+        Intent i = new Intent( this, ActivityList.class );
+        startActivity( i );
     }
 
 }

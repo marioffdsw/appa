@@ -40,6 +40,14 @@
             android:name=".ActivityPrestamos"
             android:label="@string/title_activity_activity_prestamos" >
         </activity>
+        <activity
+            android:name=".activities.ActivityList"
+            android:label="@string/title_activity_activity_list" >
+
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.paolosport.appa.MainActivity" />
+
+        </activity>
     </application>
 
 </manifest>

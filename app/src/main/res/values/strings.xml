@@ -17,5 +17,6 @@
     <string name="title_activity_activity_marca">ActivityMarca</string>
     <string name="title_activity_activity_persona">ActivityPersona</string>
     <string name="title_activity_interfaz_prestamos">InterfazPrestamos</string>
+    <string name="title_activity_activity_list">ActivityList</string>
 
 </resources>
