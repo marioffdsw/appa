@@ -1,6 +1,8 @@
 package com.paolosport.appa.activities;
 
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,8 +18,6 @@ import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.entities.Local;
-import com.paolosport.appa.spinnerLocalPaquete.SpinnerLocal;
-import com.paolosport.appa.spinnerMarcaPaquete.SpinnerMarca;
 
 import java.util.ArrayList;
 
@@ -75,32 +75,29 @@ public class ActivityLocal extends ActionBarActivity {
         localDAO.open();
 
         ArrayList<Local> listaLocales = localDAO.retrieveAll();
-
-
-        ArrayList<SpinnerLocal> items = new ArrayList<SpinnerLocal>();
         int[] colores = getResources().getIntArray(R.array.arregloColor);
 
         Resources r = this.getResources();
 
         int i=0;
-        for(Local local:listaLocales) {
+        /*for(Local local:listaLocales) {
             items.add(new SpinnerLocal(local.getNombre(), colores[i]));
             i++;
             //muestra nombre de la marca y el nombre del url de la marca q obligatoriamente debe coincidir con el nombre del recurso
-        }
+        }*/
 
        // SpinnerAdapterLocal colorSpinner = new SpinnerAdapterLocal(this, items);
         //prueba.setAdapter(colorSpinner);
-        //prueba.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+       // spinner.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
         spinner = (android.widget.Spinner) findViewById(R.id.spinnerLocal);
-        spinner.setAdapter(new SpinnerAdapterLocal(this,items));
+        spinner.setAdapter(new SpinnerAdapterLocal(this,listaLocales));
         localDAO.close();
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
             {
-                Toast.makeText(adapterView.getContext(), ((SpinnerLocal) adapterView.getItemAtPosition(position)).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(adapterView.getContext(), ((Local) adapterView.getItemAtPosition(position)).getNombre(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -1,6 +1,10 @@
 package com.paolosport.appa.spinnerMarcaPaquete;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +13,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.paolosport.appa.R;
+import com.paolosport.appa.persistencia.entities.Marca;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Andres on 04/03/2015.
  */
-    public class SpinnerAdapterMarca extends ArrayAdapter<SpinnerMarca>
+    public class SpinnerAdapterMarca extends ArrayAdapter<Marca>
     {
         private Context context;
 
-        List<SpinnerMarca> datos = null;
+        List<Marca> datos = null;
+        Bitmap bmImg;
 
-        public SpinnerAdapterMarca(Context context, List<SpinnerMarca> datos)
+        public SpinnerAdapterMarca(Context context, List<Marca> datos)
         {
             //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
             super(context, R.layout.spinner_selected_item, datos);
@@ -37,8 +47,19 @@ import java.util.List;
             {
                 convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.spinner_selected_item,null);
             }
-            ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getName());
-            ((ImageView) convertView.findViewById(R.id.icono)).setBackgroundResource(datos.get(position).getIcon());
+
+            Pattern pat = Pattern.compile(".*/.*");
+            Matcher mat = pat.matcher(datos.get(position).getUrl());
+            bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
+            if (mat.matches()) {
+                ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
+                ((ImageView) convertView.findViewById(R.id.icono)).setImageBitmap(bmImg);
+            } else {
+                ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
+                ((ImageView) convertView.findViewById(R.id.icono)).setBackgroundResource(datos.get(position).getIcon(this.context));
+            }
+
+
 
             return convertView;
         }
@@ -52,7 +73,7 @@ import java.util.List;
             if (row == null)
             {
                 LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                row = layoutInflater.inflate(R.layout.spinner_list_item, parent, false);
+                row = layoutInflater.inflate(R.layout.spinner_selected_item, parent, false);
             }
 
             if (row.getTag() == null)
@@ -64,9 +85,17 @@ import java.util.List;
             }
 
             //rellenamos el layout con los datos de la fila que se está procesando
-            SpinnerMarca socialNetwork = datos.get(position);
-            ((SpinnerHolder) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon());
-            ((SpinnerHolder) row.getTag()).getTextView().setText(socialNetwork.getName());
+            Marca socialNetwork = datos.get(position);
+
+            Pattern pat = Pattern.compile(".*/.*");
+            Matcher mat = pat.matcher(datos.get(position).getUrl());
+            bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
+            if (mat.matches()) {
+                ((SpinnerHolder) row.getTag()).getIcono().setImageBitmap(bmImg);
+            } else {
+                ((SpinnerHolder) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
+            }
+            ((SpinnerHolder) row.getTag()).getTextView().setText(socialNetwork.getNombre());
 
             return row;
         }

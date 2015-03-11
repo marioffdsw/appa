@@ -25,5 +25,6 @@
     <string name="from_gallery">Escoge desde la galeria</string>
     <string name="cancel">Cancelar</string>
     <string name="choose_image">Escoge una Imagen</string>
+    <string name="title_activity_cargar_imagen">cargarImagen</string>
 
 </resources>
