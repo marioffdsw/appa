@@ -1,5 +1,11 @@
 package com.paolosport.appa.persistencia.entities;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.widget.ImageView;
+
+import com.paolosport.appa.R;
+
 /**
  * Created by mario on 2/03/15.
  */
@@ -39,6 +45,10 @@ public class Marca {
         this.url = url;
     }
 
+    public int getIcon(Context context){
+        int i= context.getResources().getIdentifier(getUrl(), "drawable", context.getPackageName());
+        return i;
+    }
 
     @Override
     public String toString(){

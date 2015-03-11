@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.paolosport.appa.R;
+import com.paolosport.appa.persistencia.entities.Local;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerHolder;
 
 import java.util.List;
@@ -15,13 +16,13 @@ import java.util.List;
 /**
  * Created by Andres on 04/03/2015.
  */
-public class SpinnerAdapterLocal extends ArrayAdapter<SpinnerLocal>
+public class SpinnerAdapterLocal extends ArrayAdapter<Local>
 {
     private Context context;
 
-    List<SpinnerLocal> datos = null;
+    List<Local> datos = null;
 
-    public SpinnerAdapterLocal(Context context, List<SpinnerLocal> datos)
+    public SpinnerAdapterLocal(Context context, List<Local> datos)
     {
         //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
         super(context, R.layout.spinner_selected_item, datos);
@@ -37,7 +38,7 @@ public class SpinnerAdapterLocal extends ArrayAdapter<SpinnerLocal>
         {
             convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.spinner_selected_item,null);
         }
-        ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getName());
+        ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
 
 
         return convertView;
@@ -63,8 +64,8 @@ public class SpinnerAdapterLocal extends ArrayAdapter<SpinnerLocal>
         }
 
         //rellenamos el layout con los datos de la fila que se está procesando
-        SpinnerLocal socialNetwork = datos.get(position);
-        ((SpinnerHolderLocal) row.getTag()).getTextView().setText(socialNetwork.getName());
+         Local socialNetwork = datos.get(position);
+        ((SpinnerHolderLocal) row.getTag()).getTextView().setText(socialNetwork.getNombre());
 
         return row;
     }

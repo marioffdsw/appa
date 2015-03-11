@@ -23,7 +23,9 @@
             <EditText
                 android:layout_width="335dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtIDMarca" />
+                android:id="@+id/txtIDMarca"
+                android:background="@android:drawable/gallery_thumb"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,13 +36,31 @@
             <EditText
                 android:layout_width="335dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtNombreMarca" />
+                android:id="@+id/txtNombreMarca"
+                android:background="@android:drawable/spinner_background"
+                />
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="336dp"
                 android:layout_height="wrap_content"
+                android:background="@android:drawable/gallery_thumb"
                 />
+
+            <Button
+                android:text="Obtener"
+                android:id="@+id/btnPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:onClick="onClicka">
+            </Button>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_below="@+id/rgrp01"
+                android:layout_height="48dp"
+                android:id="@+id/imgView">
+            </ImageView>
 
             <TextView
                 android:layout_width="wrap_content"

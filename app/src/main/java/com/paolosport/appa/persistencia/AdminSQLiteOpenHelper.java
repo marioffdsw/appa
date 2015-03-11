@@ -111,7 +111,10 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( CREATE_TABLE_LOCAL );
         db.execSQL( CREATE_TABLE_MARCA );
         db.execSQL( CREATE_TABLE_PRESTAMOS );
-        setupTestDataBase( db );
+        db.execSQL( INSERT_TABLE_LOCAL );
+        db.execSQL( INSERT_TABLE_MARCA );
+
+//        setupTestDataBase( db );
     }
 
     @Override
@@ -131,8 +134,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public void setupTestDataBase( SQLiteDatabase db ) {
         db.execSQL( TEST_PERSONA );
-        db.execSQL( TEST_LOCAL );
-        db.execSQL( TEST_MARCA );
+       // db.execSQL( TEST_LOCAL );
+       // db.execSQL( TEST_MARCA );
         db.execSQL( TEST_PRESTAMOS );
     } // end method setupTestDatabase
 }

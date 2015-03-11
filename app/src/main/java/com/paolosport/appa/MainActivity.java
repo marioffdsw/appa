@@ -6,14 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
+import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
+import com.paolosport.appa.persistencia.dao.LocalDAO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -21,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     EditText txtNombreLocal;
     TextView txtListaLocales;
     TextView txtFecha;
+    Spinner spinner2;
 
     AdminSQLiteOpenHelper helper;
     LocalDAO localDAO;
@@ -38,17 +47,6 @@ public class MainActivity extends ActionBarActivity {
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
 
-        Button btnFecha = (Button) findViewById( R.id.btnFecha );
-        btnFecha.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Date date = new Date( System.currentTimeMillis() );
-
-            double anio = date.getSeconds();
-
-                txtFecha.setText( String.valueOf( anio ) );
-            }
-        });
     }
 
 
@@ -83,7 +81,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
     }
 
-
     public void mostrarFecha( View view ){
         java.util.Date dateUtil = new java.util.Date();
         Timestamp date = new Timestamp( dateUtil.getTime() );
@@ -95,5 +92,4 @@ public class MainActivity extends ActionBarActivity {
         Intent i = new Intent(this, ActivityPrestamos.class );
         startActivity(i);
     }
-
 }

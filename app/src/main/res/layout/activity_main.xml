@@ -49,19 +49,6 @@
             android:id="@+id/btnPrestamos"
             android:onClick="prestamos"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnFecha"
-            android:text="Fecha" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnDate"
-            android:text="Date"
-            android:onClick="mostrarFecha" />
-
     </LinearLayout>
 
     <TextView
@@ -73,5 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtListaLocales"/>
+
+    <!--android:spinnerMode="dialog"-->
 
 </LinearLayout>
