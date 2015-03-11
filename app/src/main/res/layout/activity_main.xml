@@ -8,29 +8,35 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="locales"
+        android:id="@+id/btnLocal"
+        android:onClick="local" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="marca"
+        android:id="@+id/btnMarca"
+        android:onClick="marca" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PERSONA"
+        android:id="@+id/btnPersona"
+        android:onClick="persona" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="PRESTAMOS"
         android:id="@+id/btnPrestamos"
         android:onClick="prestamos"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="locales"
-            android:id="@+id/btnLocal"
-            android:onClick="local" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="marca"
-            android:id="@+id/btnMarca"
-            android:onClick="marca" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PERSONA"
-            android:id="@+id/btnPersona"
-            android:onClick="persona" />
+    <Button android:id="@+id/btnListaPrestamos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lista_prestamos"
+        android:onClick="listaPrestamos"/>
 
 </LinearLayout>
