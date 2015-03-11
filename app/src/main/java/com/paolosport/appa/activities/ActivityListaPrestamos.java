@@ -43,7 +43,7 @@ public class ActivityListaPrestamos extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_Prestamos);
+        setContentView(R.layout.activity_lista_prestamos);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /** Se configura el FiltrosFragment */
