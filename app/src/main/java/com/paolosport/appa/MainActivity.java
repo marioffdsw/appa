@@ -29,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
         localDAO = new LocalDAO( this, helper );
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -45,7 +44,6 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     /** el metodo local, lanza una activity que permite introducir
      *  información sobre un nuevo empleado */

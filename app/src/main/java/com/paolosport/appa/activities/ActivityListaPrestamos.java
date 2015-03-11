@@ -70,19 +70,23 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         prestamoDAO.setMarcaDAO(marcaDAO);
         prestamoDAO.setLocalDAO(localDAO);
 
+        /** se carga los datos sobre los prestamos en la lista */
+        // Se obtiene los datos de los prestamos
         prestamoDAO.open();
         ArrayList<Prestamo> prestamos = prestamoDAO.retrieveAll();
         prestamoDAO.close();
 
+        // se crea el adaptador de la vista
         PrestamoAdapter adapter = new PrestamoAdapter(this, R.layout.prestamo_item, prestamos);
 
+        // si no hay datos sobre prestamos se notifica al usuario
         if (prestamos == null)
             Toast.makeText(this, "no hay datos", Toast.LENGTH_SHORT);
 
+        // se carga los datos que existan sobre los prestamos
         ListView lstPrestamos = (ListView) findViewById(R.id.lstPrestamos);
         lstPrestamos.setAdapter(adapter);
-
-    }
+    } // fin del metodo onCreate
 
 
     @Override
@@ -90,7 +94,7 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_list, menu);
         return true;
-    }
+    } // fin del metodo onCreateOptionsMenu
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -105,8 +109,11 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    } // fin del emtodo onOptionsItemSelected
 
+    /** el metodo getImage, se encarga de lanzar un dialogo que pregunta al usuario si
+     * obtener una imagen desde la camara o desde la galeria y se encarga de lanzar
+     * el intent requerido y configurar el codigo de resultado */
     public void getImage(View view) {
 
         final CharSequence[] options = {getString(R.string.take_photo),
@@ -135,31 +142,52 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         builder.show();
     } // end method  getImage
 
-    @Override
+
+    /** el metodo onActivityResult se encarga de recibir la imagen de cualquiera de las dos opciones,
+     * obtiene el path al archivo guardado y ademas entrega el bitmap al fragment para que este lo muestre
+     * en una ImageView */
+    //TODO conectar este metodo con el de guardar el archivo
+     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // verifica si el resultado es correcto o fue cancelada la operacion
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
+
+            // verifica el codigo de solicitud, con este se sabe si la imagen resultado viene
+            // de la galeria o de la camara y se procesa adecuadamente
+            if (requestCode == 1) { // el bitmap viene de la camara
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
                         f = temp;
                         break;
                     }
-                }
+                } // fin de if
+
+                // trata de obtener el bitmap a partir de la informacion entregada por la camara
+                // ya que esta la guarda y entrega un archivo temporal que debera ser guardado
                 try {
+
+                    // se obtiene el bitmap de el archivo que entrega la camara
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
+
+                    // se publica la imagen en el fragment para que la muestre en un ImageView
                     filtrosFrag.publishImage(bitmap);
+
+                    // se obtiene la ruta que el sistema asigna a la aplicacion y se crea el nombre de archivo
+                    // utilizando la fecha actual
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    f.delete();
+                    f.delete(); // se elimina el archivo temporal
                     OutputStream outFile = null;
+
+                    // se guarda el archivo
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
