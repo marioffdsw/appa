@@ -17,6 +17,14 @@
     <string name="title_activity_activity_marca">ActivityMarca</string>
     <string name="title_activity_activity_persona">ActivityPersona</string>
     <string name="title_activity_interfaz_prestamos">InterfazPrestamos</string>
+    <string name="title_activity_activity_list">ActivityList</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="take_photo">Toma una fotografía</string>
+    <string name="from_gallery">Escoge desde la galeria</string>
+    <string name="cancel">Cancelar</string>
+    <string name="choose_image">Escoge una Imagen</string>
     <string name="title_activity_cargar_imagen">cargarImagen</string>
 
 </resources>
