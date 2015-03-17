@@ -8,7 +8,8 @@
 
     <size android:height="75dp"
         android:width="500dp" />
+    <stroke android:color="@color/bordes" android:width="15dp" />
 
-    <solid android:color="@color/a" />
+    <solid android:color="@color/actionBar" />
 
 </shape>
