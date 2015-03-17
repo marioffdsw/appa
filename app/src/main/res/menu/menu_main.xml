@@ -5,30 +5,36 @@
     <item
         android:id="@+id/action_configuracion"
         android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
-        android:title="Configuracion"
         android:orderInCategory="100"
-        app:showAsAction="always|withText"
+        android:title="opciones"
+        app:showAsAction="always"
+        
         >
 
         <menu   >
             <item
                 android:id="@+id/anda"
                 android:icon="@drawable/adidas"
-                android:title="Configuracion"
+                android:title="Configuración"
                 android:orderInCategory="100"
             />
             <item
-                android:id="@+id/anda2"
+                android:id="@+id/informacion"
                 android:icon="@drawable/adidas"
-                android:title="Configuracion"
+                android:title="Información"
                 android:orderInCategory="100"
             />
-
+            <item
+                android:id="@+id/acercade"
+                android:icon="@drawable/adidas"
+                android:title="Acerca de"
+                android:orderInCategory="100"
+                />
         </menu>
 
 
     </item>
-
+<!--
     <item
         android:id="@+id/action_acercade"
         android:icon="@drawable/swiss"
@@ -36,5 +42,5 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         />
-
+-->
 </menu>

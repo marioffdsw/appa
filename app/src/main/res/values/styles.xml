@@ -5,6 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="actionBarStyle">@style/MyActionBar</item>
+
+
     </style>
 
     <style name="MyActionBar"
@@ -12,5 +14,6 @@
         <item name="android:background">@color/actionBar</item>
         <item name="background">@color/actionBar</item>
     </style>
+
 
 </resources>

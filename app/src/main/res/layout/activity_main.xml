@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="horizontal"
-    android:background="@color/fondo">
+    android:background="@color/fondo"
+    >
 
     <Button
         android:layout_width="wrap_content"
