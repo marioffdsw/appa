@@ -81,10 +81,12 @@ public class ActivityPersona extends ActionBarActivity {
                 else{
                     txtNombrePersona.setInputType( InputType.TYPE_CLASS_NUMBER );
                 }
-            }
+            } // end method afterTextChanged
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
             public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
+        }); // end addTextChangedListener
 
         helper = new AdminSQLiteOpenHelper(this);
         personaDAO = new PersonaDAO(this, helper);
