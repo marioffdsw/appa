@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!-- Search, should appear as action button -->
+    <item android:id="@+id/action_reload"
+        android:icon="@drawable/abc_ab_share_pack_holo_dark"
+        android:title="sssss"
+        android:showAsAction="ifRoom" />
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/adidas"
+        android:title="@string/action_settings"
+        android:showAsAction="ifRoom" />
+</menu>

@@ -1,11 +1,14 @@
 package com.paolosport.appa;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 
 import com.paolosport.appa.activities.ActivityListaPrestamos;
 import com.paolosport.appa.activities.ActivityLocal;
@@ -27,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
 
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
+
     }
 
 
@@ -43,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

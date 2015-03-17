@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:text="locales"
         android:id="@+id/btnLocal"
-        android:onClick="local" />
+        android:onClick="local"
+        />
 
     <Button
         android:layout_width="wrap_content"

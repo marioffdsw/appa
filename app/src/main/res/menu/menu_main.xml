@@ -1,10 +1,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    >
+
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/action_configuracion"
+        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+        android:title="Configuracion"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="always|withText"
+        >
+
+        <menu   >
+            <item
+                android:id="@+id/anda"
+                android:icon="@drawable/adidas"
+                android:title="Configuracion"
+                android:orderInCategory="100"
+            />
+            <item
+                android:id="@+id/anda2"
+                android:icon="@drawable/adidas"
+                android:title="Configuracion"
+                android:orderInCategory="100"
+            />
+
+        </menu>
+
+
+    </item>
+
+    <item
+        android:id="@+id/action_acercade"
+        android:icon="@drawable/swiss"
+        android:title="Acerca de"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>

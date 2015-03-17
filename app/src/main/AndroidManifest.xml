@@ -22,10 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Local"
-            android:label="@string/title_activity_local" >
-        </activity>
-        <activity
             android:name=".activities.ActivityLocal"
             android:label="@string/title_activity_activity_local" >
         </activity>
@@ -49,10 +45,7 @@
                 android:value="com.paolosport.appa.MainActivity" />
 
         </activity>
-        <activity
-            android:name=".cargarImagen"
-            android:label="@string/title_activity_cargar_imagen" >
-        </activity>
+
     </application>
 
 </manifest>

@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.paolosport.appa.local">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_acercade"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_acedrcade"
+        android:title="dasd"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>

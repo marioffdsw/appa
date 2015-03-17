@@ -28,4 +28,16 @@
     <string name="title_activity_cargar_imagen">cargarImagen</string>
     <string name="lista_prestamos">lista Prestamos</string>
 
+
+        <string-array name="lista">
+            <item>Lunes</item>
+            <item>Martes</item>
+            <item>Miercoles</item>
+            <item>Jueves</item>
+            <item>Viernes</item>
+            <item>Sabado</item>
+            <item>Domingo</item>
+        </string-array>
+
+
 </resources>

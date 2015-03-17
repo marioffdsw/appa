@@ -71,6 +71,8 @@ public class ActivityLocal extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     private void DatosPorDefecto() {
         localDAO.open();
 
