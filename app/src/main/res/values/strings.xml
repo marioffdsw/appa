@@ -23,9 +23,18 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="take_photo">Toma una fotografía</string>
     <string name="from_gallery">Escoge desde la galeria</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
+    <string name="crear">Crear</string>
     <string name="choose_image">Escoge una Imagen</string>
     <string name="title_activity_cargar_imagen">cargarImagen</string>
     <string name="lista_prestamos">lista Prestamos</string>
+    <string name="cedula">Cédula:</string>
+    <string name="cedula_hint">Introduce aqui tu cedula</string>
+    <string name="nombre">Nombre:</string>
+    <string name="nombre_hint">Introduce tus nombres y tus apellidos</string>
+    <string name="Telefono">Telefono:</string>
+    <string name="telefono_hint">555-555-5555</string>
+    <string name="foto">Foto:</string>
 
 </resources>

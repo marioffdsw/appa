@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:drawable="@drawable/rect_1"
+        android:id="@+id/rect_1"
+        android:top="200dp"
+        android:bottom="200dp"
+        android:right="200dp"
+        android:left="200dp" />
+
+    <item android:drawable="@drawable/rect_2"
+        android:id="@+id/rect_2"
+        android:top="175dp"
+        android:bottom="175dp"
+        android:right="175dp"
+        android:left="175dp" />
+
+</layer-list>

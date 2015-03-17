@@ -1,5 +1,6 @@
 package com.paolosport.appa.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -81,7 +82,7 @@ public class ActivityListaPrestamos extends ActionBarActivity {
 
         // si no hay datos sobre prestamos se notifica al usuario
         if (prestamos == null)
-            Toast.makeText(this, "no hay datos", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "no hay datos", Toast.LENGTH_SHORT).show();
 
         // se carga los datos que existan sobre los prestamos
         ListView lstPrestamos = (ListView) findViewById(R.id.lstPrestamos);
@@ -142,17 +143,16 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         builder.show();
     } // end method  getImage
 
-
     /** el metodo onActivityResult se encarga de recibir la imagen de cualquiera de las dos opciones,
      * obtiene el path al archivo guardado y ademas entrega el bitmap al fragment para que este lo muestre
      * en una ImageView */
     //TODO conectar este metodo con el de guardar el archivo
-     @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // verifica si el resultado es correcto o fue cancelada la operacion
-        if (resultCode == RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
 
             /** verifica el codigo de solicitud, con este se sabe si la imagen resultado viene
              *  de la galeria o de la camara y se procesa adecuadamente */
