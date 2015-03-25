@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="3dp"
+    android:gravity="top|center_vertical|center|center_horizontal"
+    android:minWidth="200dp" android:minHeight="370dp">
+    >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView2"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="3dp"
+            android:id="@+id/asd"
+            android:layout_weight="0.71"
+            android:gravity="center_vertical|center"
+            android:background="@color/dialogo"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/dd">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/logo_appa"
+                    android:layout_gravity="center_horizontal" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="64dp"
+                    android:gravity="center"
+                    android:id="@+id/ddd">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  Aplicacion de Prestamos PaoloSport "
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        android:id="@+id/textView4"
+                        android:textColor="@color/actionBar1"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/action_bar_bg" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:text="Aplicacion movil creada para el control de prestamos y pedidos.  Esta Aplicación fue desarrollada por:"
+                android:textColor="#ff393739" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:text="Ing. Mario Florez"
+                android:textColor="#ff393739" />
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:text="Ing. Andres Solarte"
+                android:textColor="#ff393739" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <TextView
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:text="Si tiene algún problema utilizando la aplicación o encuentra algun error, envíe un correo a las siguientes direcciónes:"
+                android:id="@+id/textView5"
+                android:textColor="#ff393739" />
+
+
+            <TextView
+                android:layout_width="162dp"
+                android:layout_height="36dp"
+                android:text="@string/texto"
+                android:id="@+id/textView6"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ff0005ff"
+                android:textColorLink="#ff51b6ff" />
+
+            <TextView
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:text="Por favor,envíenos sus sugerencias para seguir mejorando la aplicación.Muchas gracias."
+                android:id="@+id/textView9"
+                android:textColor="#ff393739" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="APPA"
+                android:id="@+id/textView3"
+                android:textColor="#ff393739" />
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Version 1.0.0"
+            android:id="@+id/textView7"
+            android:textColor="#ff393739" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copyright ©Joma 2015"
+                android:id="@+id/textView8"
+                android:textColor="#ff393739" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/action_bar_bg" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:text="ACEPTAR"
+                android:id="@+id/aceptar"
+                android:nestedScrollingEnabled="false"
+                android:layout_weight="16.50"
+                android:background="@color/dialogo"
+                android:textColor="#ff000000" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

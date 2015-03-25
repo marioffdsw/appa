@@ -3,30 +3,29 @@
     >
 
     <item
-        android:id="@+id/action_configuracion"
+        android:id="@+id/opciones"
         android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
         android:orderInCategory="100"
         android:title="opciones"
         app:showAsAction="always"
-        
         >
 
-        <menu   >
+        <menu>
             <item
-                android:id="@+id/anda"
-                android:icon="@drawable/adidas"
+                android:id="@+id/configuracion"
+                android:icon="@drawable/ic_action_settings"
                 android:title="Configuración"
                 android:orderInCategory="100"
             />
             <item
-                android:id="@+id/informacion"
-                android:icon="@drawable/adidas"
+                android:id="@+id/Ayuda"
+                android:icon="@drawable/ic_action_help"
                 android:title="Información"
                 android:orderInCategory="100"
             />
             <item
                 android:id="@+id/acercade"
-                android:icon="@drawable/adidas"
+                android:icon="@drawable/ic_action_about"
                 android:title="Acerca de"
                 android:orderInCategory="100"
                 />

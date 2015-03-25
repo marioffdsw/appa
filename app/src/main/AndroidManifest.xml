@@ -4,17 +4,16 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/logo_appa"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Temaappa" >
         <activity
             android:name=".MainActivity"
+            android:icon="@drawable/logo_appa"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,12 +40,18 @@
         <activity
             android:name=".activities.ActivityListaPrestamos"
             android:label="@string/title_activity_activity_list" >
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.paolosport.appa.MainActivity" />
-
         </activity>
-
+        <activity
+            android:name=".activities.prueba"
+            android:label="@string/title_activity_prueba" >
+        </activity>
+        <activity
+            android:name=".activities.ActivityConfiguracion"
+            android:label="@string/title_activity_activity_configuracion" >
+        </activity>
     </application>
 
 </manifest>

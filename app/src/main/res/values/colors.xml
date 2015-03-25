@@ -18,11 +18,16 @@
 
     <!-- Paleta de colores RETRO
         https://color.adobe.com/es/Retro-ABC-color-theme-4196363/edit/?copy=true -->
-    <color name="actionBar">#ff024959</color>
+    <color name="actionBar1">#ff022533</color>
+    <color name="actionBar2">#ff236475</color>
+    <color name="actionBar3">#ff024959</color>
+
     <color name="fuentes">#ff037E8C</color>
     <color name="fondo">#ffFBEFC7</color>
     <color name="bordes">#c0ff6300</color>
     <color name="slide_drawer">#ff5F5448</color>
+    <color name="dialogo">#fffffff1</color>
+
 
 
     <array name="arregloColor">
@@ -34,6 +39,6 @@
         <item>@color/f</item>
         <item>@color/g</item>
         <item>@color/h</item>
-
     </array>
+
 </resources>
