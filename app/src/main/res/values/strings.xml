@@ -48,6 +48,7 @@
         <item>ConfiguraciÃ³n</item>
         <item>Compartir</item>
     </string-array>
+
     <!-- Lista de iconos de navegacion-->
     <array name="navigation_iconos">
         <item>@drawable/adidas</item>

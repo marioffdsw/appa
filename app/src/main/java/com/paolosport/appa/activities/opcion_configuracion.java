@@ -54,7 +54,6 @@ public class opcion_configuracion extends ActionBarActivity {
             }
         });
 
-
     }
     public void setGroupParents() {
         parentItems.add("Android");
