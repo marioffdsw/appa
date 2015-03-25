@@ -20,7 +20,7 @@
     <string name="title_activity_activity_list">ActivityList</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello local fragment</string>
     <string name="take_photo">Toma una fotografía</string>
     <string name="from_gallery">Escoge desde la galeria</string>
     <string name="ok">OK</string>
@@ -48,6 +48,7 @@
         <item>ConfiguraciÃ³n</item>
         <item>Compartir</item>
     </string-array>
+
     <!-- Lista de iconos de navegacion-->
     <array name="navigation_iconos">
         <item>@drawable/adidas</item>
