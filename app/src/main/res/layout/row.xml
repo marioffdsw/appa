@@ -2,14 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:animateLayoutChanges="true"
     android:id="@+id/textView1"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:layout_marginLeft="5dp"
-    android:gravity="center_vertical"
-    android:padding="10dp"
+    android:layout_marginLeft="25dp"
+    android:gravity="center_vertical|center_horizontal"
+    android:padding="25dp"
     android:textColor="#000000"
     android:textSize="15sp"
     android:textStyle="bold"
-    android:background="#CCFF99"
+    android:background="#ff236475"
 
- />
+    />
+

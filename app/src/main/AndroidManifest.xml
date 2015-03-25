@@ -45,11 +45,11 @@
                 android:value="com.paolosport.appa.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.prueba"
+            android:name=".activities.opcion_informacion"
             android:label="@string/title_activity_prueba" >
         </activity>
         <activity
-            android:name=".activities.ActivityConfiguracion"
+            android:name=".activities.opcion_configuracion"
             android:label="@string/title_activity_activity_configuracion" >
         </activity>
     </application>

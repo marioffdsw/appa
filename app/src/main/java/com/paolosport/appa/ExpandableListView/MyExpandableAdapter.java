@@ -1,9 +1,10 @@
-package com.paolosport.appa;
+package com.paolosport.appa.ExpandableListView;
 
 /**
  * Created by Andres on 22/03/2015.
  */
 
+import android.content.Context;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
@@ -25,6 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
         import android.widget.Toast;
 
+import com.paolosport.appa.R;
+
 public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     private Activity activity;
@@ -33,12 +36,14 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private ArrayList<String> parentItems, child;
     LinearLayout layoutAnimado = null;
     int aux;
+    private Context mcontext;
 
 
-
-    public MyExpandableAdapter(ArrayList<String> parents, ArrayList<Object> childern) {
+    public MyExpandableAdapter(ArrayList<String> parents, ArrayList<Object> childern,Context context) {
         this.parentItems = parents;
         this.childtems = childern;
+        this.mcontext = context;
+
     }
 
     public void setInflater(LayoutInflater inflater, Activity activity) {
@@ -54,6 +59,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         //espacio que envoca los subitems
         TextView textView = null;
         if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater)mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.group, null);
         }
 
@@ -77,7 +83,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, child.get(childPosition),
+                Toast.makeText(mcontext, child.get(childPosition),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -89,6 +95,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater)mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.row, null);
         }
 

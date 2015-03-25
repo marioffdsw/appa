@@ -2,13 +2,13 @@
 
     <!-- These settings headers are only used on tablets. -->
 
-    <header android:fragment="com.paolosport.appa.activities.prueba$GeneralPreferenceFragment"
+    <header android:fragment="com.paolosport.appa.activities.opcion_informacion$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
 
-    <header android:fragment="com.paolosport.appa.activities.prueba$NotificationPreferenceFragment"
+    <header android:fragment="com.paolosport.appa.activities.opcion_informacion$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications" />
 
-    <header android:fragment="com.paolosport.appa.activities.prueba$DataSyncPreferenceFragment"
+    <header android:fragment="com.paolosport.appa.activities.opcion_informacion$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />
 
 </preference-headers>

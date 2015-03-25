@@ -2,8 +2,6 @@ package com.paolosport.appa;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,15 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 import android.view.View.OnClickListener;
 
-import com.paolosport.appa.activities.ActivityConfiguracion;
+import com.paolosport.appa.activities.opcion_configuracion;
 import com.paolosport.appa.activities.ActivityListaPrestamos;
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
-import com.paolosport.appa.activities.prueba;
+import com.paolosport.appa.activities.opcion_informacion;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 
@@ -57,14 +54,14 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.configuracion:
-                Intent i = new Intent(this, ActivityConfiguracion.class);
+                Intent i = new Intent(this, opcion_configuracion.class);
                 startActivity(i);
                 break;
             case R.id.acercade:
                 mostrar(findViewById(id));
                 break;
             case R.id.Ayuda:
-                Intent a = new Intent(this, prueba.class);
+                Intent a = new Intent(this, opcion_informacion.class);
                 startActivity(a);
                break;
         }
