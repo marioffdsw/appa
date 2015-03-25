@@ -12,7 +12,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 
-import com.paolosport.appa.activities.opcion_configuracion;
+import com.paolosport.appa.activities.ActivityConfiguracion;
 import com.paolosport.appa.activities.ActivityListaPrestamos;
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.configuracion:
-                Intent i = new Intent(this, opcion_configuracion.class);
+                Intent i = new Intent(this, ActivityConfiguracion.class);
                 startActivity(i);
                 break;
             case R.id.acercade:

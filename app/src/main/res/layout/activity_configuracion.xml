@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="horizontal"
+    android:background="@color/fondo" >
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selection 1" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selelction 2"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/configuration_fragment_container"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
