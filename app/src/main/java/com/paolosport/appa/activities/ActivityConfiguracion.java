@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,6 +21,8 @@ public class ActivityConfiguracion extends ActionBarActivity {
     LocalFragment localFragment;
     MarcaFragment marcaFragment;
     PersonaFragment personaFragment;
+
+    Button btnLocal;
 
     static final int LOCAL_SELECTED = 1;
     static final int MARCA_SELECTED = 2;
@@ -38,13 +41,28 @@ public class ActivityConfiguracion extends ActionBarActivity {
 
         onListSelection( MARCA_SELECTED );
 
+        btnLocal = (Button) findViewById( R.id.btnLocal );
+        btnLocal.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    btnLocal.setBackgroundResource( R.color.a );
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    btnLocal.setBackgroundResource( R.color.fondo );
+                    seleccionarCategoria( btnLocal );
+                }
+                return true;
+            }
+        });
+
     } // fin del metodo onCreate
 
 
     public void seleccionarCategoria( View view ){
         switch( view.getId() ){
             case R.id.btnLocal:
-                onListSelection( LOCAL_SELECTED );
+                Button b = (Button) view;
+                onListSelection(LOCAL_SELECTED);
                 break;
             case R.id.btnMarca:
                 onListSelection( MARCA_SELECTED );

@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="local"
-            android:onClick="seleccionarCategoria" />
+            android:textColorHighlight="@color/naranja"
+            android:onClick="seleccionarCategoria"/>
 
         <Button
             android:id="@+id/btnMarca"
