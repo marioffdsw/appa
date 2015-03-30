@@ -80,7 +80,6 @@ public class ActivityLocal extends ActionBarActivity {
         int[] colores = getResources().getIntArray(R.array.arregloColor);
 
         Resources r = this.getResources();
-
         int i=0;
         /*for(Local local:listaLocales) {
             items.add(new SpinnerLocal(local.getNombre(), colores[i]));
@@ -103,10 +102,7 @@ public class ActivityLocal extends ActionBarActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-                //nothing
-            }
+            public void onNothingSelected(AdapterView<?> adapterView){}
         });
 
     }

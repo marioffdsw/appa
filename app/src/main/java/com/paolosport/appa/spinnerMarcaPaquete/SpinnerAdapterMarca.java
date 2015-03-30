@@ -1,10 +1,8 @@
 package com.paolosport.appa.spinnerMarcaPaquete;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,6 @@ import android.widget.TextView;
 import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.entities.Marca;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,7 +74,7 @@ import java.util.regex.Pattern;
 
             if (row.getTag() == null)
             {
-                SpinnerHolder redSocialHolder = new SpinnerHolder();
+                SpinnerHolderMarca redSocialHolder = new SpinnerHolderMarca();
                 redSocialHolder.setIcono((ImageView) row.findViewById(R.id.icono));
                 redSocialHolder.setTextView((TextView) row.findViewById(R.id.texto));
                 row.setTag(redSocialHolder);
@@ -91,11 +87,11 @@ import java.util.regex.Pattern;
             Matcher mat = pat.matcher(datos.get(position).getUrl());
             bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
             if (mat.matches()) {
-                ((SpinnerHolder) row.getTag()).getIcono().setImageBitmap(bmImg);
+                ((SpinnerHolderMarca) row.getTag()).getIcono().setImageBitmap(bmImg);
             } else {
-                ((SpinnerHolder) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
+                ((SpinnerHolderMarca) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
             }
-            ((SpinnerHolder) row.getTag()).getTextView().setText(socialNetwork.getNombre());
+            ((SpinnerHolderMarca) row.getTag()).getTextView().setText(socialNetwork.getNombre());
 
             return row;
         }

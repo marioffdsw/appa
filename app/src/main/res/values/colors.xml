@@ -24,10 +24,14 @@
 
     <color name="fuentes">#ff037E8C</color>
     <color name="fondo">#ffFBEFC7</color>
+    <color name="fondo2">#27ffbe00</color>
     <color name="bordes">#c0ff6300</color>
     <color name="slide_drawer">#ff5F5448</color>
     <color name="dialogo">#fffffff1</color>
-
+    <color name="iconos">#7e0000</color>
+    <color name="fondoBotones">#ff00522C </color>
+    <color name="fondoBotones2">#002513 </color>
+    <color name="fondoBotones3">#005d31 </color>
 
 
     <array name="arregloColor">

@@ -45,8 +45,8 @@
             android:layout_width="336dp"
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
-            android:background="@android:drawable/btn_dropdown"
-            android:popupBackground="@drawable/abc_popup_background_mtrl_mult"
+            android:background="@drawable/spinner_background_ab_verde"
+            android:popupBackground="@drawable/botonpulsado3"
             />
 
         <LinearLayout

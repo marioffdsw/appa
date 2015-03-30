@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ab_transparent_verde"
+    android:animateLayoutChanges="true"
+    android:id="@+id/ll_marca_item">
+    <!--android:divider="@color/material_blue_grey_800"-->
+    <!--android:showDividers="end">-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:animateLayoutChanges="true"
+        android:id="@+id/ll_Marca_item2">
+
+    <TextView
+        android:id="@+id/txtIDMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="          "
+        />
+
+    <TextView
+        android:id="@+id/txtNombreMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
