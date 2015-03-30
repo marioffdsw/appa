@@ -279,13 +279,7 @@
                         android:paddingBottom="10dp" />
                 </RelativeLayout>
             </LinearLayout>
-
         </ScrollView>
-
-
-
-
-
     </LinearLayout>
 
     <FrameLayout
