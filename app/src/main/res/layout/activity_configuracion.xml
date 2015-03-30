@@ -112,14 +112,18 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btnLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selection 1" />
+            android:text="local"
+            android:onClick="seleccionarCategoria" />
 
         <Button
+            android:id="@+id/btnMarca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selelction 2"/>
+            android:text="marca"
+            android:onClick="seleccionarCategoria"/>
 
     </LinearLayout>
 
