@@ -175,7 +175,6 @@ public class LocalFragment extends Fragment {
         ll_eliminar_local.setVisibility(View.VISIBLE);
         ll_crear_local.setVisibility(View.GONE);
         ll_editar_local.setVisibility(View.GONE);
-
     }
     //?????????????????????????????????????????????????????????????????????????
     public void editar(){
@@ -266,7 +265,9 @@ public class LocalFragment extends Fragment {
             localDAO.close();
             Toast.makeText(getActivity().getApplicationContext(), "Registro Creado", Toast.LENGTH_SHORT).show();
 
-            tv_id_local.setText((Integer.parseInt(id))+1);
+            int auxId= Integer.parseInt(id)+1;
+            id = String.valueOf(auxId);
+            tv_id_local.setText(id);
             et_nombre_local.setText("");
             DatosPorDefecto();
 

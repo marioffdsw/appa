@@ -1,15 +1,23 @@
 package com.paolosport.appa.fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -18,12 +26,17 @@ import android.widget.Toast;
 
 import com.paolosport.appa.ListViewAdapters.MarcaAdapter;
 import com.paolosport.appa.R;
+import com.paolosport.appa.RealPathUtil;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.entities.Marca;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MarcaFragment extends Fragment {
@@ -37,13 +50,15 @@ public class MarcaFragment extends Fragment {
             ll_eliminar_marca,
             ll_crear_marca;
     private View view;
+    private ImageView iv_imagen_marca;
     private Button  btn_listar,
             btn_eliminar,
             btn_crear,
             btn_editar,
             btn_eliminar_marca,
             btn_crear_marca,
-            btn_editar_marca;
+            btn_editar_marca,
+            btn_imagen_marca;
 
     private Spinner     sp_marca,   sp_marca2;
     private TextView    tv_id_marca,   tv_url_marca;
@@ -85,6 +100,7 @@ public class MarcaFragment extends Fragment {
         btn_eliminar_marca = (Button)view.findViewById(R.id.btn_eliminar_marca);
         btn_editar_marca = (Button)view.findViewById(R.id.btn_editar_marca);
         btn_crear_marca = (Button)view.findViewById(R.id.btn_crear_marca);
+        btn_imagen_marca = (Button)view.findViewById(R.id.btn_imagen_marca);
 
         tv_id_marca = (TextView)view.findViewById(R.id.tv_id_marca);
         tv_url_marca = (TextView)view.findViewById(R.id.tv_url_marca);
@@ -96,6 +112,8 @@ public class MarcaFragment extends Fragment {
         ll_listar_marca = (LinearLayout)view.findViewById(R.id.ll_listar_marca);
         ll_editar_marca = (LinearLayout)view.findViewById(R.id.ll_editar_marca);
         ll_eliminar_marca = (LinearLayout)view.findViewById(R.id.ll_eliminar_marca);
+
+        iv_imagen_marca = (ImageView)view.findViewById(R.id.iv_imagen_marca);
 
         DatosPorDefecto();
 
@@ -130,6 +148,13 @@ public class MarcaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 listar();
+            }
+        });
+        //-----------------------
+        btn_imagen_marca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClicka();
             }
         });
         //-----------------------
@@ -260,8 +285,13 @@ public class MarcaFragment extends Fragment {
 
         if((nombre == null) || (nombre.equals(""))){
             Toast.makeText(getActivity().getApplicationContext(), "Ingrese Nombre", Toast.LENGTH_SHORT).show();
+            return;
         }
-        else{
+        if((url == null) || (url.equals(""))){
+            Toast.makeText(getActivity().getApplicationContext(), "Ingrese Imagen", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
             Marca marca = new Marca( id, nombre,url );
             try {
                 marcaDAO.open();
@@ -269,18 +299,24 @@ public class MarcaFragment extends Fragment {
                 marcaDAO.close();
                 Toast.makeText(getActivity().getApplicationContext(), "Registro Creado", Toast.LENGTH_SHORT).show();
 
-                tv_id_marca.setText((Integer.parseInt(id))+1);
+                int auxId= Integer.parseInt(id)+1;
+                id = String.valueOf(auxId);
+                tv_id_marca.setText(id);
                 et_nombre_marca.setText("");
+                tv_url_marca.setText("");
+                iv_imagen_marca.setImageDrawable(null);
                 DatosPorDefecto();
 
                 if (ll_listar_marca.getVisibility() == view.VISIBLE) {
                     ll_listar_marca.setVisibility(View.INVISIBLE);
                     listar();
                 }
+                Toast.makeText(getActivity().getApplicationContext(), "Registro Creado", Toast.LENGTH_SHORT).show();
+
             }
             catch (Exception e){
                 Toast.makeText(getActivity().getApplicationContext(), "Registro NO Creado", Toast.LENGTH_SHORT).show();}
-        }//finElse
+
     }//end method crearMarca
 
     //?????????????????????????????????????????????????????????????????????????
@@ -349,4 +385,91 @@ public class MarcaFragment extends Fragment {
 
     } // end method mostrarEntradas
 
+    //?????????????????????????????????????????????????????????????????????????
+    //?????????????????????????????????????????????????????????????????????????
+
+    public String cargarImagen(Context context, String nombre, Bitmap imagen){
+        ContextWrapper cw = new ContextWrapper(context);
+        File dirImages = cw.getDir("Imagenes", Context.MODE_PRIVATE);
+        File myPath = new File(dirImages, nombre);
+
+        String ultimatePath=(dirImages+"/"+nombre);
+
+        this.tv_url_marca.setText(ultimatePath);
+        FileOutputStream fos = null;
+        try{
+            fos = new FileOutputStream(myPath);
+            imagen.compress(Bitmap.CompressFormat.PNG, 10, fos);
+            fos.flush();
+        }catch (FileNotFoundException ex){
+            ex.printStackTrace();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return myPath.getAbsolutePath();
+    }
+
+    //?????????????????????????????????????????????????????????????????????????
+    //?????????????????????????????????????????????????????????????????????????
+
+    private void setTextViews(int sdk, String uriPath,String realPath){
+
+        //this.txtSDK.setText("Build.VERSION.SDK_INT: "+sdk);
+        //this.txtUriPath.setText("URI Path: "+uriPath);
+        //this.txtURL.setText("Real Path: "+realPath);
+        Uri uriFromPath = Uri.fromFile(new File(realPath));
+        // you have two ways to display selected image
+        // ( 1 ) imageView.setImageURI(uriFromPath);
+        // ( 2 ) imageView.setImageBitmap(bitmap);
+        Bitmap bitmap = null;
+        try {
+            bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uriFromPath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        iv_imagen_marca.setImageBitmap(bitmap);
+
+        String nombre = realPath;
+        String []cadenas = nombre.split("[/]");
+        nombre = cadenas[(cadenas.length)-1];
+
+        String ruta = cargarImagen(getActivity().getApplicationContext(), nombre, bitmap);
+        tv_url_marca.setText(ruta);
+
+        Log.d("HMKCODE", "Build.VERSION.SDK_INT:" + sdk);
+        Log.d("HMKCODE", "URI Path:"+uriPath);
+        Log.d("HMKCODE", "Real Path: "+realPath);
+    }
+
+    //?????????????????????????????????????????????????????????????????????????
+    //?????????????????????????????????????????????????????????????????????????
+
+    @Override
+    public void onActivityResult(int reqCode, int resCode, Intent data) {
+        if(resCode == Activity.RESULT_OK && data != null){
+            String realPath;
+            if (Build.VERSION.SDK_INT < 11)
+                realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(getActivity().getApplicationContext(), data.getData());
+            else if (Build.VERSION.SDK_INT < 19)
+                realPath = RealPathUtil.getRealPathFromURI_API11to18(getActivity().getApplicationContext(), data.getData());
+            else
+                realPath = RealPathUtil.getRealPathFromURI_API19(getActivity().getApplicationContext(), data.getData());
+            setTextViews(Build.VERSION.SDK_INT, data.getData().getPath(),realPath);
+        }
+    }
+
+    //?????????????????????????????????????????????????????????????????????????
+    //?????????????????????????????????????????????????????????????????????????
+
+    public void onClicka() {
+
+        // 1. on Upload click call ACTION_GET_CONTENT intent
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        // 2. pick image only
+        intent.setType("image/*");
+        // 3. start activity
+        startActivityForResult(intent, 0);
+        // define onActivityResult to do something with picked image
+    }
 } // fin de la clase MarcaFragment
