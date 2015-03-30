@@ -1,250 +1,132 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.paolosport.appa.fragments.PersonaFragment">
+    android:layout_height="match_parent" tools:context="com.paolosport.appa.fragments.PersonaFragment"
+    android:orientation="vertical" >
 
-    <!-- TODO: Update blank fragment layout -->
-
+    <ScrollView
+        android:layout_weight="7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/ll_izquierdo_local">
+        android:layout_weight="7"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal" >
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="341dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:id="@+id/ll_derecho_local">
-
-            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-                android:text="@string/localesPaolo"
-                android:textColor="@color/iconos"
-                android:shadowColor="@color/white"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/ll_crear_local">
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText"
-                    android:text="ID:"
-                    android:textColor="#ff202020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textCursorDrawable="@null"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblNombreLocal"
-                    android:textColor="#ff202020"
-                    android:id="@+id/textnomloc"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtNombreLocal"
-                    android:background="@drawable/ab_transparent_verde"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"/>
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GUARDAR"
-                    android:id="@+id/button7"
-                    android:layout_marginLeft="0dp"
-                    android:layout_gravity="left"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_guardar"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/ll_editar_local">
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Seleccione Local a Editar:"
-                    android:textColor="#ff202020"
-                    android:id="@+id/txt_locales"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="12dp" />
-
-                <Spinner
-                    android:id="@+id/spinnerLocal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/nav_options"
-                    android:background="@drawable/ab_bottom_solid_estiloandres"
-                    android:popupBackground="@android:drawable/editbox_background"
-                    />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nuevo Nombre:"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView10"
-                    android:textColor="@color/black" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText2"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:background="@drawable/ab_transparent_verde" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GUARDAR"
-                    android:id="@+id/button6"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_guardar"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/ll_eliminar_local">
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Seleccione Local a Eliminar:"
-                    android:textColor="#ff202020"
-                    android:id="@+id/txt_locales2"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="12dp" />
-
-                <Spinner
-                    android:id="@+id/spinnerLocal2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/nav_options"
-                    android:background="@drawable/ab_bottom_solid_estiloandres"
-                    android:popupBackground="@android:drawable/editbox_background"
-                    />
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ELIMINAR"
-                    android:id="@+id/button5"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_borrar"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="45dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/ll_listar_local"
-            android:visibility="invisible">
-
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/scrollView4"></ScrollView>
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/listaLocales"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ff202020"
-                />
+                android:text="@string/foto"
+                android:layout_gravity="center"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@color/a"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/contenido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cedula"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/txtCedulaPersona"
+                android:inputType="number"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="@string/cedula_hint"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/txtNombrePersona"
+                android:inputType="textPersonName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="@string/nombre_hint"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Telefono"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/txtTelefonoPersona"
+                android:inputType="phone"
+                android:layout_width="300dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:hint="@string/telefono_hint"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtOops"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Oops! :("
+                    android:textSize="40dp"
+                    android:textColor="@color/iconos"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="no se han registrado empleados"
+                    android:textSize="20dp"
+                    android:layout_below="@id/txtOops"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/iconos"/>
+
+                </RelativeLayout>
+
+            <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtListaLocales"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-            />
-        </LinearLayout>
+                android:visibility="invisible" >
+
+
+            </ListView>
+
+        </RelativeLayout>
 
     </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -311,5 +193,4 @@
             android:paddingLeft="2dp"
             />
     </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

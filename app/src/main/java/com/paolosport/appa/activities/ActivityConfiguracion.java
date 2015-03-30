@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,8 +24,6 @@ public class ActivityConfiguracion extends ActionBarActivity {
     LocalFragment localFragment;
     MarcaFragment marcaFragment;
     PersonaFragment personaFragment;
-
-    Button btnLocal;
 
     static final int LOCAL_SELECTED = 1;
     static final int MARCA_SELECTED = 2;
@@ -43,20 +43,6 @@ public class ActivityConfiguracion extends ActionBarActivity {
         fragmentManager = getSupportFragmentManager();
 
         onListSelection( MARCA_SELECTED );
-
-        btnLocal = (Button) findViewById( R.id.btnLocal );
-        btnLocal.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    btnLocal.setBackgroundResource( R.color.a );
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    btnLocal.setBackgroundResource( R.color.fondo );
-                    seleccionarCategoria( btnLocal );
-                }
-                return true;
-            }
-        });
 
     } // fin del metodo onCreate
 
@@ -83,10 +69,10 @@ public class ActivityConfiguracion extends ActionBarActivity {
         else if( index == PERSONA_SELECTED && !containerFragment.getClass().equals( personaFragment ) ){
             changeFragment( personaFragment );
         }
-        else if( index == CERRAR_SELECTED && !containerFragment.getClass().equals( personaFragment ) ){
+        else if( index == CERRAR_SELECTED ){
             finish();
         }
-        else if( index == REGRESAR_SELECTED && !containerFragment.getClass().equals( personaFragment ) ){
+        else if( index == REGRESAR_SELECTED  ){
             finish();
         }
 
@@ -122,5 +108,5 @@ public class ActivityConfiguracion extends ActionBarActivity {
                 onListSelection(REGRESAR_SELECTED);
                 break;
         } // end switch
-    }
+    } // end method muestre
 } // fin de la clase ActivityConfiguracion
