@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/ab_transparent_verde"
     android:animateLayoutChanges="true"
-    android:id="@+id/ll_local_item">
+    android:id="@+id/ll_marca_item">
     <!--android:divider="@color/material_blue_grey_800"-->
     <!--android:showDividers="end">-->
 
@@ -16,10 +16,10 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:animateLayoutChanges="true"
-        android:id="@+id/ll_local_item2">
+        android:id="@+id/ll_Marca_item2">
 
     <TextView
-        android:id="@+id/txtIDLocal"
+        android:id="@+id/txtIDMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
@@ -33,7 +33,7 @@
         />
 
     <TextView
-        android:id="@+id/txtNombreLocal"
+        android:id="@+id/txtNombreMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"/>

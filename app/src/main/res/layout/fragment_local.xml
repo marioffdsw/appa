@@ -22,9 +22,10 @@
             <TextView android:layout_width="match_parent" android:layout_height="match_parent"
                 android:text="@string/localesPaolo"
                 android:textColor="@color/iconos"
-                android:shadowColor="@color/black"
-                android:shadowDx="1dp"
-                android:shadowDy="1dp"
+                android:shadowColor="@color/white"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                 android:textStyle="bold"/>
 
@@ -36,33 +37,65 @@
 
                 <Space
                     android:layout_width="12dp"
-                    android:layout_height="12dp" />
+                    android:layout_height="24dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText"
-                    android:text="ID:"
-                    android:textColor="#ff202020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID: "
+                        android:textColor="#ff202020"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_id_local"
+                        android:textColor="#ff202020"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblNombreLocal"
-                    android:textColor="#ff202020" />
+                    android:textColor="#ff202020"
+                    android:id="@+id/textnomloc"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtNombreLocal"
-                    android:background="@drawable/ab_transparent_verde" />
+                    android:id="@+id/et_nombre_local"
+                    android:background="@drawable/ab_transparent_verde"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@null"/>
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="24dp" />
 
                 <Button
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="GUARDAR"
-                    android:id="@+id/button7" />
+                    android:id="@+id/btn_crear_local"
+                    android:layout_marginLeft="0dp"
+                    android:layout_gravity="left"
+                    android:background="@drawable/botonpulsado"
+                    android:drawableLeft="@drawable/ico_guardar"
+                    android:paddingRight="12dp"
+                    android:layout_margin="0dp" />
 
             </LinearLayout>
 
@@ -74,58 +107,115 @@
 
                 <Space
                     android:layout_width="20px"
-                    android:layout_height="12dp" />
+                    android:layout_height="24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Seleccione Local"
+                    android:text="Seleccione Local a Editar:"
                     android:textColor="#ff202020"
                     android:id="@+id/txt_locales"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="12dp" />
+
                 <Spinner
-                    android:id="@+id/spinnerLocal"
+                    android:id="@+id/sp_local"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
-                    android:entries="@array/nav_options"
-                    android:background="@drawable/ab_bottom_solid_estiloandres"
+                    android:background="@drawable/spinner_background_ab_verde"
                     android:popupBackground="@android:drawable/editbox_background"
                     />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nuevo Nombre:"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView10" />
+                    android:id="@+id/textView10"
+                    android:textColor="@color/black" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText2" />
+                    android:id="@+id/et_nombre_local_editado"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@null"
+                    android:background="@drawable/ab_transparent_verde" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="24dp" />
 
                 <Button
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="GUARDAR"
-                    android:id="@+id/button6" />
+                    android:id="@+id/btn_editar_local"
+                    android:background="@drawable/botonpulsado"
+                    android:drawableLeft="@drawable/ico_guardar"
+                    android:paddingRight="12dp"
+                    android:layout_margin="0dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/ll_eliminar_local">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione Local a Eliminar:"
+                    android:textColor="#ff202020"
+                    android:id="@+id/txt_locales2"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="12dp" />
+
+                <Spinner
+                    android:id="@+id/sp_local2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:background="@drawable/spinner_background_ab_verde"
+                    android:popupBackground="@android:drawable/editbox_background"
+                    />
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="24dp" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ELIMINAR"
-                    android:id="@+id/button5" />
+                    android:id="@+id/btn_eliminar_local"
+                    android:background="@drawable/botonpulsado"
+                    android:drawableLeft="@drawable/ico_borrar"
+                    android:paddingRight="12dp"
+                    android:layout_margin="0dp" />
 
             </LinearLayout>
 
@@ -155,10 +245,35 @@
                 android:textColor="#ff202020"
                 />
 
+            <Space
+                android:layout_width="20px"
+                android:layout_height="24dp"
+            />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtListaLocales"
+                android:text="ID    NOMBRE"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/iconos"
+                />
+            <Space
+                android:layout_width="20px"
+                android:layout_height="12dp"
+            />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_lista_locales"
+                android:divider="@color/green"
+                android:footerDividersEnabled="true"
+                >
+
+            </ListView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:id="@+id/tv_lista_locales"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 />
             />
@@ -172,7 +287,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:alpha="100"
-        android:background="@color/fondoBotones2">
+        android:background="#ff000000">
 
         <Button
             android:layout_width="wrap_content"

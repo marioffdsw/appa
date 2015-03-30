@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_mediumAnimTime" >
 
+    <item android:drawable="@drawable/list_pressed_verde"
+        android:state_pressed="true" />
+    <item android:drawable="@color/material_blue_grey_900"/>
 </selector>

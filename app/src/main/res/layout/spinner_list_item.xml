@@ -30,10 +30,9 @@
             android:layout_marginLeft="10dp"
             android:singleLine="true"
             android:textSize="15sp"
-            android:textColor="@android:color/black"
-            android:background="@android:drawable/spinner_background"
-            android:popupBackground="@android:drawable/dialog_holo_dark_frame"
-            />
+            android:textColor="@android:color/black"/>
+            <!--android:popupBackground="@android:drawable/dialog_holo_dark_frame"-->
+
 
     </FrameLayout>
 

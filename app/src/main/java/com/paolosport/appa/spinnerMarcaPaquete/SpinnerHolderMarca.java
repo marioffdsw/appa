@@ -6,7 +6,7 @@ import android.widget.TextView;
 /**
  * Created by Andres on 04/03/2015.
  */
-public class SpinnerHolder {
+public class SpinnerHolderMarca {
 
     private ImageView icono;
     private TextView textView;

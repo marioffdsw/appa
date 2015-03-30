@@ -10,120 +10,281 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:id="@+id/dfgfdg"
+        android:background="@color/material_blue_grey_950">
 
-        <ImageView
-            android:id="@+id/backgrds"
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="110dp">
+
+            <ImageView
+                android:id="@+id/backgrds"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_personahd"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
+        </FrameLayout>
+
+
+        <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo_appa"
-            android:scaleType="centerCrop"
-            />
+            android:id="@+id/scrollView3" >
 
-        <RelativeLayout
-            android:id="@+id/item_marca"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:clickable="true"
-            android:elevation="2dp"
-            android:onClick="muestre">
-            <ImageView
-                android:id="@+id/icon_marca"
-                android:background="@drawable/adidas"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_centerVertical="true" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/ll_inicial">
 
-            <TextView
-                android:id="@+id/text_marca"
-                android:text="Marcas"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/icon_marca"
-                android:textColor="#ff022533"
-                android:gravity="center_vertical"
-                android:paddingRight="40dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"/>
-        </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp">
 
-        <RelativeLayout
-            android:id="@+id/item_persona"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:clickable="true"
-            android:focusable="false"
-            android:elevation="2dp"
-            android:onClick="muestre">
-            <ImageView
-                android:id="@+id/icon_persona"
-                android:background="@drawable/lacoste"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_centerVertical="true" />
+                    <TextView
+                        android:text="Configuración Inicial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#777572"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingRight="12dp"
+                        android:paddingTop="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingBottom="0dp"
+                        android:layout_alignParentBottom="true"
+                        android:id="@+id/ddddd"
+                        android:gravity="bottom"
+                        android:layout_alignParentTop="true"
+                        android:padding="0dp" />
 
-            <TextView
-                android:id="@+id/text_persona"
-                android:text="Personas"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/icon_persona"
-                android:textColor="#ff022533"
-                android:gravity="center_vertical"
-                android:paddingRight="40dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"/>
-        </RelativeLayout>
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/item_local"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:clickable="true"
-            android:elevation="2dp"
-            android:onClick="muestre">
-            <ImageView
-                android:id="@+id/icon_local"
-                android:background="@drawable/converse"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_centerVertical="true" />
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:drawable/divider_horizontal_textfield"
+                    android:id="@+id/sdfs" />
 
-            <TextView
-                android:id="@+id/tex_local"
-                android:text="Locales"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/icon_local"
-                android:textColor="#ff022533"
-                android:gravity="center_vertical"
-                android:paddingRight="40dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"/>
-        </RelativeLayout>
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/item_local"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clickable="true"
+                    android:onClick="muestre"
+                    android:background="@drawable/selectable_background_temaappa"
+                    >
+                    <ImageView
+                        android:id="@+id/icon_local"
+                        android:background="@drawable/ico_local"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true" />
 
-        <Button
-            android:id="@+id/btnLocal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="local"
-            android:onClick="seleccionarCategoria" />
+                    <TextView
+                        android:id="@+id/tex_local"
+                        android:text="Locales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/icon_local"
+                        android:textColor="#fffffff1"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center_vertical"
+                        android:paddingRight="3dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"/>
 
-        <Button
-            android:id="@+id/btnMarca"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="marca"
-            android:onClick="seleccionarCategoria"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:drawable/divider_horizontal_textfield"/>
+
+                <RelativeLayout
+                    android:id="@+id/item_persona"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:onClick="muestre"
+                    android:background="@drawable/selectable_background_temaappa">
+                    <ImageView
+                        android:id="@+id/icon_persona"
+                        android:background="@drawable/ico_personas"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/text_persona"
+                        android:text="Personal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/icon_persona"
+                        android:textColor="#fffffff1"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center_vertical"
+                        android:paddingRight="3dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:drawable/divider_horizontal_textfield"
+                    android:id="@+id/rr" />
+
+                <RelativeLayout
+                    android:id="@+id/item_marca"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clickable="true"
+                    android:onClick="muestre"
+                    android:background="@drawable/selectable_background_estiloandres">
+                    <ImageView
+                        android:id="@+id/icon_marca"
+                        android:background="@drawable/ico_marca"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/text_marca"
+                        android:text="Marcas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#fffffff1"
+                        android:layout_toRightOf="@id/icon_marca"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center_vertical"
+                        android:paddingRight="3dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/selectable_background_estiloandres"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp">
+
+                    <TextView
+                        android:text="General"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#777572"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingRight="12dp"
+                        android:paddingTop="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingBottom="0dp"
+                        android:layout_alignParentBottom="true"
+                        android:id="@+id/dddwed"
+                        android:gravity="bottom"
+                        android:layout_alignParentTop="true"
+                        android:padding="0dp" />
+
+                </RelativeLayout>
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:drawable/divider_horizontal_textfield"/>
+
+                <RelativeLayout
+                    android:id="@+id/item_regresar"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clickable="true"
+                    android:onClick="muestre"
+                    android:background="@drawable/selectable_background_estiloandres">
+                    <ImageView
+                        android:id="@+id/icon_regresar"
+                        android:background="@drawable/ico_atras"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/text_regresar"
+                        android:text="Regresar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#fffffff1"
+                        android:layout_toRightOf="@id/icon_regresar"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center_vertical"
+                        android:paddingRight="3dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:drawable/divider_horizontal_textfield"/>
+
+                <RelativeLayout
+                    android:id="@+id/item_cerrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clickable="true"
+                    android:onClick="muestre"
+                    android:background="@drawable/selectable_background_estiloandres">
+                    <ImageView
+                        android:id="@+id/icon_cerrar"
+                        android:background="@drawable/ico_sesion"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/text_cerrar"
+                        android:text="Cerrar Sesión"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#fffffff1"
+                        android:layout_toRightOf="@id/icon_cerrar"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center_vertical"
+                        android:paddingRight="3dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+
+
+
 
     </LinearLayout>
 

@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.entities.Local;
-import com.paolosport.appa.spinnerMarcaPaquete.SpinnerHolder;
 
 import java.util.List;
 
@@ -34,11 +34,13 @@ public class SpinnerAdapterLocal extends ArrayAdapter<Local>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+
         if (convertView == null)
         {
             convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.spinner_selected_item,null);
         }
         ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
+        ((ImageView) convertView.findViewById(R.id.icono)).setImageResource(R.drawable.ico_local);
 
 
         return convertView;
