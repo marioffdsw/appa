@@ -3,8 +3,6 @@ package com.paolosport.appa.spinnerMarcaPaquete;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,6 @@ import android.widget.TextView;
 import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.entities.Marca;
 
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,14 +20,14 @@ import java.util.regex.Pattern;
 /**
  * Created by Andres on 04/03/2015.
  */
-    public class SpinnerAdapterMarca extends ArrayAdapter<Marca>
+    public class ListViewAdapterMarca extends ArrayAdapter<Marca>
     {
         private Context context;
 
         List<Marca> datos = null;
         Bitmap bmImg;
 
-        public SpinnerAdapterMarca(Context context, List<Marca> datos)
+        public ListViewAdapterMarca(Context context, List<Marca> datos)
         {
             //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
             super(context, R.layout.spinner_selected_item, datos);
@@ -50,15 +46,16 @@ import java.util.regex.Pattern;
 
             Pattern pat = Pattern.compile(".*/.*");
             Matcher mat = pat.matcher(datos.get(position).getUrl());
-            bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
-//            Bitmap b = Bitmap.createScaledBitmap(bmImg,48,48,true);
+
 
             if (mat.matches()) {
+                bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
                 ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
                 ((ImageView) convertView.findViewById(R.id.icono)).setImageBitmap(bmImg);
             } else {
                 ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
                 ( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
+                // ((ImageView) convertView.findViewById(R.id.icono)).setBackgroundResource(datos.get(position).getIcon(this.context));
             }
 
 
@@ -91,13 +88,13 @@ import java.util.regex.Pattern;
 
             Pattern pat = Pattern.compile(".*/.*");
             Matcher mat = pat.matcher(datos.get(position).getUrl());
-            bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
+
             if (mat.matches()) {
+                bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
                 ((SpinnerHolderMarca) row.getTag()).getIcono().setImageBitmap(bmImg);
             } else {
-                //((SpinnerHolderMarca) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
+                ((SpinnerHolderMarca) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
                 ( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
-
             }
             ((SpinnerHolderMarca) row.getTag()).getTextView().setText(socialNetwork.getNombre());
 

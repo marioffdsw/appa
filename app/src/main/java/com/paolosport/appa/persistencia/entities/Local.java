@@ -9,6 +9,9 @@ public class Local {
         this.nombre = nombre;
     } // end constructor
 
+    public Local( String nombre ){
+        this.nombre = nombre;
+    } // end constructor
     public String getId() {
         return id;
     }

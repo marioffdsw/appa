@@ -21,6 +21,11 @@ public class Marca {
         this.url = url;
     }
 
+    public Marca(String nombre, String url){
+        this.nombre = nombre;
+        this.url = url;
+    }
+
     public String getId() {
         return id;
     }

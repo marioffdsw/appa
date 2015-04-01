@@ -6,6 +6,9 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import com.paolosport.appa.RealPathUtil;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.entities.Marca;
+import com.paolosport.appa.spinnerMarcaPaquete.ListViewAdapterMarca;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
 
 
@@ -38,19 +42,23 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MarcaFragment extends Fragment {
 
     // private OnFragmentInteractionListener mListener;
     AdminSQLiteOpenHelper helper;
     MarcaDAO marcaDAO;
-    private String id_marca;
+    private String id_marca,url_marca,nombre_marca;
     private LinearLayout ll_listar_marca,
             ll_editar_marca,
             ll_eliminar_marca,
             ll_crear_marca;
     private View view;
-    private ImageView iv_imagen_marca;
+    private ImageView iv_imagen_marca,iv_editada;
+
     private Button  btn_listar,
             btn_eliminar,
             btn_crear,
@@ -61,9 +69,9 @@ public class MarcaFragment extends Fragment {
             btn_imagen_marca;
 
     private Spinner     sp_marca,   sp_marca2;
-    private TextView    tv_id_marca,   tv_url_marca;
+    private TextView    tv_url_marca;
     private EditText    et_nombre_marca,   et_nombre_marca_editado;
-    private ListView    lv_lista_marcas;
+    private ListView    lv_lista_marcas,lv_marca;
 
     ArrayList<Marca> listaMarcas;
     public MarcaFragment() {
@@ -100,9 +108,7 @@ public class MarcaFragment extends Fragment {
         btn_eliminar_marca = (Button)view.findViewById(R.id.btn_eliminar_marca);
         btn_editar_marca = (Button)view.findViewById(R.id.btn_editar_marca);
         btn_crear_marca = (Button)view.findViewById(R.id.btn_crear_marca);
-        btn_imagen_marca = (Button)view.findViewById(R.id.btn_imagen_marca);
 
-        tv_id_marca = (TextView)view.findViewById(R.id.tv_id_marca);
         tv_url_marca = (TextView)view.findViewById(R.id.tv_url_marca);
         et_nombre_marca = (EditText)view.findViewById(R.id.et_nombre_marca);
         et_nombre_marca_editado = (EditText)view.findViewById(R.id.et_nombre_marca_editado);
@@ -114,12 +120,13 @@ public class MarcaFragment extends Fragment {
         ll_eliminar_marca = (LinearLayout)view.findViewById(R.id.ll_eliminar_marca);
 
         iv_imagen_marca = (ImageView)view.findViewById(R.id.iv_imagen_marca);
+        iv_editada= (ImageView)view.findViewById(R.id.iv_editada);
 
         DatosPorDefecto();
 
         ll_listar_marca.setVisibility(View.INVISIBLE);
         ll_eliminar_marca.setVisibility(View.GONE);
-        ll_crear_marca.setVisibility(View.GONE);
+        ll_crear_marca.setVisibility(View.VISIBLE);
         ll_editar_marca.setVisibility(View.GONE);
 
         //-----------------------
@@ -151,7 +158,14 @@ public class MarcaFragment extends Fragment {
             }
         });
         //-----------------------
-        btn_imagen_marca.setOnClickListener(new View.OnClickListener() {
+        iv_editada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClicka();
+            }
+        });
+        //-----------------------
+        iv_imagen_marca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClicka();
@@ -180,7 +194,6 @@ public class MarcaFragment extends Fragment {
 
         return view;
 
-
     } // fin del metodo onCreateView
 
     @Override
@@ -190,7 +203,7 @@ public class MarcaFragment extends Fragment {
 
     //?????????????????????????????????????????????????????????????????????????
     public void listar(){
-        if(ll_listar_marca.getVisibility()== view.INVISIBLE)
+        if(ll_listar_marca.getVisibility()== View.INVISIBLE)
         {ll_listar_marca.setVisibility(View.VISIBLE);}
         else{ll_listar_marca.setVisibility(View.INVISIBLE);}
         mostrarEntradas();
@@ -206,31 +219,27 @@ public class MarcaFragment extends Fragment {
     public void editar(){
         ll_eliminar_marca.setVisibility(View.GONE);
         ll_crear_marca.setVisibility(View.GONE);
-        ll_editar_marca.setVisibility(view.VISIBLE);
+        ll_editar_marca.setVisibility(View.VISIBLE);
     }
     //?????????????????????????????????????????????????????????????????????????
     public void crear(){
         ll_eliminar_marca.setVisibility(View.GONE);
         ll_crear_marca.setVisibility(View.VISIBLE);
         ll_editar_marca.setVisibility(View.GONE);
-
-        String id = Integer.toString(listaMarcas.size()+1);
-        tv_id_marca.setText((id));
-
     }
     //?????????????????????????????????????????????????????????????????????????
     //?????????????????????????????????????????????????????????????????????????
 
     public void editarMarca(){
-        String aux = id_marca.toString();
+        String id = id_marca.toString();
         String nombre = et_nombre_marca_editado.getText().toString();
-        String url = tv_url_marca.getText().toString();
+        String url = url_marca.toString();
 
         if((nombre == null) || (nombre.equals(""))){
             Toast.makeText(getActivity().getApplicationContext(), "Ingrese Nombre", Toast.LENGTH_SHORT).show();
         }
         else {
-            Marca marca = new Marca(aux, nombre,url);
+            Marca marca = new Marca(id,nombre,url);
             marcaDAO.open();
             try {
                 marcaDAO.update(marca);
@@ -239,7 +248,7 @@ public class MarcaFragment extends Fragment {
                 DatosPorDefecto();
                 Toast.makeText(getActivity().getApplicationContext(), "Registro Editado", Toast.LENGTH_SHORT).show();
 
-                if (ll_listar_marca.getVisibility() == view.VISIBLE) {
+                if (ll_listar_marca.getVisibility() == View.VISIBLE) {
                     ll_listar_marca.setVisibility(View.INVISIBLE);
                     listar();
                 }
@@ -263,7 +272,7 @@ public class MarcaFragment extends Fragment {
             DatosPorDefecto();
             Toast.makeText(getActivity().getApplicationContext(),"Registro Eliminado",Toast.LENGTH_SHORT).show();
 
-            if(ll_listar_marca.getVisibility()== view.VISIBLE)
+            if(ll_listar_marca.getVisibility()== View.VISIBLE)
             {   ll_listar_marca.setVisibility(View.INVISIBLE);
                 listar();
             }
@@ -279,7 +288,6 @@ public class MarcaFragment extends Fragment {
 
     public void crearMarca(){
 
-        String id = tv_id_marca.getText().toString();
         String nombre = et_nombre_marca.getText().toString();
         String url = tv_url_marca.getText().toString();
 
@@ -292,22 +300,19 @@ public class MarcaFragment extends Fragment {
             return;
         }
 
-            Marca marca = new Marca( id, nombre,url );
+            Marca marca = new Marca( nombre,url );
             try {
                 marcaDAO.open();
                 marcaDAO.create(marca);
                 marcaDAO.close();
                 Toast.makeText(getActivity().getApplicationContext(), "Registro Creado", Toast.LENGTH_SHORT).show();
 
-                int auxId= Integer.parseInt(id)+1;
-                id = String.valueOf(auxId);
-                tv_id_marca.setText(id);
                 et_nombre_marca.setText("");
                 tv_url_marca.setText("");
                 iv_imagen_marca.setImageDrawable(null);
                 DatosPorDefecto();
 
-                if (ll_listar_marca.getVisibility() == view.VISIBLE) {
+                if (ll_listar_marca.getVisibility() == View.VISIBLE) {
                     ll_listar_marca.setVisibility(View.INVISIBLE);
                     listar();
                 }
@@ -323,7 +328,7 @@ public class MarcaFragment extends Fragment {
     //?????????????????????????????????????????????????????????????????????????
     private void DatosPorDefecto() {
         marcaDAO.open();
-        ArrayList<Marca> listaMarcas = marcaDAO.retrieveAll();
+        final ArrayList<Marca> listaMarcas = marcaDAO.retrieveAll();
 
         sp_marca= (android.widget.Spinner) view.findViewById(R.id.sp_marca);
         sp_marca2= (android.widget.Spinner) view.findViewById(R.id.sp_marca2);
@@ -338,6 +343,20 @@ public class MarcaFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
             {
                 id_marca=((Marca) adapterView.getItemAtPosition(position)).getId();
+                url_marca=((Marca) adapterView.getItemAtPosition(position)).getUrl();
+                et_nombre_marca_editado.setText(((Marca) adapterView.getItemAtPosition(position)).getNombre());
+
+                String url = url_marca.toString();
+                Bitmap bmImg = BitmapFactory.decodeFile(listaMarcas.get(position).getUrl());
+                Pattern pat = Pattern.compile(".*/.*");
+                Matcher mat = pat.matcher(url);
+                if (mat.matches()) {
+                    iv_editada.setImageBitmap(bmImg);
+                } else {
+                    int path = getResources().getIdentifier(url,"drawable", "com.paolosport.appa");
+                    iv_editada.setImageResource(path);
+                }
+
             }
 
             @Override
@@ -350,6 +369,9 @@ public class MarcaFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
             {
                 id_marca=((Marca) adapterView.getItemAtPosition(position)).getId();
+                url_marca=((Marca) adapterView.getItemAtPosition(position)).getUrl();
+
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){}
@@ -366,6 +388,7 @@ public class MarcaFragment extends Fragment {
         marcaDAO.open();
         listaMarcas = marcaDAO.retrieveAll();
         marcaDAO.close();
+        lv_marca= (ListView) view.findViewById(R.id.lv_lista_marcas);
         try{
             marcaDAO.open();
             DatosPorDefecto();
@@ -375,8 +398,9 @@ public class MarcaFragment extends Fragment {
         StringBuilder sb = new StringBuilder();
 
         if(listaMarcas!=null  && !listaMarcas.isEmpty()){
-            MarcaAdapter lista = new MarcaAdapter(getActivity().getApplicationContext(), R.layout.marca_item,listaMarcas);
-            lv_lista_marcas.setAdapter(lista);
+            //ListViewAdapterMarca lista = new ListViewAdapterMarca(getActivity().getApplicationContext(), R.layout.spinner_list_item,listaMarcas);
+            lv_lista_marcas.setAdapter(new ListViewAdapterMarca(getActivity().getApplicationContext(), listaMarcas));
+            //lv_lista_marcas.setAdapter(lista);
         }
         else{
             sb.append("No hay registros");
@@ -424,10 +448,13 @@ public class MarcaFragment extends Fragment {
         Bitmap bitmap = null;
         try {
             bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uriFromPath));
+            Bitmap b = Bitmap.createScaledBitmap(bitmap,48,48,true);
+            bitmap=b;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+        Drawable d =new BitmapDrawable(getResources(),bitmap);
         iv_imagen_marca.setImageBitmap(bitmap);
 
         String nombre = realPath;

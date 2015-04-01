@@ -28,7 +28,7 @@ public class LocalDAO extends  BaseDAO<Local>{
         try{
 
             ContentValues initialValues = new ContentValues();
-            initialValues.put( KEY_ID, local.getId() );
+            //initialValues.put( KEY_ID, local.getId() );
             initialValues.put( KEY_NOMBRE, local.getNombre() );
 
             db.insert( TABLE_NAME, null, initialValues );

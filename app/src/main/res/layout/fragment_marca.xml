@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblNombreMarca"
-                    android:textColor="#ff202020"
+                    android:textColor="@android:color/black"
                     android:id="@+id/textnomloc"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -107,31 +107,32 @@
 
                 <Space
                     android:layout_width="12dp"
-                    android:layout_height="24dp" />
+                    android:layout_height="12dp" />
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="IMAGEN"
-                    android:id="@+id/btn_imagen_marca"
-                    android:layout_marginLeft="0dp"
-                    android:layout_gravity="left"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_imagen"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
+                    android:text="Seleccione Icono:"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/black"
+                 />
 
                 <Space
                     android:layout_width="12dp"
                     android:layout_height="24dp" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/botonpulsado">
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_below="@+id/rgrp01"
-                    android:layout_height="48dp"
-                    android:id="@+id/iv_imagen_marca">
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:id="@+id/iv_imagen_marca"
+                    android:background="@drawable/ico_imagen"
+                    android:clickable="true">
                 </ImageView>
+                </LinearLayout>
 
                 <Space
                     android:layout_width="12dp"
@@ -160,19 +161,26 @@
 
                 <Space
                     android:layout_width="20px"
-                    android:layout_height="24dp" />
+                    android:layout_height="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Seleccione marca a Editar:"
-                    android:textColor="#ff202020"
+                    android:textColor="@android:color/black"
                     android:id="@+id/txt_marcas"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                 <Space
                     android:layout_width="20px"
                     android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/prueba"
+                    android:textColor="@android:color/black" />
 
                 <Spinner
                     android:id="@+id/sp_marca"
@@ -210,6 +218,36 @@
                 <Space
                     android:layout_width="12dp"
                     android:layout_height="24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione Icono:"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView11" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="24dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/botonpulsado" >
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:id="@+id/iv_editada"
+                        android:background="@drawable/ico_imagen"
+                        android:clickable="true" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="24dp"
+                    android:clickable="false" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"

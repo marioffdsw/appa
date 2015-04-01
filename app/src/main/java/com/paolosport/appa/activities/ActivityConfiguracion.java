@@ -42,7 +42,7 @@ public class ActivityConfiguracion extends ActionBarActivity {
         containerFragment = localFragment;
         fragmentManager = getSupportFragmentManager();
 
-        onListSelection( MARCA_SELECTED );
+        //onListSelection( MARCA_SELECTED );
 
     } // fin del metodo onCreate
 

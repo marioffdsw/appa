@@ -45,8 +45,6 @@ public class LocalFragment extends Fragment {
     private Spinner sp_local,
                     sp_local2;
 
-    private TextView tv_id_local;
-
     private EditText et_nombre_local,
                      et_nombre_local_editado;
     private ListView lv_lista_locales;
@@ -87,7 +85,6 @@ public class LocalFragment extends Fragment {
         btn_editar_local = (Button)view.findViewById(R.id.btn_editar_local);
         btn_crear_local = (Button)view.findViewById(R.id.btn_crear_local);
 
-        tv_id_local = (TextView)view.findViewById(R.id.tv_id_local);
         et_nombre_local = (EditText)view.findViewById(R.id.et_nombre_local);
         et_nombre_local_editado = (EditText)view.findViewById(R.id.et_nombre_local_editado);
         lv_lista_locales = (ListView)view.findViewById(R.id.lv_lista_locales);
@@ -101,7 +98,7 @@ public class LocalFragment extends Fragment {
 
         ll_listar_local.setVisibility(View.INVISIBLE);
         ll_eliminar_local.setVisibility(View.GONE);
-        ll_crear_local.setVisibility(View.GONE);
+        ll_crear_local.setVisibility(View.VISIBLE);
         ll_editar_local.setVisibility(View.GONE);
 
         //-----------------------
@@ -187,10 +184,6 @@ public class LocalFragment extends Fragment {
         ll_eliminar_local.setVisibility(View.GONE);
         ll_crear_local.setVisibility(View.VISIBLE);
         ll_editar_local.setVisibility(View.GONE);
-
-        String id = Integer.toString(listaLocales.size()+1);
-        tv_id_local.setText((id));
-
     }
     //?????????????????????????????????????????????????????????????????????????
     //?????????????????????????????????????????????????????????????????????????
@@ -252,25 +245,21 @@ public class LocalFragment extends Fragment {
 
     public void crearLocal(){
 
-        String id = tv_id_local.getText().toString();
         String nombre = et_nombre_local.getText().toString();
         if((nombre == null) || (nombre.equals(""))){
             Toast.makeText(getActivity().getApplicationContext(), "Ingrese Nombre", Toast.LENGTH_SHORT).show();
         }
         else{
-        Local local = new Local( id, nombre );
+        Local local = new Local( nombre );
         try {
             localDAO.open();
             localDAO.create(local);
             localDAO.close();
-            Toast.makeText(getActivity().getApplicationContext(), "Registro Creado", Toast.LENGTH_SHORT).show();
 
-            int auxId= Integer.parseInt(id)+1;
-            id = String.valueOf(auxId);
-            tv_id_local.setText(id);
             et_nombre_local.setText("");
             DatosPorDefecto();
 
+            Toast.makeText(getActivity().getApplicationContext(), "Registro Creado", Toast.LENGTH_SHORT).show();
             if (ll_listar_local.getVisibility() == view.VISIBLE) {
                 ll_listar_local.setVisibility(View.INVISIBLE);
                 listar();
@@ -334,14 +323,12 @@ public class LocalFragment extends Fragment {
             localDAO.close();
         }
         catch (Exception e){e.printStackTrace();}
-        StringBuilder sb = new StringBuilder();
 
         if(listaLocales!=null  && !listaLocales.isEmpty()){
             LocalAdapter lista = new LocalAdapter(getActivity().getApplicationContext(), R.layout.local_item,listaLocales);
             lv_lista_locales.setAdapter(lista);
         }
         else{
-            sb.append("No hay registros");
             Toast.makeText(getActivity().getApplicationContext(),"No hay registros",Toast.LENGTH_SHORT).show();
         }
 

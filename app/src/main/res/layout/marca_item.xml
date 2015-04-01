@@ -18,11 +18,10 @@
         android:animateLayoutChanges="true"
         android:id="@+id/ll_Marca_item2">
 
-    <TextView
+    <ImageView
         android:id="@+id/txtIDMarca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         />
 
     <TextView
@@ -36,7 +35,11 @@
         android:id="@+id/txtNombreMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        />
 
     </LinearLayout>
 
