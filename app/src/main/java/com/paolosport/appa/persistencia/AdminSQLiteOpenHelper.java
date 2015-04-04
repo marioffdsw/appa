@@ -8,7 +8,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
     static final String DATABASE_NAME = "appa.db";
-    static final int DATABASE_VERSION = 6;
+    static final int DATABASE_VERSION = 7;
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */

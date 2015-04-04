@@ -11,11 +11,13 @@ import android.widget.ImageView;
 
 import com.paolosport.appa.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FiltrosFragment extends Fragment {
 
+    View view;
 
     public FiltrosFragment() {
         // Required empty public constructor
@@ -26,11 +28,11 @@ public class FiltrosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filtros, container, false);
+        view = inflater.inflate(R.layout.fragment_filtros, container, false);
+        return view;
     }
 
     public void publishImage( Bitmap bitmap ){
-        View view = this.getView();
         ImageView imageView = (ImageView) view.findViewById( R.id.imgContainer );
         imageView.setImageBitmap(bitmap);
     }

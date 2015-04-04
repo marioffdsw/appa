@@ -35,7 +35,9 @@ public class PersonaDAO extends BaseDAO <Persona> {
             initialValues.put(KEY_TELEFONO, persona.getTelefono());
             initialValues.put(KEY_URL, persona.getUrl());
 
-            db.insert( TABLE_NAME, null, initialValues );
+            long i = db.insert( TABLE_NAME, null, initialValues );
+            if ( i == -1 )
+                throw new Exception( "Error al insertar" );
         }
         catch( Exception e ){
             return Estado.ERROR_INSERTAR;
@@ -58,7 +60,27 @@ public class PersonaDAO extends BaseDAO <Persona> {
             return Estado.ERROR_ACTUALIZAR;
         } // end catch
 
-        return Estado.ACTUALIZADO;}
+        return Estado.ACTUALIZADO;
+    }
+
+    public Estado update(Persona persona, String cedulaAntigua ) {
+        try{
+            ContentValues updateValues = new ContentValues();
+            updateValues.put(KEY_NOMBRE, persona.getNombre());
+            updateValues.put( KEY_CEDULA, persona.getCedula() );
+            updateValues.put(KEY_TELEFONO, persona.getTelefono());
+            updateValues.put(KEY_URL, persona.getUrl());
+
+            long i = db.update(TABLE_NAME, updateValues, KEY_CEDULA + "=" + cedulaAntigua, null);
+            if ( i == -1 )
+                throw new Exception();
+        }
+        catch( Exception e ){
+            return Estado.ERROR_ACTUALIZAR;
+        } // end catch
+
+        return Estado.ACTUALIZADO;
+    }
 
     @Override
     public Persona retrieve( String id ) {

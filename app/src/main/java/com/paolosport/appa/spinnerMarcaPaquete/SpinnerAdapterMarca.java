@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.entities.Marca;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +36,13 @@ import java.util.regex.Pattern;
             super(context, R.layout.spinner_selected_item, datos);
             this.context = context;
             this.datos = datos;
+            Collections.sort( datos, new Comparator<Marca>() {
+                @Override
+                public int compare(Marca uno, Marca dos) {
+                    return new String( uno.getNombre() ).compareTo( dos.getNombre() );
+                }
+            });
+
         }
 
         //este método establece el elemento seleccionado sobre el botón del spinner

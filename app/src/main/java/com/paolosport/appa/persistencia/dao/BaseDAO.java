@@ -9,7 +9,7 @@ import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-abstract class BaseDAO < T > {
+abstract public class BaseDAO < T > {
 
     static protected String TABLE_NAME;
 

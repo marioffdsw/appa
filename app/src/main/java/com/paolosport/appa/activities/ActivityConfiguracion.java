@@ -1,5 +1,13 @@
 package com.paolosport.appa.activities;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -16,6 +24,12 @@ import com.paolosport.appa.fragments.LocalFragment;
 import com.paolosport.appa.fragments.MarcaFragment;
 import com.paolosport.appa.fragments.PersonaFragment;
 import com.paolosport.appa.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class ActivityConfiguracion extends ActionBarActivity {
 
@@ -109,4 +123,6 @@ public class ActivityConfiguracion extends ActionBarActivity {
                 break;
         } // end switch
     } // end method muestre
+
+
 } // fin de la clase ActivityConfiguracion
