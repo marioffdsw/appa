@@ -25,9 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.paolosport.appa.R;
-import com.paolosport.appa.activities.ActivityPersona;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
-import com.paolosport.appa.persistencia.dao.BaseDAO;
 import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.entities.Persona;
 

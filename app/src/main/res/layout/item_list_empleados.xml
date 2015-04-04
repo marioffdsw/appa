@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/ab_transparent_estiloandres"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/fotoPersona"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/margin_test" >
+    </ImageView>
+
+
+    <LinearLayout
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/txtNombreEmpleado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:padding="2dp"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="15dp"
+                android:text="c.c.:"
+                android:gravity="left"
+                android:padding="2dp"/>
+
+            <TextView
+                android:layout_weight="12"
+                android:id="@id/txtCedulaPersona"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@color/gray"
+                android:textSize="15dp"
+                android:padding="2dp"/>
+
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="15dp"
+                android:text="Tel:"
+                android:gravity="left"
+                android:padding="2dp"/>
+
+            <TextView
+                android:layout_weight="12"
+                android:id="@+id/txtTelefonoPersona"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/gray"
+                android:gravity="right"
+                android:padding="2dp"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
