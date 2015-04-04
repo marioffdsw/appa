@@ -46,4 +46,6 @@
         parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/f</item>
     </style>
+
+
 </resources>

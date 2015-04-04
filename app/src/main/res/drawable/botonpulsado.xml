@@ -3,6 +3,6 @@
 
     <item android:drawable="@drawable/list_pressed_temaappa"
     android:state_pressed="true" />
-    <item android:drawable="@color/material_blue_grey_950"/>
+    <item android:drawable="@color/material_blue_grey_900"/>
 
 </selector>

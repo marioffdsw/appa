@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.entities.Marca;
 
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,12 +59,14 @@ import java.util.regex.Pattern;
             Pattern pat = Pattern.compile(".*/.*");
             Matcher mat = pat.matcher(datos.get(position).getUrl());
             bmImg = BitmapFactory.decodeFile(datos.get(position).getUrl());
+//            Bitmap b = Bitmap.createScaledBitmap(bmImg,48,48,true);
+
             if (mat.matches()) {
                 ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
                 ((ImageView) convertView.findViewById(R.id.icono)).setImageBitmap(bmImg);
             } else {
                 ((TextView) convertView.findViewById(R.id.texto)).setText(datos.get(position).getNombre());
-                ((ImageView) convertView.findViewById(R.id.icono)).setBackgroundResource(datos.get(position).getIcon(this.context));
+                ( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
             }
 
 
@@ -99,7 +103,9 @@ import java.util.regex.Pattern;
             if (mat.matches()) {
                 ((SpinnerHolderMarca) row.getTag()).getIcono().setImageBitmap(bmImg);
             } else {
-                ((SpinnerHolderMarca) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
+                ((SpinnerHolderMarca) row.getTag()).getIcono().setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
+               //( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
+
             }
             ((SpinnerHolderMarca) row.getTag()).getTextView().setText(socialNetwork.getNombre());
 

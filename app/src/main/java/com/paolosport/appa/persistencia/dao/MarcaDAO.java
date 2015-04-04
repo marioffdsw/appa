@@ -30,7 +30,7 @@ public class MarcaDAO extends BaseDAO <Marca> {
 
         try{
             ContentValues initialValues = new ContentValues();
-            initialValues.put( KEY_ID, marca.getId() );
+            //initialValues.put( KEY_ID, marca.getId() );
             initialValues.put( KEY_NOMBRE, marca.getNombre() );
             initialValues.put(KEY_URL, marca.getUrl());
 

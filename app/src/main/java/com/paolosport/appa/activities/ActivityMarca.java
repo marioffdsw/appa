@@ -49,7 +49,6 @@ public class ActivityMarca extends ActionBarActivity {
     EditText txtNombreMarca;
     EditText txtURL;
     private android.widget.Spinner spinner;
-    TextView txtFecha;
 
     TextView txtListaMarcas;
 

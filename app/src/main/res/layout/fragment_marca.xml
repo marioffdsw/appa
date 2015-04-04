@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.paolosport.appa.activities.MarcaFragment">
+    tools:context="com.paolosport.appa.activities.MarcaFragment"
+    android:id="@+id/ee">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,12 +15,20 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="341dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
-            android:id="@+id/ll_derecho_marca">
+            android:layout_marginRight="30dp"
+            android:id="@+id/ll_derecho_marca"
+            android:layout_weight="2">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:id="@+id/texto_animado"
+                android:gravity="center_horizontal">
             <TextView android:layout_width="match_parent" android:layout_height="match_parent"
                 android:text="@string/marcasPaolo"
                 android:textColor="@color/iconos"
@@ -28,249 +37,171 @@
                 android:shadowDy="1"
                 android:shadowRadius="2"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal" />
+            </LinearLayout>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/ll_crear_marca">
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
+                android:id="@+id/scrollCrearMarca"
+                android:fillViewport="false"
+                android:layout_gravity="center"
+                android:foregroundGravity="center_vertical|center_horizontal">
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_crear_marca"
+                    android:gravity="center_vertical|center|center_horizontal">
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="56dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccione Icono:"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_seleccione_icono"
+                        android:gravity="center_horizontal" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/botonpulsado"
+                        android:gravity="center_horizontal">
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:id="@+id/iv_imagen_marca"
+                        android:background="@drawable/ico_imagen"
+                        android:clickable="true">
+                    </ImageView>
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ID: "
-                        android:textColor="#ff202020"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        />
+                        android:text="Ingrese Nombre:"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/tv_ingrese_nombre"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="12dp" />
+
+                    <EditText
+                        android:layout_width="206dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_nombre_marca"
+                        android:background="@drawable/ab_transparent_verde"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@null"
+                        android:inputType="text"
+                        android:gravity="center_horizontal" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_id_marca"
-                        android:textColor="#ff202020"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        />
+                        android:id="@+id/tv_url_marca"
+                        android:visibility="gone" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="56dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:gravity="end">
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GUARDAR"
+                            android:id="@+id/btn_crear_marca"
+                            android:layout_marginLeft="0dp"
+                            android:background="@drawable/botonpulsado"
+                            android:drawableLeft="@drawable/ico_guardar"
+                            android:paddingRight="12dp"
+                            android:layout_margin="0dp"
+                            android:gravity="left|center|center_horizontal"
+                            android:layout_gravity="top"
+                            android:layout_weight="1" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GUARDAR"
+                            android:id="@+id/btn_editar_marca"
+                            android:background="@drawable/botonpulsado"
+                            android:drawableLeft="@drawable/ico_guardar"
+                            android:paddingRight="12dp"
+                            android:layout_margin="0dp"
+                            android:visibility="gone"
+                            android:gravity="left|center_vertical|center|center_horizontal"
+                            android:layout_gravity="left"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Button"
+                            android:id="@+id/button5"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CANCELAR"
+                            android:id="@+id/btn_cancelar_marca"
+                            android:background="@drawable/botonpulsado"
+                            android:drawableLeft="@drawable/ico_cancelar"
+                            android:paddingRight="8dp"
+                            android:gravity="left|center_vertical|center|center_horizontal"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="24dp" />
+
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblNombreMarca"
-                    android:textColor="#ff202020"
-                    android:id="@+id/textnomloc"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_nombre_marca"
-                    android:background="@drawable/ab_transparent_verde"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"/>
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="URL: "
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_url_marca"
-                    android:background="@drawable/ab_transparent_verde"
-                    android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="IMAGEN"
-                    android:id="@+id/btn_imagen_marca"
-                    android:layout_marginLeft="0dp"
-                    android:layout_gravity="left"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_imagen"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GUARDAR"
-                    android:id="@+id/btn_crear_marca"
-                    android:layout_marginLeft="0dp"
-                    android:layout_gravity="left"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_guardar"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/ll_editar_marca">
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Seleccione marca a Editar:"
-                    android:textColor="#ff202020"
-                    android:id="@+id/txt_marcas"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="12dp" />
-
-                <Spinner
-                    android:id="@+id/sp_marca"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:background="@drawable/spinner_background_ab_verde"
-                    android:popupBackground="@android:drawable/editbox_background"
-                    />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nuevo Nombre:"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView10"
-                    android:textColor="@color/black" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="12dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_nombre_marca_editado"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:background="@drawable/ab_transparent_verde" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GUARDAR"
-                    android:id="@+id/btn_editar_marca"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_guardar"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/ll_eliminar_marca">
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Seleccione marca a Eliminar:"
-                    android:textColor="#ff202020"
-                    android:id="@+id/txt_marcas2"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="12dp" />
-
-                <Spinner
-                    android:id="@+id/sp_marca2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:background="@drawable/spinner_background_ab_verde"
-                    android:popupBackground="@android:drawable/editbox_background"
-                    />
-
-                <Space
-                    android:layout_width="20px"
-                    android:layout_height="24dp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ELIMINAR"
-                    android:id="@+id/btn_eliminar_marca"
-                    android:background="@drawable/botonpulsado"
-                    android:drawableLeft="@drawable/ico_borrar"
-                    android:paddingRight="12dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="45dp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:id="@+id/ll_listar_marca"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            android:layout_weight="3"
+            android:layout_marginBottom="15dp">
 
             <ScrollView
                 android:layout_width="wrap_content"
@@ -278,28 +209,18 @@
                 android:id="@+id/scrollView4"></ScrollView>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/listaMarcas"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ff202020"
-                />
+                android:gravity="center_horizontal" />
 
             <Space
                 android:layout_width="20px"
-                android:layout_height="24dp"
+                android:layout_height="6dp"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ID    NOMBRE"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/iconos"
-                />
-            <Space
-                android:layout_width="20px"
-                android:layout_height="12dp"
-                />
+
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -308,83 +229,11 @@
                 android:footerDividersEnabled="true"
                 >
 
-            </ListView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:id="@+id/tv_lista_marcas"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
+            </ListView><![CDATA[
             />
+        ]]>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:alpha="100"
-        android:background="#ff000000">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nuevo"
-            android:id="@+id/button"
-            android:drawableLeft="@drawable/ico_nuevo"
-            android:background="@drawable/botonpulsado2"
-            android:layout_margin="2dp"
-            android:paddingBottom="1dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp"
-            android:paddingLeft="4dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="EDITAR"
-            android:id="@+id/button2"
-            android:drawableLeft="@drawable/ico_editar"
-            android:background="@drawable/botonpulsado2"
-            android:layout_margin="2dp"
-            android:paddingBottom="1dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp"
-            android:paddingLeft="2dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Eliminar"
-            android:id="@+id/button3"
-            android:drawableLeft="@drawable/ico_eliminar"
-            android:background="@drawable/botonpulsado2"
-            android:layout_margin="2dp"
-            android:paddingBottom="1dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp"
-            android:paddingLeft="2dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="LISTAR"
-            android:id="@+id/button4"
-            android:drawableLeft="@drawable/ico_lista"
-            android:background="@drawable/botonpulsado2"
-            android:layout_margin="2dp"
-            android:paddingBottom="1dp"
-            android:paddingRight="4dp"
-            android:paddingTop="2dp"
-            android:paddingLeft="2dp"
-            />
     </LinearLayout>
 
 </FrameLayout>

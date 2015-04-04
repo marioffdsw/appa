@@ -29,6 +29,9 @@
     <color name="slide_drawer">#ff5F5448</color>
     <color name="dialogo">#fffffff1</color>
     <color name="iconos">#7e0000</color>
+    <color name="action_bar">#ffbb0000</color>
+
+
     <color name="fondoBotones">#ff00522C </color>
     <color name="fondoBotones2">#002513 </color>
     <color name="fondoBotones3">#005d31 </color>
