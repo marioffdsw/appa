@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Inicio de Sesión"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
@@ -43,14 +43,9 @@
                     android:shadowColor="#00ff5f00"
                     android:shadowDx="2"
                     android:shadowDy="2"
-                    android:shadowRadius="3" />
+                    android:shadowRadius="3"
+                    android:layout_gravity="center" />
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ico_sesion"
-                    android:layout_gravity="top|right" />
             </LinearLayout>
 
             <View
