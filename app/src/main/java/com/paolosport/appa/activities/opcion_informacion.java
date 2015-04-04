@@ -30,53 +30,10 @@ public class opcion_informacion extends ActionBarActivity {
         setContentView(R.layout.prueba);
 
         mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
 
         setGroupParents();
-        setChildData();
+        setChildData();}
 
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-        // set up the drawer's list view with items and click listener
-
-        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems,this);
-
-        mDrawerList.setAdapter(adapter);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        mDrawerList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            int previousItem = -1;
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if(groupPosition != previousItem )
-                    mDrawerList.collapseGroup(previousItem );
-                previousItem = groupPosition;
-            }
-        });
-
-       mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
-                this, mDrawerLayout,
-                /* nav drawer image to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-
-    }
 
     public void setGroupParents() {
         parentItems.add("Android");

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="3dp"
+    android:gravity="top|center_vertical|center|center_horizontal"
+    android:minWidth="150dp" android:minHeight="230dp">
+    >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView2"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="3dp"
+            android:id="@+id/asd"
+            android:layout_weight="0.71"
+            android:gravity="center_vertical|center"
+            android:background="@color/fondo"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Inicio de Sesión"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:id="@+id/textView4"
+                    android:textColor="@color/iconos"
+                    android:textStyle="bold"
+                    android:shadowColor="#00ff5f00"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="3" />
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ico_sesion"
+                    android:layout_gravity="top|right" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/iconos" />
+
+            <Space
+                android:layout_width="296dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="contraseña:"
+                android:id="@+id/textView10"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/iconos" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/editText3"
+                android:textColor="#ff000000"
+                android:textCursorDrawable="@null"
+                android:drawableLeft="@drawable/ico_yave"
+                android:background="@drawable/ab_transparent_estiloandres" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8"
+                android:textColor="#ff393739" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/iconos" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text="INICIAR"
+                android:id="@+id/btn_aceptar_sesion"
+                android:nestedScrollingEnabled="false"
+                android:background="@color/fondo"
+                android:textColor="@color/iconos"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

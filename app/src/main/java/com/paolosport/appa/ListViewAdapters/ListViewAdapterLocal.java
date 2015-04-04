@@ -20,15 +20,15 @@ import java.util.List;
 /**
  * Created by Andres on 29/03/2015.
  */
-public class LocalAdapter extends ArrayAdapter<Local> {
+public class ListViewAdapterLocal extends ArrayAdapter<Local> {
     LinearLayout layoutAnimado = null;
 
-    public LocalAdapter(Context context, int textViewResourceId) {
+    public ListViewAdapterLocal(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
 
-    public LocalAdapter(Context context, int resource, List<Local> prestamos) {
+    public ListViewAdapterLocal(Context context, int resource, List<Local> prestamos) {
         super(context, resource, prestamos);
     }
 

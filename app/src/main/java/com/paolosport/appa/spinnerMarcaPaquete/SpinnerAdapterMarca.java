@@ -95,8 +95,8 @@ import java.util.regex.Pattern;
             if (mat.matches()) {
                 ((SpinnerHolderMarca) row.getTag()).getIcono().setImageBitmap(bmImg);
             } else {
-                //((SpinnerHolderMarca) row.getTag()).getIcono().setImageResource(socialNetwork.getIcon(this.context));
-                ( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
+                ((SpinnerHolderMarca) row.getTag()).getIcono().setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
+               //( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
 
             }
             ((SpinnerHolderMarca) row.getTag()).getTextView().setText(socialNetwork.getNombre());

@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ab_transparent_verde"
+    android:background="@drawable/selectable_background_temaappa2"
     android:animateLayoutChanges="true"
-    android:id="@+id/ll_marca_item">
+    android:id="@+id/ll_marca_item"
+    android:gravity="center_vertical">
     <!--android:divider="@color/material_blue_grey_800"-->
     <!--android:showDividers="end">-->
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:animateLayoutChanges="true"
-        android:id="@+id/ll_Marca_item2">
-
     <ImageView
-        android:id="@+id/txtIDMarca"
+        android:id="@+id/iv_icon_marca"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        />
+        android:layout_gravity="center"
+        android:src="@drawable/merrell"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="          "
-        />
+        android:text="   "
+        android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/txtNombreMarca"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:gravity="center_vertical|center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        />
+        android:gravity="center_vertical"
+        android:id="@+id/ll_texto">
 
+        <TextView
+            android:id="@+id/tv_icon_marca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:gravity="center_vertical|center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="left|center_vertical" />
     </LinearLayout>
-
 
 </LinearLayout>

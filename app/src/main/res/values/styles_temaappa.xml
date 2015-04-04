@@ -37,8 +37,8 @@
 
     <style name="MyActionBar2"
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/iconos</item>
-        <item name="background">@color/iconos</item>
+        <item name="android:background">@color/action_bar</item>
+        <item name="background">@color/action_bar</item>
     </style>
 
     <style name="ActionBar.Solid.Temaappa" parent="@style/Widget.AppCompat.ActionBar.Solid">
@@ -83,5 +83,6 @@
         <item name="popupMenuStyle">@style/PopupMenu.Temaappa</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Temaappa</item>
     </style>
+
 
 </resources>
