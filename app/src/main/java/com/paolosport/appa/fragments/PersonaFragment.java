@@ -478,3 +478,4 @@ public class PersonaFragment extends Fragment {
         return myPath.getAbsolutePath();
     }
 } // fin de la clase LocalFragment
+
