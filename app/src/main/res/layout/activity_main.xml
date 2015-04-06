@@ -4,79 +4,306 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="horizontal"
-    android:background="@color/fondo"
+    android:background="@color/fondo3"
     >
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp">
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="locales"
-            android:id="@+id/btnLocal"
-            android:onClick="local"
-            />
+            android:id="@+id/ll_contenido_prestamo">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="marca"
-            android:id="@+id/btnMarca"
-            android:onClick="marca" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PERSONA"
-            android:id="@+id/btnPersona"
-            android:onClick="persona" />
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/tl_prestamo"
+                android:orientation="vertical">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PRESTAMOS"
-            android:id="@+id/btnPrestamos"
-            android:onClick="prestamos"/>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12dp">
 
-        <Button android:id="@+id/btnListaPrestamos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lista_prestamos"
-            android:onClick="listaPrestamos"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Marca:"
+                        android:id="@+id/tv_marca"
+                        android:textColor="#ff444444"
+                        android:layout_gravity="center_vertical"
+                        android:textAllCaps="false"
+                        android:soundEffectsEnabled="false"
+                        android:singleLine="false"
+                        android:typeface="sans" />
+
+                    <Spinner
+                        android:id="@+id/sp_marca_prestamo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background_ab_verde"
+                        android:popupBackground="@android:drawable/editbox_background"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Descripcion:"
+                        android:textColor="#ff444444"
+                        android:id="@+id/tv_descripcion"
+                        android:textAllCaps="false"
+                        android:soundEffectsEnabled="false"
+                        android:singleLine="false"
+                        android:typeface="sans" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_descripcion"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:inputType="textCapWords"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@null" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageButton"
+                        android:src="@android:drawable/ic_menu_camera" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Talla:"
+                        android:textColor="#ff444444"
+                        android:id="@+id/tv_talla"
+                        android:layout_gravity="center_vertical"
+                        android:textAllCaps="false"
+                        android:soundEffectsEnabled="false"
+                        android:singleLine="false"
+                        android:typeface="sans" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_talla"
+                        android:layout_marginLeft="10dp"
+                        android:inputType="numberDecimal"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:textColor="@color/black"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null"
+                        android:layout_weight="1" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Local:"
+                        android:textColor="#ff444444"
+                        android:id="@+id/tv_local"
+                        android:layout_gravity="center_vertical"
+                        android:textAllCaps="false"
+                        android:soundEffectsEnabled="false"
+                        android:singleLine="false"
+                        android:typeface="sans" />
+
+                    <Spinner
+                        android:id="@+id/sp_local_prestamo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background_ab_verde"
+                        android:popupBackground="@android:drawable/editbox_background"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Empleado:"
+                        android:textColor="#ff444444"
+                        android:id="@+id/tv_empleado"
+                        android:layout_gravity="center_vertical"
+                        android:textAllCaps="false"
+                        android:soundEffectsEnabled="false"
+                        android:singleLine="false"
+                        android:typeface="sans" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_persona"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:weightSum="1"
         android:id="@+id/ee">
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_personahd" />
 
-        <com.paolosport.appa.CircularImageView
-            android:id="@+id/row_icon"
-            android:layout_width="209dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="22dp"
-            android:contentDescription="@string/app_name"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/catico"
-            android:layout_weight="0.47" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="locales"
+                android:id="@+id/btnLocal"
+                android:onClick="local"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="marca"
+                android:id="@+id/btnMarca"
+                android:onClick="marca" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PERSONA"
+                android:id="@+id/btnPersona"
+                android:onClick="persona" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PRESTAMOS"
+                android:id="@+id/btnPrestamos"
+                android:onClick="prestamos"/>
+
+            <Button android:id="@+id/btnListaPrestamos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lista_prestamos"
+                android:onClick="listaPrestamos"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="@drawable/boton_redondo"
+                android:soundEffectsEnabled="false"
+                android:saveEnabled="false" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/btn_nuevo"
+                android:layout_weight="1"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:src="@drawable/btn_bote"
+                android:layout_weight="1"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:src="@drawable/btn_blanco"
+                android:layout_weight="1"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView5"
+                android:src="@drawable/btn_yave"
+                android:layout_weight="1"
+                android:clickable="true" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -22,9 +22,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.paolosport.appa.activities.ActivityConfiguracion;
@@ -35,16 +37,30 @@ import com.paolosport.appa.activities.ActivityPersona;
 import com.paolosport.appa.activities.opcion_informacion;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
+import com.paolosport.appa.persistencia.dao.MarcaDAO;
+import com.paolosport.appa.persistencia.entities.Local;
+import com.paolosport.appa.persistencia.entities.Marca;
+import com.paolosport.appa.spinnerLocalPaquete.SpinnerAdapterLocal;
+import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends ActionBarActivity {
 
     AdminSQLiteOpenHelper helper;
-    LocalDAO localDAO;
+
     int id=0;
     Dialog customDialog=null;
     public boolean sesion;
     private ImageView imageView;
+
+    MarcaDAO marcaDAO;
+    LocalDAO localDAO;
+    private Spinner sp_marca,   sp_local;
+    String id_marca,url_marca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +72,19 @@ public class MainActivity extends ActionBarActivity {
 
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
+        marcaDAO = new MarcaDAO(this,helper);
 
         if(sesion==true){
             Toast.makeText(getApplicationContext(), "Sesión inicada", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getApplicationContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show();
         }
+        DatosPorDefecto();
 
         //SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
         //sesion=prefe.getBoolean("sesion",true);
 
-        imageView = (ImageView) findViewById(R.id.imageView1);
+        /*imageView = (ImageView) findViewById(R.id.imageView1);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.catico);
         Bitmap b = Bitmap.createScaledBitmap(bitmap,100,100,true);
         bitmap=b;
@@ -104,12 +122,120 @@ public class MainActivity extends ActionBarActivity {
             queuePhoto(url, imageView);
             imageView.setImageResource(stub_id);
         }*/
-
-
-
-
-
     }
+
+
+    //?????????????????????????????????????????????????????????????????????????
+    //?????????????????????????????????????????????????????????????????????????
+    private void DatosPorDefecto() {
+        marcaDAO.open();
+        localDAO.open();
+
+        final ArrayList<Marca> listaMarcas = marcaDAO.retrieveAll();
+        final ArrayList<Local> listaLocales = localDAO.retrieveAll();
+
+
+        sp_marca= (android.widget.Spinner)findViewById(R.id.sp_marca_prestamo);
+        sp_local= (android.widget.Spinner)findViewById(R.id.sp_local_prestamo);
+
+        sp_marca.setAdapter(new SpinnerAdapterMarca(this,listaMarcas));
+        sp_local.setAdapter(new SpinnerAdapterLocal(this,listaLocales));
+
+        marcaDAO.close();
+        localDAO.close();
+
+        sp_marca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                id_marca=((Marca) adapterView.getItemAtPosition(position)).getId();
+                url_marca=((Marca) adapterView.getItemAtPosition(position)).getUrl();
+
+                //et_nombre_marca_editado.setText(((Marca) adapterView.getItemAtPosition(position)).getNombre());
+
+                String url = url_marca.toString();
+
+                Bitmap bmImg = BitmapFactory.decodeFile(listaMarcas.get(position).getUrl());
+                Pattern pat = Pattern.compile(".*/.*");
+                Matcher mat = pat.matcher(url);
+
+                /*if (mat.matches()) {
+                    iv_editada.setImageBitmap(bmImg);
+                } else {
+                    int path = getResources().getIdentifier(url,"drawable", "com.paolosport.appa");
+                    iv_editada.setImageResource(path);
+                }*/
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView){}
+        });
+
+        sp_local.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                //id_marca=((Marca) adapterView.getItemAtPosition(position)).getId();
+                //url_marca=((Marca) adapterView.getItemAtPosition(position)).getUrl();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
+    }//end method DatosPorDefecto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,6 +264,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void mostrar(View v)
     {
         customDialog = new Dialog(this);
@@ -155,6 +282,24 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View view){customDialog.dismiss();}
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /** el metodo local, lanza una activity que permite introducir
      *  información sobre un nuevo empleado */

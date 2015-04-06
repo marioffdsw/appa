@@ -7,7 +7,7 @@
     <color name="e">#ffffd6f4</color>
     <color name="f">#80ff0005</color>
     <color name="g">#ffb5ff87</color>
-    <color name="h">#8070f8ff</color>
+    <color name="h">#ffff4444</color>
 
 
     <color name="naranja">#ffff8b49</color>
@@ -25,6 +25,7 @@
     <color name="fuentes">#ff037E8C</color>
     <color name="fondo">#ffFBEFC7</color>
     <color name="fondo2">#27ffbe00</color>
+    <color name="fondo3">#fff5f5f5</color>
     <color name="bordes">#c0ff6300</color>
     <color name="slide_drawer">#ff5F5448</color>
     <color name="dialogo">#fffffff1</color>
@@ -46,6 +47,8 @@
         <item>@color/f</item>
         <item>@color/g</item>
         <item>@color/h</item>
+
+
     </array>
 
 </resources>
