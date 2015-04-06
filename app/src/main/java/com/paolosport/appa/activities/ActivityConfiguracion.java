@@ -124,7 +124,6 @@ public class ActivityConfiguracion extends ActionBarActivity {
             ll_gravity.setLayoutParams(params);
             rl_item_sesion.setVisibility(View.GONE);
         }
-
     } // fin del metodo onCreate
 
     public void onListSelection(int index) {
