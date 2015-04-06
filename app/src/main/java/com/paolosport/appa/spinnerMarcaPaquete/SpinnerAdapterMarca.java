@@ -61,8 +61,6 @@ import java.util.regex.Pattern;
                 ( (ImageView) convertView.findViewById( R.id.icono )).setImageBitmap( BitmapFactory.decodeResource( context.getResources(),datos.get(position).getIcon(this.context) )  );
             }
 
-
-
             return convertView;
         }
 
