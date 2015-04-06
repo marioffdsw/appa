@@ -8,7 +8,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
     static final String DATABASE_NAME = "appa.db";
-    static final int DATABASE_VERSION = 7;
+    static final int DATABASE_VERSION = 8;
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
@@ -23,11 +23,11 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     static final String TEST_PERSONA = "INSERT INTO persona " +
             "(  cedula,      nombre,               telefono,         foto ) VALUES " +
-            "( '1',         'Homero Simpson',     '5555555551',     'homero.jpg'  )," +
-            "( '2',         'Marge Simpson',      '5555555552',     'marge.jpg'   )," +
-            "( '3',         'Bart Simpson',       '5555555553',     'bart.jpg'    )," +
-            "( '4',         'Lissa Simpson',      '5555555554',     'lissa.jpg'  )," +
-            "( '5',         'Maggie Simpson',     '5555555555',     'maggie.jpg'  )";
+            "( '1',         'Homero Simpson',     '5555555551',     'prueba'  )," +
+            "( '2',         'Marge Simpson',      '5555555552',     'prueba'   )," +
+            "( '3',         'Bart Simpson',       '5555555553',     'prueba'    )," +
+            "( '4',         'Lissa Simpson',      '5555555554',     'prueba'  )," +
+            "( '5',         'Maggie Simpson',     '5555555555',     'prueba'  )";
 
     static final String CREATE_TABLE_LOCAL = "CREATE TABLE local(" +
             "id             INTEGER       PRIMARY KEY," +

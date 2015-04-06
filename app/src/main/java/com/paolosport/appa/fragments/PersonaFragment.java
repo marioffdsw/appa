@@ -3,23 +3,25 @@ package com.paolosport.appa.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,9 +30,7 @@ import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.entities.Persona;
-
 import com.paolosport.appa.ui.EmpleadoAdapter;
-import com.paolosport.appa.ui.FiltrosFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,17 +38,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class PersonaFragment extends Fragment {
 
     Context context;
-    FiltrosFragment filtrosFrag = new FiltrosFragment();
     View view;
-    FrameLayout fotoFragmentContainer;
     private PersonaDAO personaDAO;
-    private ArrayList<Persona> listaPersonas;
+    private ArrayList< Persona > listaPersonas;
+    private ImageView imgFoto;
 
     private EditText txtNombrePersona;
     private EditText txtCedulaPersona;
@@ -57,6 +57,12 @@ public class PersonaFragment extends Fragment {
     private EmpleadoAdapter adapter;
     private Persona persona;
 
+    private Button btnGuardar;
+    private Button btnNuevo;
+    private Button btnCancelar;
+    private Button btnActualizar;
+    private Button btnEliminar;
+
     // private OnFragmentInteractionListener mListener;
 
     public PersonaFragment() {
@@ -64,21 +70,20 @@ public class PersonaFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate( Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
+        super.onActivityCreated( savedInstanceState );
 
     } // fin del metodo onCreate
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_persona, container, false);
+        view = inflater.inflate( R.layout.fragment_persona, container, false );
 
         /** Se crea, los objetos de gestion de la base de datos */
-        AdminSQLiteOpenHelper adminSQLiteOpenHelper = new AdminSQLiteOpenHelper(context.getApplicationContext());
-        personaDAO = new PersonaDAO(context.getApplicationContext(), adminSQLiteOpenHelper);
+        AdminSQLiteOpenHelper adminSQLiteOpenHelper = new AdminSQLiteOpenHelper( context.getApplicationContext() );
+        personaDAO = new PersonaDAO( context.getApplicationContext(), adminSQLiteOpenHelper );
 
         /** se carga los datos sobre los prestamos en la lista */
         // Se obtiene los datos de los prestamos
@@ -87,107 +92,153 @@ public class PersonaFragment extends Fragment {
         personaDAO.close();
 
         // se crea el adaptador de la vista
-        adapter = new EmpleadoAdapter(context, R.layout.item_list_empleados, listaPersonas);
+        adapter = new EmpleadoAdapter( context, R.layout.item_list_empleados, listaPersonas );
 
         // si no hay datos sobre prestamos se notifica al usuario
-        if (listaPersonas == null)
-            Toast.makeText(context, "no hay datos", Toast.LENGTH_SHORT).show();
+        if( listaPersonas == null ) {
+            Toast.makeText( context, "no hay datos", Toast.LENGTH_SHORT ).show();
+        }
 
-        if(  listaPersonas != null ){
-            Toast.makeText( context, String.valueOf(listaPersonas.size()).toString(), Toast.LENGTH_SHORT ).show();
-            view.findViewById( R.id.layoutOops).setVisibility( View.INVISIBLE );
-            view.findViewById( R.id.lstEmpleados).setVisibility( View.VISIBLE );
+        if( listaPersonas != null ) {
+            //Toast.makeText( context, String.valueOf( listaPersonas.size() ).toString(),
+            //    Toast.LENGTH_SHORT ).show();
+
+            view.findViewById( R.id.layoutOops ).setVisibility( View.INVISIBLE );
+            view.findViewById( R.id.lstEmpleados ).setVisibility( View.VISIBLE );
+            Toast.makeText( context, listaPersonas.get( 10 ).getUrl(), Toast.LENGTH_LONG ).show();
         }
         // se carga los datos que existan sobre los prestamos
-        Activity activity = (Activity) context;
-        lstPersonas = (ListView) view.findViewById( R.id.lstEmpleados );
-        lstPersonas.setAdapter(adapter);
-        adapter.setNotifyOnChange(true);
+        Activity activity = ( Activity ) context;
+        lstPersonas = ( ListView ) view.findViewById( R.id.lstEmpleados );
+        lstPersonas.setAdapter( adapter );
+        adapter.setNotifyOnChange( true );
 
         lstPersonas.setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick( AdapterView< ? > parent, View view, int position, long id ) {
                 persona = listaPersonas.get( position );
 
                 txtNombrePersona.setText( persona.getNombre() );
+                txtNombrePersona.setEnabled( true );
                 txtCedulaPersona.setText( persona.getCedula() );
+                txtCedulaPersona.setEnabled( true );
                 txtTelefonoPersona.setText( persona.getTelefono() );
+                txtTelefonoPersona.setEnabled( true );
+                imgFoto.setImageBitmap( BitmapFactory.decodeFile( persona.getUrl() ) );
+                imgFoto.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick( View v ) {
+                        getImage( imgFoto );
+                    }
+                } );
+
+                btnNuevo.setVisibility( View.INVISIBLE );
+                btnCancelar.setVisibility( View.VISIBLE );
+                btnActualizar.setVisibility( View.VISIBLE );
+                btnEliminar.setVisibility( View.VISIBLE );
             }
-        });
+        } );
 
-        txtNombrePersona = (EditText) view.findViewById( R.id.txtNombrePersona );
-        txtCedulaPersona = (EditText) view.findViewById( R.id.txtCedulaPersona );
-        txtTelefonoPersona = (EditText) view.findViewById( R.id.txtTelefonoPersona );
+        txtNombrePersona = ( EditText ) view.findViewById( R.id.txtNombrePersona );
+        txtCedulaPersona = ( EditText ) view.findViewById( R.id.txtCedulaPersona );
+        txtTelefonoPersona = ( EditText ) view.findViewById( R.id.txtTelefonoPersona );
 
-        Button guardar = (Button) view.findViewById( R.id.btnGuardar );
-        guardar.setOnClickListener( new View.OnClickListener() {
+        btnNuevo = ( Button ) view.findViewById( R.id.btnNuevo );
+        btnNuevo.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                guardarPersona();
+            public void onClick( View v ) {
+                nuevaPersona();
             }
-        });
+        } );
 
-        Button actualizar = (Button) view.findViewById( R.id.btnActualizar );
-        actualizar.setOnClickListener( new View.OnClickListener() {
+        btnGuardar = ( Button ) view.findViewById( R.id.btnGuardar );
+        btnGuardar.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick( View v ) {
+                crearPersona();
+            }
+        } );
+
+        btnActualizar = ( Button ) view.findViewById( R.id.btnActualizar );
+        btnActualizar.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
                 actualizarPersona();
             }
-        });
+        } );
 
-        Button eliminar = (Button) view.findViewById( R.id.btnEliminar );
-        eliminar.setOnClickListener( new View.OnClickListener() {
+        btnEliminar = ( Button ) view.findViewById( R.id.btnEliminar );
+        btnEliminar.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick( View v ) {
                 eliminarPersona();
             }
-        });
+        } );
 
-        final Button cancelar = (Button) view.findViewById( R.id.btnCancelar );
-        cancelar.setOnClickListener( new View.OnClickListener() {
+        btnCancelar = ( Button ) view.findViewById( R.id.btnCancelar );
+        btnCancelar.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick( View v ) {
                 cancelar();
             }
-        });
+        } );
 
-        ImageView imgFoto = (ImageView) view.findViewById( R.id.imgContainer );
+        imgFoto = ( ImageView ) view.findViewById( R.id.imgContainer );
         imgFoto.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                getImage(v);
+            public void onClick( View v ) {
+                getImage( v );
             }
-        });
+        } );
+
+        cancelar();
 
         return view;
     } // fin del metodo onCreateView
 
-    public void guardarPersona(){
+    public void nuevaPersona(){
+        txtCedulaPersona.setEnabled( true );
+        txtNombrePersona.setEnabled( true );
+        txtTelefonoPersona.setEnabled( true );
+        imgFoto.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                getImage( imgFoto );
+            }
+        } );
+        btnNuevo.setVisibility( View.INVISIBLE );
+        btnGuardar.setVisibility( View.VISIBLE );
+        btnCancelar.setVisibility( View.VISIBLE );
+    }
+
+    public void crearPersona() {
         String id = txtCedulaPersona.getText().toString();
         String nombre = txtNombrePersona.getText().toString();
         String telefono = txtTelefonoPersona.getText().toString();
 
-        Persona persona = new Persona(id, nombre, telefono, "prueba");
+        Bitmap foto = ( ( BitmapDrawable ) imgFoto.getDrawable() ).getBitmap();
+
+        Persona persona = new Persona( id, nombre, telefono, "prueba" );
+        persona.setUrl( guardarImange( context, persona.getCedula(), foto ) );
+
 
         personaDAO.open();
-        PersonaDAO.Estado estado = personaDAO.create(persona);
+        PersonaDAO.Estado estado = personaDAO.create( persona );
         personaDAO.close();
 
-        if ( estado == PersonaDAO.Estado.INSERTADO ) {
-            listaPersonas.add(persona);
-            adapter.notifyDataSetChanged();
+        if( estado == PersonaDAO.Estado.INSERTADO ) {
+            listaPersonas.add( persona );
+            ordenarAlfabeticamente();
+        } else {
+            Toast.makeText( context, ":( Error al insertar persona\n" + "Es posible que un empleado con ese numero de cedula ya haya sido registrado", Toast.LENGTH_LONG ).show();
         }
-        else{
-            Toast.makeText( context,
-                ":( Error al insertar persona\n" +
-                "Es posible que un empleado con ese numero de cedula ya haya sido registrado",
-            Toast.LENGTH_LONG ).show();
-        }
+
+        cancelar();
     }
 
-    public void actualizarPersona(){
+    public void actualizarPersona() {
 
-        if ( persona == null ){
+        if( persona == null ) {
             Toast.makeText( context, "Selecciona un empleado de la lista primero", Toast.LENGTH_SHORT ).show();
             return;
         }
@@ -195,30 +246,29 @@ public class PersonaFragment extends Fragment {
         String id = txtCedulaPersona.getText().toString();
         String nombre = txtNombrePersona.getText().toString();
         String telefono = txtTelefonoPersona.getText().toString();
+        Bitmap foto = ( ( BitmapDrawable ) imgFoto.getDrawable() ).getBitmap();
 
         String cedulaAntigua = persona.getCedula();
         persona.setCedula( id );
         persona.setNombre( nombre );
         persona.setTelefono( telefono );
+        persona.setUrl( guardarImange( context, persona.getCedula(), foto ) );
 
         personaDAO.open();
         PersonaDAO.Estado estado = personaDAO.update( persona, cedulaAntigua );
         personaDAO.close();
 
-        if ( estado == PersonaDAO.Estado.ACTUALIZADO ) {
-            adapter.notifyDataSetChanged();
+        if( estado == PersonaDAO.Estado.ACTUALIZADO ) {
+            ordenarAlfabeticamente();
+        } else {
+            Toast.makeText( context, ":( Error al actualizar los datos del empleado" + "\n\tEs posible que el empleado tenga pedidos pendientes", Toast.LENGTH_LONG ).show();
         }
-        else{
-            Toast.makeText( context,
-                    ":( Error al actualizar los datos del empleado" +
-                    "\n\tEs posible que el empleado tenga pedidos pendientes",
-                    Toast.LENGTH_LONG ).show();
-        }
+        cancelar();
     }
 
-    public void eliminarPersona(){
+    public void eliminarPersona() {
 
-        if ( persona == null ){
+        if( persona == null ) {
             Toast.makeText( context, "Selecciona un empleado de la lista primero", Toast.LENGTH_SHORT ).show();
             return;
         }
@@ -227,62 +277,81 @@ public class PersonaFragment extends Fragment {
         PersonaDAO.Estado estado = personaDAO.delete( persona );
         personaDAO.close();
 
-        if ( estado == PersonaDAO.Estado.ELIMINADO ) {
+        if( estado == PersonaDAO.Estado.ELIMINADO ) {
 
             adapter.remove( persona );
             cancelar();
-            adapter.notifyDataSetChanged();
+            ordenarAlfabeticamente();
+        } else {
+            Toast.makeText( context, ":( Error al actualizar los datos del empleado", Toast.LENGTH_LONG ).show();
         }
-        else{
-            Toast.makeText( context,
-                    ":( Error al actualizar los datos del empleado",
-                    Toast.LENGTH_LONG ).show();
-        }
+        cancelar();
     }
 
     public void cancelar() {
         persona = null;
         txtCedulaPersona.setText( "" );
+        txtCedulaPersona.setEnabled( false );
         txtNombrePersona.setText( "" );
+        txtNombrePersona.setEnabled( false );
         txtTelefonoPersona.setText( "" );
+        txtTelefonoPersona.setEnabled( false );
+        imgFoto.setImageDrawable( getActivity().getResources().getDrawable( R.color.a ) );
+        imgFoto.setOnClickListener( null );
+        btnNuevo.setVisibility( View.VISIBLE );
+        btnGuardar.setVisibility( View.INVISIBLE );
+        btnCancelar.setVisibility( View.INVISIBLE );
+        btnActualizar.setVisibility( View.INVISIBLE );
+        btnEliminar.setVisibility( View.INVISIBLE );
+    }
+
+    public void ordenarAlfabeticamente(){
+        Collections.sort( listaPersonas, new Comparator< Persona >() {
+            @Override
+            public int compare( Persona lhs, Persona rhs ) {
+                return lhs.getNombre().toUpperCase().compareTo( rhs.getNombre().toUpperCase() );
+            }
+        } );
+        adapter.notifyDataSetChanged();
     }
 
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach( Activity activity ) {
+        super.onAttach( activity );
         context = activity;
     } // fin del metodo onAttach
 
 
-    /** el metodo getImage, se encarga de lanzar un dialogo que pregunta al usuario si
+    /**
+     * el metodo getImage, se encarga de lanzar un dialogo que pregunta al usuario si
      * obtener una imagen desde la camara o desde la galeria y se encarga de lanzar
-     * el intent requerido y configurar el codigo de resultado */
-    public void getImage(View view) {
+     * el intent requerido y configurar el codigo de resultado
+     */
+    public void getImage( View view ) {
 
-        final CharSequence[] options = {getString(R.string.take_photo),
-                getString(R.string.from_gallery),
-                getString(R.string.cancel)};
+        final CharSequence[] options = { getString( R.string.take_photo ), getString( R.string.from_gallery ), getString( R.string.cancel ) };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder( context );
 
-        builder.setTitle(getString(R.string.choose_image));
-        builder.setItems(options, new DialogInterface.OnClickListener() {
+        builder.setTitle( getString( R.string.choose_image ) );
+        builder.setItems( options, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals(getString(R.string.take_photo))) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
-                } else if (options[item].equals(getString(R.string.from_gallery))) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
-                } else if (options[item].equals(getString(R.string.cancel))) {
+            public void onClick( DialogInterface dialog, int item ) {
+                if( options[ item ].equals( getString( R.string.take_photo ) ) ) {
+                    Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
+                    intent.putExtra( MediaStore.EXTRA_VIDEO_QUALITY, 0 );
+                    File f = new File( android.os.Environment.getExternalStorageDirectory(), "temp.jpg" );
+                    intent.putExtra( MediaStore.EXTRA_OUTPUT, Uri.fromFile( f ) );
+                    startActivityForResult( intent, 1 );
+                } else if( options[ item ].equals( getString( R.string.from_gallery ) ) ) {
+                    Intent intent = new Intent( Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI );
+                    startActivityForResult( intent, 2 );
+                } else if( options[ item ].equals( getString( R.string.cancel ) ) ) {
                     dialog.dismiss();
                 }
             }
-        });
+        } );
         builder.show();
     } // end method  getImage
 
@@ -315,18 +384,22 @@ public class PersonaFragment extends Fragment {
                     // se obtiene el bitmap de el archivo que entrega la camara
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    bitmapOptions.inJustDecodeBounds = false;
+                    bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;
+                    bitmapOptions.inDither = true;
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
-                            bitmapOptions);
+                        bitmapOptions);
+                    bitmap = Bitmap.createScaledBitmap( bitmap, 640, 480, false );
 
                     // se publica la imagen en el fragment para que la muestre en un ImageView
-                    publishImage(bitmap);
+                    publishImage( bitmap );
 
                     // se obtiene la ruta que el sistema asigna a la aplicacion y se crea el nombre de archivo
                     // utilizando la fecha actual
                     String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
+                        .getExternalStorageDirectory()
+                        + File.separator
+                        + "Phoenix" + File.separator + "default";
                     f.delete(); // se elimina el archivo temporal
                     OutputStream outFile = null;
 
@@ -352,7 +425,8 @@ public class PersonaFragment extends Fragment {
 
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
-                Cursor c = context.getContentResolver().query(selectedImage, filePath, null, null, null);
+                Cursor c = context.getContentResolver().query(selectedImage, filePath, null, null,
+                    null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
@@ -361,19 +435,46 @@ public class PersonaFragment extends Fragment {
 
                 try {
                     Uri uri = Uri.parse("file://" + picturePath);
-                    thumbnail = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
+                    thumbnail = BitmapFactory.decodeStream(context.getContentResolver()
+                        .openInputStream( uri ));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                // se publica la imagen el el fragment para ser mostrada
-                publishImage(thumbnail);
+                // se publica la imagen el el fragment parda ser mostrada
+                publishImage( thumbnail );
             } // fin else if ( codigo de respuesta )
         } // fin de else (respuesta correcta)
     } // fin del metodo onActivityResult
 
-    public void publishImage( Bitmap bitmap ){
-        ImageView imageView = (ImageView) view.findViewById( R.id.imgContainer );
-        imageView.setImageBitmap(bitmap);
+    public void publishImage( Bitmap bitmap ) {
+        ImageView imageView = ( ImageView ) view.findViewById( R.id.imgContainer );
+        imageView.setImageBitmap( bitmap );
+    }
+
+    public String guardarImange( Context context, String nombre, Bitmap imagen ) {
+        ContextWrapper cw = new ContextWrapper( context );
+        File dirImages = cw.getDir( "Imagenes", Context.MODE_PRIVATE );
+        File dirImagesMini = cw.getDir( "Imagenes", Context.MODE_PRIVATE );
+        File myPath = new File( dirImages, nombre );
+        File myPathMini = new File( dirImagesMini, nombre + "mini" );
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream( myPath );
+            imagen = Bitmap.createScaledBitmap( imagen, 200, 200, false );
+            imagen.compress( Bitmap.CompressFormat.PNG, 10, fos );
+            fos.flush();
+            fos = new FileOutputStream( myPathMini );
+            Bitmap mini = Bitmap.createScaledBitmap( imagen, 48, 48, false );
+            imagen.compress( Bitmap.CompressFormat.PNG, 10, fos );
+            fos.flush();
+
+        } catch( FileNotFoundException ex ) {
+            ex.printStackTrace();
+        } catch( IOException ex ) {
+            ex.printStackTrace();
+        }
+        return myPath.getAbsolutePath();
     }
 } // fin de la clase LocalFragment

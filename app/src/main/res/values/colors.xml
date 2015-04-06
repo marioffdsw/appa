@@ -36,6 +36,7 @@
     <color name="fondoBotones2">#002513 </color>
     <color name="fondoBotones3">#005d31 </color>
     <color name="gray">#ff787878</color>
+    <color name="gray_light">#ffb2b2b2</color>
 
 
     <array name="arregloColor">

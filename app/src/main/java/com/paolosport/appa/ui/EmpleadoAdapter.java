@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +60,13 @@ public class EmpleadoAdapter extends ArrayAdapter<Persona> {
             txtNombreEmpleado.setText(p.getNombre().toString());
             txtTelefonoPersona.setText( formatearTelefono(p.getTelefono().toString()));
             txtCedulaPersona.setText(p.getCedula().toString());
-            Bitmap bm = BitmapFactory.decodeResource( getContext().getResources(), R.drawable.puma);
+            Bitmap bm = null;
+            if ( p.getUrl().equals( "prueba" ) ) {
+                bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.puma);
+            }
+            else{
+                bm = BitmapFactory.decodeFile( p.getUrl() + "mini" );
+            }
             fotoPersona.setImageBitmap( bm );
             //fotoPersona.setImageBitmap(  );
 
@@ -70,13 +77,15 @@ public class EmpleadoAdapter extends ArrayAdapter<Persona> {
     private String formatearTelefono( String sinFormato ){
         StringBuilder sb = new StringBuilder();
 
-        sb.append( sinFormato.substring(0,3) )
+/*
+            sb.append( sinFormato.substring(0,3) )
                 .append(" ")
                 .append(sinFormato.substring(3, 6))
                 .append(" ")
                 .append(sinFormato.substring(6, sinFormato.length()));
-
-        return sb.toString();
+*/
+        return sinFormato;
+        //return sb.toString();
     } // end method formatearTelefono
 
 } // end class PrestamoAdapter
