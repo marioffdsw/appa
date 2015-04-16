@@ -23,7 +23,7 @@
     <color name="actionBar3">#ff024959</color>
 
     <color name="fuentes">#ff037E8C</color>
-    <color name="fondo">#ffeeeaf0</color>
+    <color name="fondo">#dbdee2</color>
     <color name="fondo2">#27ffbe00</color>
     <color name="fondo3">#fff5f5f5</color>
     <color name="bordes">#c0ff6300</color>
@@ -31,6 +31,12 @@
     <color name="dialogo">#fffffff1</color>
     <color name="iconos">#7e0000</color>
     <color name="action_bar">#ffbb0000</color>
+    <color name="action_bar2">#e2f92718</color>
+    <color name="sombra_titulo">#c73a65f5</color>
+    <color name="sombra_titulo_verde">#c700aa59</color>
+    <color name="sombra_titulo_amarillo">#c0e0db00</color>
+
+
 
 
     <color name="fondoBotones">#ff00522C </color>

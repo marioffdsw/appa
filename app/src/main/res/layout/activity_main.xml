@@ -4,34 +4,90 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="horizontal"
-    android:background="@color/fondo3"
-    >
+    android:background="@color/white">
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginBottom="30dp"
+        android:id="@+id/ll_izquierdo">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll_contenido_prestamo">
+            android:layout_height="fill_parent"
+            android:id="@+id/ll_contenido_prestamo"
+            android:background="@drawable/sombra"
+            android:layout_marginTop="12dp">
 
 
             <TableLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/tl_prestamo"
                 android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="25dp"
+                    android:background="@drawable/sombra_titulo">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Pedido"
+                        android:id="@+id/textView12"
+                        android:layout_gravity="center_horizontal|top"
+                        android:textColor="#ffffffff"
+                        android:textStyle="bold"
+                        android:elegantTextHeight="false" />
+                </FrameLayout>
 
                 <TableRow
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Destino:"
+                        android:textColor="#ff444444"
+                        android:id="@+id/tv_local"
+                        android:layout_gravity="center_vertical|right"
+                        android:textAllCaps="false"
+                        android:soundEffectsEnabled="false"
+                        android:singleLine="false"
+                        android:typeface="sans" />
+
+                    <Spinner
+                        android:id="@+id/sp_local_prestamo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background_ab_verde"
+                        android:popupBackground="@android:drawable/editbox_background"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -40,7 +96,7 @@
                         android:text="Marca:"
                         android:id="@+id/tv_marca"
                         android:textColor="#ff444444"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center_vertical|right"
                         android:textAllCaps="false"
                         android:soundEffectsEnabled="false"
                         android:singleLine="false"
@@ -65,8 +121,48 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="12dp"
-                    android:gravity="center_vertical">
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff444444"
+                        android:id="@+id/tv_codigo"
+                        android:typeface="sans"
+                        android:text="Codigo:"
+
+                        android:layout_gravity="center_vertical|right" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_codigo"
+                        android:layout_weight="1"
+                        android:inputType="textCapWords"
+                        android:background="@android:drawable/editbox_background_normal"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@null"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageButton2"
+                        android:src="@android:drawable/ic_menu_camera"
+                        android:visibility="invisible" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -76,20 +172,19 @@
                         android:textColor="#ff444444"
                         android:id="@+id/tv_descripcion"
                         android:textAllCaps="false"
-                        android:soundEffectsEnabled="false"
-                        android:singleLine="false"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        android:layout_gravity="center_vertical|right" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/et_descripcion"
                         android:layout_weight="1"
-                        android:layout_marginLeft="10dp"
                         android:inputType="textCapWords"
                         android:background="@android:drawable/editbox_background_normal"
                         android:textColor="@color/black"
-                        android:textCursorDrawable="@null" />
+                        android:textCursorDrawable="@null"
+                        android:layout_marginLeft="10dp" />
 
                     <ImageButton
                         android:layout_width="wrap_content"
@@ -105,7 +200,8 @@
                     android:layout_marginBottom="12dp"
                     android:gravity="center_vertical"
 
-                    >
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -114,7 +210,7 @@
                         android:text="Talla:"
                         android:textColor="#ff444444"
                         android:id="@+id/tv_talla"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center_vertical|right"
                         android:textAllCaps="false"
                         android:soundEffectsEnabled="false"
                         android:singleLine="false"
@@ -124,41 +220,53 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/et_talla"
-                        android:layout_marginLeft="10dp"
                         android:inputType="numberDecimal"
                         android:background="@android:drawable/editbox_background_normal"
                         android:textColor="@color/black"
                         android:cursorVisible="false"
                         android:textCursorDrawable="@null"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp" />
 
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px" />
+                    <ToggleButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New ToggleButton"
+                        android:textOn=""
+                        android:textOff=""
+                        android:id="@+id/toggleButton"
+                        android:background="@drawable/switch_bg"
+                        android:checked="false" />
+
+                    <!--android:track="@drawable/track_bg"-->
+
                 </TableRow>
 
                 <TableRow
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/ploplo"
                     android:layout_marginBottom="12dp"
-                    android:gravity="center_vertical">
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Local:"
+                        android:text="Persona:"
                         android:textColor="#ff444444"
-                        android:id="@+id/tv_local"
-                        android:layout_gravity="center_vertical"
+                        android:id="@+id/textView13"
+                        android:layout_gravity="center_vertical|right"
                         android:textAllCaps="false"
                         android:soundEffectsEnabled="false"
                         android:singleLine="false"
                         android:typeface="sans" />
 
                     <Spinner
-                        android:id="@+id/sp_local_prestamo"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/sp_persona_prestamo"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:spinnerMode="dropdown"
                         android:background="@drawable/spinner_background_ab_verde"
@@ -171,30 +279,6 @@
                         android:layout_height="20px" />
                 </TableRow>
 
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Empleado:"
-                        android:textColor="#ff444444"
-                        android:id="@+id/tv_empleado"
-                        android:layout_gravity="center_vertical"
-                        android:textAllCaps="false"
-                        android:soundEffectsEnabled="false"
-                        android:singleLine="false"
-                        android:typeface="sans" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_persona"
-                        android:layout_marginLeft="10dp" />
-                </TableRow>
             </TableLayout>
 
         </LinearLayout>
@@ -203,105 +287,144 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="2"
         android:weightSum="1"
-        android:id="@+id/ee">
-
-
+        android:id="@+id/ee"
+        android:layout_weight="1">
 
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone">
+            android:layout_height="200dp"
+            android:background="@drawable/sombra"
+            android:layout_margin="12dp"
+            android:id="@+id/ttttt">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="locales"
-                android:id="@+id/btnLocal"
-                android:onClick="local"
-                />
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:background="@drawable/sombra_titulo_verde"
+                android:id="@+id/aqwe">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="marca"
-                android:id="@+id/btnMarca"
-                android:onClick="marca" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Pedido"
+                    android:id="@+id/tv_pedido"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PERSONA"
-                android:id="@+id/btnPersona"
-                android:onClick="persona" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PRESTAMOS"
-                android:id="@+id/btnPrestamos"
-                android:onClick="prestamos"/>
-
-            <Button android:id="@+id/btnListaPrestamos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lista_prestamos"
-                android:onClick="listaPrestamos"/>
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="100dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="right"
-            android:gravity="center_vertical">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:background="@drawable/boton_redondo"
-                android:soundEffectsEnabled="false"
-                android:saveEnabled="false" />
+                android:visibility="gone"
+                >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/btn_nuevo"
-                android:layout_weight="1"
-                android:clickable="true" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="locales"
+                    android:id="@+id/btnLocal"
+                    android:onClick="local"
+                    />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView3"
-                android:src="@drawable/btn_bote"
-                android:layout_weight="1"
-                android:clickable="true" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="marca"
+                    android:id="@+id/btnMarca"
+                    android:onClick="marca" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView4"
-                android:src="@drawable/btn_blanco"
-                android:layout_weight="1"
-                android:clickable="true" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PERSONA"
+                    android:id="@+id/btnPersona"
+                    android:onClick="persona" />
 
-            <ImageView
-                android:layout_width="wrap_content"
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRESTAMOS"
+                    android:id="@+id/btnPrestamos"
+                    android:onClick="prestamos"/>
+
+                <Button android:id="@+id/btnListaPrestamos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lista_prestamos"
+                    android:onClick="listaPrestamos"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Button"
+                    android:id="@+id/button"
+                    android:onClick="cargar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView5"
-                android:src="@drawable/btn_yave"
-                android:layout_weight="1"
-                android:clickable="true" />
+                android:gravity="center_vertical"
+                android:layout_gravity="bottom">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/cc"
+                    android:layout_weight="1"
+                    android:clickable="true" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/imageView3"
+                    android:src="@drawable/dd"
+                    android:layout_weight="1"
+                    android:clickable="true" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/ee"
+                    android:layout_weight="1"
+                    android:clickable="true" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/ff"
+                    android:layout_weight="1"
+                    android:clickable="true" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/imageView7"
+                    android:src="@drawable/gg"
+                    android:layout_weight="1"
+                    android:clickable="true" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -271,7 +271,7 @@ public class LocalFragment extends Fragment {
         catch (Exception e){e.printStackTrace();}
 
         if(listaLocales!=null  && !listaLocales.isEmpty()){
-            ListViewAdapterLocal lista = new ListViewAdapterLocal(getActivity().getApplicationContext(), R.layout.local_item,listaLocales);
+            ListViewAdapterLocal lista = new ListViewAdapterLocal(getActivity().getApplicationContext(), R.layout.local_item_lv,listaLocales);
             lv_lista_locales.setAdapter(lista);
         }
         else{

@@ -6,16 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.Shader;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,14 +24,16 @@ import com.paolosport.appa.activities.ActivityListaPrestamos;
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
-import com.paolosport.appa.activities.opcion_informacion;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
+import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.entities.Local;
 import com.paolosport.appa.persistencia.entities.Marca;
+import com.paolosport.appa.persistencia.entities.Persona;
 import com.paolosport.appa.spinnerLocalPaquete.SpinnerAdapterLocal;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
+import com.paolosport.appa.spinnerPersonaPaquete.SpinnerAdapterPersonaLista;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -59,20 +51,29 @@ public class MainActivity extends ActionBarActivity {
 
     MarcaDAO marcaDAO;
     LocalDAO localDAO;
-    private Spinner sp_marca,   sp_local;
+    PersonaDAO personaDAO;
+
+    HorizontalListView lv_persona;
+
+    private Spinner sp_marca,   sp_local, sp_persona;
     String id_marca,url_marca;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         sesion=preferences.getBoolean("sesion",sesion);
+        //lv_persona= (HorizontalListView)findViewById(R.id.lv_persona);
 
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
         marcaDAO = new MarcaDAO(this,helper);
+        personaDAO = new PersonaDAO(this,helper);
+
 
         if(sesion==true){
             Toast.makeText(getApplicationContext(), "Sesión inicada", Toast.LENGTH_SHORT).show();
@@ -80,9 +81,8 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show();
         }
         DatosPorDefecto();
+        CargarDatosListaPersonas();
 
-        //SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        //sesion=prefe.getBoolean("sesion",true);
 
         /*imageView = (ImageView) findViewById(R.id.imageView1);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.catico);
@@ -124,15 +124,24 @@ public class MainActivity extends ActionBarActivity {
         }*/
     }
 
-
+    private void CargarDatosListaPersonas() {
+        personaDAO.open();
+        final ArrayList<Persona> listaPersonas = personaDAO.retrieveAll();
+        sp_persona= (android.widget.Spinner)findViewById(R.id.sp_persona_prestamo);
+        sp_persona.setAdapter(new SpinnerAdapterPersonaLista(this,listaPersonas));
+        personaDAO.close();
+    }
     //?????????????????????????????????????????????????????????????????????????
     //?????????????????????????????????????????????????????????????????????????
     private void DatosPorDefecto() {
         marcaDAO.open();
         localDAO.open();
+        personaDAO.open();
 
         final ArrayList<Marca> listaMarcas = marcaDAO.retrieveAll();
         final ArrayList<Local> listaLocales = localDAO.retrieveAll();
+        final ArrayList<Persona> listaPersonas = personaDAO.retrieveAll();
+
 
 
         sp_marca= (android.widget.Spinner)findViewById(R.id.sp_marca_prestamo);
@@ -143,6 +152,7 @@ public class MainActivity extends ActionBarActivity {
 
         marcaDAO.close();
         localDAO.close();
+        personaDAO.close();
 
         sp_marca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -186,14 +196,22 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
+
     }//end method DatosPorDefecto
 
 
 
+    public void cargar(View view) {
+        DatosPorDefecto();
+    }
+
+
+    public void mostrarFotosPersonas(){
 
 
 
 
+    }
 
 
 
@@ -257,8 +275,8 @@ public class MainActivity extends ActionBarActivity {
                 mostrar(findViewById(id));
                 break;
             case R.id.Ayuda:
-                Intent a = new Intent(this, opcion_informacion.class);
-                startActivity(a);
+                //Intent a = new Intent(this, opcion_informacion.class);
+                //startActivity(a);
                break;
         }
         return super.onOptionsItemSelected(item);

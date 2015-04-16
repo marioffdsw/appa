@@ -201,8 +201,8 @@ public class MarcaFragment extends Fragment {
             int path = getResources().getIdentifier(url,"drawable", "com.paolosport.appa");
             iv_imagen_marca.setImageResource(path);
         }
-        btn_crear_marca.setVisibility(View.VISIBLE);
-        btn_editar_marca.setVisibility(View.GONE);
+        btn_crear_marca.setVisibility(View.GONE);
+        btn_editar_marca.setVisibility(View.VISIBLE);
 
     }
     //?????????????????????????????????????????????????????????????????????????
@@ -224,7 +224,7 @@ public class MarcaFragment extends Fragment {
 
         String id = id_marca.toString();
         String nombre = et_nombre_marca.getText().toString();
-        String url = url_marca.toString();
+        String url = tv_url_marca.getText().toString();
 
         if((nombre == null) || (nombre.equals(""))){
             Toast.makeText(getActivity().getApplicationContext(), "Ingrese Nombre", Toast.LENGTH_SHORT).show();
@@ -333,7 +333,7 @@ public class MarcaFragment extends Fragment {
         StringBuilder sb = new StringBuilder();
 
         if(listaMarcas!=null  && !listaMarcas.isEmpty()){
-            //ListViewAdapterMarca lista = new ListViewAdapterMarca(getActivity().getApplicationContext(), R.layout.spinner_list_item,listaMarcas);
+            //ListViewAdapterMarca lista = new ListViewAdapterMarca(getActivity().getApplicationContext(), R.layout.spinner_list_item_local,listaMarcas);
             lv_lista_marcas.setAdapter(new ListViewAdapterMarca(getActivity().getApplicationContext(), listaMarcas));
             //lv_lista_marcas.setAdapter(lista);
         }

@@ -18,7 +18,9 @@ import java.util.ArrayList;
 public class PrestamoDAO extends BaseDAO<Prestamo>{
 
     static final String TABLE_NAME = "prestamos";
+    static final String KEY_ID = "id";
     static final String KEY_CODIGO = "codigo";
+    static final String KEY_FOTO = "foto";
     static final String KEY_DESCRIPCION = "descripcion";
     static final String KEY_TALLA = "talla";
     static final String KEY_FECHA = "fecha";
@@ -54,8 +56,10 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             Log.i( TAG + " prestamo", "PrestamoDAO.create()" );
 
             ContentValues initialValues = new ContentValues();
+
             initialValues.put( KEY_CODIGO, prestamo.getCodigo() );
             initialValues.put( KEY_DESCRIPCION, prestamo.getDescripcion() );
+            initialValues.put( KEY_FOTO, prestamo.getFoto() );
             initialValues.put( KEY_TALLA, prestamo.getTalla() );
             initialValues.put( KEY_FECHA, prestamo.getFecha().toString() );
             initialValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
@@ -76,15 +80,17 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     public Estado update(Prestamo prestamo) {
         try{
             ContentValues updateValues = new ContentValues();
+
             updateValues.put( KEY_CODIGO, prestamo.getCodigo() );
             updateValues.put( KEY_DESCRIPCION, prestamo.getDescripcion() );
+            updateValues.put( KEY_FOTO, prestamo.getFoto() );
             updateValues.put( KEY_TALLA, prestamo.getTalla() );
             updateValues.put( KEY_FECHA, prestamo.getFecha().toString() );
             updateValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
             updateValues.put( KEY_LOCAL, prestamo.getLocal().getId() );
             updateValues.put( KEY_MARCA, prestamo.getMarca().getId() );
 
-            db.update(TABLE_NAME, updateValues, KEY_CODIGO + "=" + prestamo.getCodigo(), null);
+            db.update(TABLE_NAME, updateValues, KEY_ID + "=" + prestamo.getId(), null);
         }
         catch( Exception e ){
             return Estado.ERROR_ACTUALIZAR;
@@ -95,18 +101,21 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
     // asume que se se ha establecido los otros daos
     @Override
-    public Prestamo retrieve(String key) {
+    public Prestamo retrieve(String id) {
         Cursor cursor= null;
         try{
             cursor = db.query(TABLE_NAME,            // FROM
-                    new String[]{ KEY_CODIGO,
+                    new String[]{
+                            KEY_ID,
+                            KEY_CODIGO,
                             KEY_DESCRIPCION,
+                            KEY_FOTO,
                             KEY_TALLA,
                             KEY_FECHA,
                             KEY_EMPLEADO,
                             KEY_LOCAL,
                             KEY_MARCA },       // SELECT
-                    KEY_CODIGO + "=" + key, null,           // WHERE
+                    KEY_ID + "=" + id, null,           // WHERE
                     null,                                   // GROUP BY
                     null,                                   // HAVING
                     null,                                   // ORDER BY
@@ -122,21 +131,23 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         if ( cursor != null ){ // ha encontrado el local con la id entregada
             cursor.moveToFirst();
 
-            key = cursor.getString(0);
-            String descripcion = cursor.getString(1);
-            Integer talla = cursor.getInt(2);
-            Timestamp fecha = formatearFecha( cursor.getString( 3 ) );
+            id = cursor.getString(0);
+            String codigo = cursor.getString(1);
+            String descripcion = cursor.getString(2);
+            String foto = cursor.getString(3);
+            String talla = cursor.getString(4);
+            Timestamp fecha = formatearFecha( cursor.getString( 5 ) );
             personaDAO.open();
-            Persona empleado = personaDAO.retrieve( cursor.getString( 4 ) );
+            Persona empleado = personaDAO.retrieve( cursor.getString( 6 ) );
             personaDAO.close();
             localDAO.open();
-            Local local = localDAO.retrieve( cursor.getString( 5 ) );
+            Local local = localDAO.retrieve( cursor.getString( 7 ) );
             localDAO.close();
             marcaDAO.open();
-            Marca marca = marcaDAO.retrieve( cursor.getString( 6 ) );
+            Marca marca = marcaDAO.retrieve( cursor.getString( 8 ) );
             marcaDAO.close();
 
-            prestamo = new Prestamo( key, descripcion, talla, fecha, empleado, local, marca );
+            prestamo = new Prestamo( id,codigo, descripcion, foto, talla, fecha, empleado, local, marca );
         }
 
         return prestamo;
@@ -146,8 +157,11 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     @Override
     public ArrayList<Prestamo> retrieveAll() {
         Cursor cursor = db.query(TABLE_NAME,            // FROM
-                new String[]{ KEY_CODIGO,
+                new String[]{
+                        KEY_ID,
+                        KEY_CODIGO,
                         KEY_DESCRIPCION,
+                        KEY_FOTO,
                         KEY_TALLA,
                         KEY_FECHA,
                         KEY_EMPLEADO,
@@ -169,24 +183,27 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             // itera por todas las filas de la tabla y crea los objetos
             try {
                 do {
-                    String key = cursor.getString(0);
-                    String descripcion = cursor.getString(1);
-                    Integer talla = cursor.getInt(2);
-                    Timestamp fecha = formatearFecha( cursor.getString( 3 ) );
+
+                    String id= cursor.getString(0);
+                    String codigo = cursor.getString(1);
+                    String descripcion = cursor.getString(2);
+                    String foto = cursor.getString(3);
+                    String talla = cursor.getString(4);
+                    Timestamp fecha = formatearFecha( cursor.getString( 5 ) );
 
                     personaDAO.open();
-                    Persona empleado = personaDAO.retrieve( cursor.getString( 4 ) );
+                    Persona empleado = personaDAO.retrieve( cursor.getString( 6) );
                     personaDAO.close();
 
                     localDAO.open();
-                    Local local = localDAO.retrieve( cursor.getString( 5 ) );
+                    Local local = localDAO.retrieve( cursor.getString( 7 ) );
                     localDAO.close();
 
                     marcaDAO.open();
-                    Marca marca = marcaDAO.retrieve( cursor.getString( 6 ) );
+                    Marca marca = marcaDAO.retrieve( cursor.getString( 8 ) );
                     marcaDAO.close();
 
-                    prestamo = new Prestamo( key, descripcion, talla, fecha, empleado, local, marca );
+                    prestamo = new Prestamo( id,codigo, descripcion, foto, talla, fecha, empleado, local, marca );
                     listaPrestamos.add(prestamo);
                 } while (cursor.moveToNext());
             }
@@ -201,7 +218,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     @Override
     public Estado delete(Prestamo prestamo) {
         try{
-            db.delete( TABLE_NAME, KEY_CODIGO + "=" + prestamo.getCodigo(), null );
+            db.delete( TABLE_NAME, KEY_ID + "=" + prestamo.getId(), null );
         }
         catch( Exception e ){
             e.printStackTrace();

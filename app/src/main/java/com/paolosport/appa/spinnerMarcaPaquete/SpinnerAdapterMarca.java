@@ -38,12 +38,12 @@ import java.util.regex.Pattern;
             super(context, R.layout.spinner_selected_item, datos);
             this.context = context;
             this.datos = datos;
-            Collections.sort( datos, new Comparator<Marca>() {
+           /* Collections.sort( datos, new Comparator<Marca>() {
                 @Override
                 public int compare(Marca uno, Marca dos) {
                     return new String( uno.getNombre() ).compareTo( dos.getNombre() );
                 }
-            });
+            });*/
 
         }
 

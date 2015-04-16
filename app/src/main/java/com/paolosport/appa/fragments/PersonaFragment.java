@@ -105,7 +105,7 @@ public class PersonaFragment extends Fragment {
 
             view.findViewById( R.id.layoutOops ).setVisibility( View.INVISIBLE );
             view.findViewById( R.id.lstEmpleados ).setVisibility( View.VISIBLE );
-            Toast.makeText( context, listaPersonas.get( 10 ).getUrl(), Toast.LENGTH_LONG ).show();
+            //Toast.makeText( context, listaPersonas.get( 10 ).getUrl(), Toast.LENGTH_LONG ).show();
         }
         // se carga los datos que existan sobre los prestamos
         Activity activity = ( Activity ) context;

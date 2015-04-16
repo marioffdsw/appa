@@ -8,7 +8,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
     static final String DATABASE_NAME = "appa.db";
-    static final int DATABASE_VERSION = 8;
+    static final int DATABASE_VERSION = 9;
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
@@ -51,9 +51,10 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
 
     static final String INSERT_TABLE_MARCA = "INSERT INTO marca ( nombre, logo) VALUES "+
-                                             "('adidas','adidas'),"+
-                                             "('puma','puma' ),"+
-                                             "('lecoq','lecoq'),"+
+                                             "('Adidas','adidas'),"+
+                                             "('Reebok','reebok'),"+
+                                             "('Puma','puma' ),"+
+                                             "('Le coq Sportif','lecoq'),"+
                                              "('Lacoste','lacoste' ),"+
                                              "('Nike','nike'),"+
                                              "('New Balance','nb'),"+
@@ -61,14 +62,17 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
                                              "('Cat','cat'),"+
                                              "('Merrell','merrell'),"+
                                              "('HH','hh'),"+
-                                             "('Timberland','timberland');";
+                                             "('Dolomite','dolomite'),"+
+                                             "('Swiss Brand','swiss');";
 
 
     static final String DROP_TABLE_MARCA = "DROP TABLE IF EXISTS marca";
 
     static final String CREATE_TABLE_PRESTAMOS = "CREATE TABLE prestamos(" +
-            "codigo         INTEGER        PRIMARY KEY      AUTOINCREMENT," +
+            "id             INTEGER        PRIMARY KEY      AUTOINCREMENT," +
+            "codigo         TEXT," +
             "descripcion    TEXT," +
+            "foto           TEXT," +    //uri de la foto
             "talla          INTEGER     NOT NULL," +
             "fecha          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL," +
             "empleado       TEXT        NOT NULL," +
@@ -131,6 +135,6 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( TEST_PERSONA );
         db.execSQL( INSERT_TABLE_LOCAL );
         db.execSQL( INSERT_TABLE_MARCA );
-        db.execSQL( TEST_PRESTAMOS );
+       // db.execSQL( TEST_PRESTAMOS );
     } // end method setupTestDatabase
 }

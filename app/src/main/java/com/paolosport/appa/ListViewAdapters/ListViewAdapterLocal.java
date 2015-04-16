@@ -40,7 +40,7 @@ public class ListViewAdapterLocal extends ArrayAdapter<Local> {
 
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.local_item, null);
+            v = vi.inflate(R.layout.local_item_lv, null);
         }
 
         Local p = getItem(position);

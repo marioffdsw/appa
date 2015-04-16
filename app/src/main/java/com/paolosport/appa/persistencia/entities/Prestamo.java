@@ -4,22 +4,35 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Prestamo {
+
+    private String id;
     private String codigo;
     private String descripcion;
-    private int talla;
+    private String foto;
+    private String talla;
     private Timestamp fecha;
     private Persona empleado;
     private Local local;
     private Marca marca;
 
-    public Prestamo(String codigo, String descripcion, int talla, Timestamp fecha, Persona empleado, Local local, Marca marca) {
+    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca) {
+        this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
+        this.foto = foto;
         this.talla = talla;
         this.fecha = fecha;
         this.empleado = empleado;
         this.local = local;
         this.marca = marca;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCodigo() {
@@ -38,11 +51,19 @@ public class Prestamo {
         this.descripcion = descripcion;
     }
 
-    public int getTalla() {
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getTalla() {
         return talla;
     }
 
-    public void setTalla(int talla) {
+    public void setTalla(String talla) {
         this.talla = talla;
     }
 

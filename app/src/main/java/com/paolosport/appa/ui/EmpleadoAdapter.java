@@ -60,6 +60,7 @@ public class EmpleadoAdapter extends ArrayAdapter<Persona> {
             txtNombreEmpleado.setText(p.getNombre().toString());
             txtTelefonoPersona.setText( formatearTelefono(p.getTelefono().toString()));
             txtCedulaPersona.setText(p.getCedula().toString());
+
             Bitmap bm = null;
             if ( p.getUrl().equals( "prueba" ) ) {
                 bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.puma);

@@ -18,7 +18,7 @@ import android.widget.ImageView;
 
 public class CircularImageView extends ImageView
 {
-    private int borderWidth = 6;
+    private int borderWidth = 3;
     private int viewWidth;
     private int viewHeight;
     private Bitmap image;
@@ -55,7 +55,7 @@ public class CircularImageView extends ImageView
         setBorderColor(Color.rgb(250,250,250));
         paintBorder.setAntiAlias(true);
         this.setLayerType(LAYER_TYPE_SOFTWARE, paintBorder);
-        paintBorder.setShadowLayer(6.0f, 0.0f, 0.0f, Color.BLACK);
+        paintBorder.setShadowLayer(1.0f, 0.0f, 0.0f, Color.BLACK);
         //paintBorder.setShadowLayer(0.0f, 0.0f, 0.0f, Color.BLACK);
 
     }

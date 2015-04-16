@@ -1,0 +1,10 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item                               android:drawable="@drawable/ico_atras" />
+    <item android:state_checked="true" android:drawable="@drawable/ico_conf_sesion"/>
+    <item android:state_pressed="true"  android:drawable="@drawable/ico_sesion" />
+
+
+
+</selector>

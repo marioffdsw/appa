@@ -55,7 +55,7 @@ public class SpinnerAdapterLocal extends ArrayAdapter<Local>
         if (row == null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.spinner_list_item, parent, false);
+            row = layoutInflater.inflate(R.layout.spinner_list_item_local, parent, false);
         }
 
         if (row.getTag() == null)

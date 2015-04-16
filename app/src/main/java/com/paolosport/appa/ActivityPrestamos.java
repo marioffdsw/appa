@@ -149,15 +149,16 @@ public class ActivityPrestamos extends ActionBarActivity {
         catch ( Exception e){
             Log.w( TAG ,"error con marca");
         }
-        marcaDAO.close();;
-
+        marcaDAO.close();
+        String id="";
         String codigo = txtCodigo.getText().toString();
+        String foto ="";
         String descripcion = txtDescripcion.getText().toString();
-        int talla = Integer.parseInt(txtTalla.getText().toString());
+        String talla = txtTalla.getText().toString();
         Date date = new Date();
         Timestamp fecha = new Timestamp( date.getTime() );
 
-        Prestamo prestamo = new Prestamo( codigo, descripcion, talla, fecha, empleado, local, marca );
+        Prestamo prestamo = new Prestamo( id,codigo, descripcion, foto,talla, fecha, empleado, local, marca );
 
         prestamoDAO.open();
         prestamoDAO.create(prestamo);

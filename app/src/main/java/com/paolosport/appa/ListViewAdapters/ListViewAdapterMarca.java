@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
         public ListViewAdapterMarca(Context context, List<Marca> datos)
         {
             //se debe indicar el layout para el item que seleccionado (el que se muestra sobre el botón del botón)
-            super(context, R.layout.marca_item, datos);
+            super(context, R.layout.marca_item_lv, datos);
             this.context = context;
             this.datos = datos;
         }
@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
 
             if (convertView == null)
             {
-                convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marca_item,null);
+                convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marca_item_lv,null);
             }
             layoutAnimado = (LinearLayout)convertView.findViewById(R.id.ll_texto);
             Pattern pat = Pattern.compile(".*/.*");
