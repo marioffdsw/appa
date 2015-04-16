@@ -21,7 +21,6 @@
     <string name="title_activity_interfaz_prestamos">InterfazPrestamos</string>
     <string name="title_activity_activity_list">ActivityList</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello local fragment</string>
     <string name="take_photo">Toma una fotografía</string>
     <string name="from_gallery">Escoge desde la galeria</string>
@@ -72,5 +71,8 @@
     </array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="lst_prestamos">Lista</string>
+    <string name="frm_prestamos">Formulario</string>
 
 </resources>

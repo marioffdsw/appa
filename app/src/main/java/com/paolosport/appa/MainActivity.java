@@ -1,11 +1,24 @@
 package com.paolosport.appa;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.Shader;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +37,9 @@ import com.paolosport.appa.activities.ActivityListaPrestamos;
 import com.paolosport.appa.activities.ActivityLocal;
 import com.paolosport.appa.activities.ActivityMarca;
 import com.paolosport.appa.activities.ActivityPersona;
+import com.paolosport.appa.activities.opcion_informacion;
+import com.paolosport.appa.fragments.PrestamoFormFragment;
+import com.paolosport.appa.fragments.PrestamoLstFragment;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
@@ -58,22 +74,22 @@ public class MainActivity extends ActionBarActivity {
     private Spinner sp_marca,   sp_local, sp_persona;
     String id_marca,url_marca;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         sesion=preferences.getBoolean("sesion",sesion);
-        //lv_persona= (HorizontalListView)findViewById(R.id.lv_persona);
 
         helper = new AdminSQLiteOpenHelper( this );
         localDAO = new LocalDAO( this, helper );
         marcaDAO = new MarcaDAO(this,helper);
         personaDAO = new PersonaDAO(this,helper);
-
+        // setup action bar for tabs
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         if(sesion==true){
             Toast.makeText(getApplicationContext(), "Sesión inicada", Toast.LENGTH_SHORT).show();
@@ -124,24 +140,15 @@ public class MainActivity extends ActionBarActivity {
         }*/
     }
 
-    private void CargarDatosListaPersonas() {
-        personaDAO.open();
-        final ArrayList<Persona> listaPersonas = personaDAO.retrieveAll();
-        sp_persona= (android.widget.Spinner)findViewById(R.id.sp_persona_prestamo);
-        sp_persona.setAdapter(new SpinnerAdapterPersonaLista(this,listaPersonas));
-        personaDAO.close();
-    }
+
     //?????????????????????????????????????????????????????????????????????????
     //?????????????????????????????????????????????????????????????????????????
     private void DatosPorDefecto() {
         marcaDAO.open();
         localDAO.open();
-        personaDAO.open();
 
         final ArrayList<Marca> listaMarcas = marcaDAO.retrieveAll();
         final ArrayList<Local> listaLocales = localDAO.retrieveAll();
-        final ArrayList<Persona> listaPersonas = personaDAO.retrieveAll();
-
 
 
         sp_marca= (android.widget.Spinner)findViewById(R.id.sp_marca_prestamo);
@@ -152,7 +159,6 @@ public class MainActivity extends ActionBarActivity {
 
         marcaDAO.close();
         localDAO.close();
-        personaDAO.close();
 
         sp_marca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -196,22 +202,14 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
-
     }//end method DatosPorDefecto
 
 
 
-    public void cargar(View view) {
-        DatosPorDefecto();
-    }
-
-
-    public void mostrarFotosPersonas(){
 
 
 
 
-    }
 
 
 
@@ -275,8 +273,8 @@ public class MainActivity extends ActionBarActivity {
                 mostrar(findViewById(id));
                 break;
             case R.id.Ayuda:
-                //Intent a = new Intent(this, opcion_informacion.class);
-                //startActivity(a);
+                Intent a = new Intent(this, opcion_informacion.class);
+                startActivity(a);
                break;
         }
         return super.onOptionsItemSelected(item);
@@ -301,23 +299,48 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    public static class TabListener<T extends Fragment > implements ActionBar.TabListener {
+        private Fragment mFragment;
+        private final Activity mActivity;
+        private final String mTag;
+        private final Class<T> mClass;
 
+        /** Constructor used each time a new tab is created.
+         * @param activity  The host Activity, used to instantiate the fragment
+         * @param tag  The identifier tag for the fragment
+         * @param clz  The fragment's Class, used to instantiate the fragment
+         */
+        public TabListener(Activity activity, String tag, Class<T> clz) {
+            mActivity = activity;
+            mTag = tag;
+            mClass = clz;
+        }
 
+    /* The following are each of the ActionBar.TabListener callbacks */
 
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+            // Check if the fragment is already initialized
+            if (mFragment == null) {
+                // If not, instantiate and add it to the activity
+                mFragment = Fragment.instantiate(mActivity, mClass.getName());
+                ft.add(android.R.id.content, mFragment, mTag);
+            } else {
+                // If it exists, simply attach it in order to show it
+                ft.attach(mFragment);
+            }
+        }
 
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            if (mFragment != null) {
+                // Detach the fragment, because another one is being attached
+                ft.detach(mFragment);
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            // User selected the already selected tab. Usually do nothing.
+        }
+    }
 
     /** el metodo local, lanza una activity que permite introducir
      *  información sobre un nuevo empleado */
