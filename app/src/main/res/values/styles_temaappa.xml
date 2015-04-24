@@ -88,5 +88,24 @@
         <item name="dropDownListViewStyle">@style/DropDownListView.Temaappa</item>
     </style>
 
+    <style name="PauseDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fadein</item>
+        <item name="android:windowExitAnimation">@anim/fadeout</item>
+    </style>
+
+
+    <style name="SinFondoDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/SinFondoDialogAnimation</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    <style name="SinFondoDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fadein_acep</item>
+        <item name="android:windowExitAnimation">@anim/fadeout_acep</item>
+    </style>
 
 </resources>

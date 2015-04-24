@@ -16,275 +16,346 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/ll_izquierdo">
+        android:id="@+id/ll_izquierdo"
+        android:layout_margin="12dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/ll_contenido_prestamo"
-            android:background="@drawable/sombra"
-            android:layout_marginTop="12dp">
+            android:id="@+id/ll_contenido_item"
+            android:background="@drawable/sombra">
 
 
-            <TableLayout
-                android:layout_width="fill_parent"
+            <ScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tl_prestamo"
-                android:orientation="vertical">
+                android:id="@+id/scrollView6" >
 
-                <FrameLayout
+                <TableLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="25dp"
-                    android:background="@drawable/sombra_titulo">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tl_prestamo"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Pedido"
-                        android:id="@+id/textView12"
-                        android:layout_gravity="center_horizontal|top"
-                        android:textColor="#ffffffff"
-                        android:textStyle="bold"
-                        android:elegantTextHeight="false" />
-                </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="25dp"
+                        android:background="@drawable/sombra_titulo">
 
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="12dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="12dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Item"
+                            android:id="@+id/textView12"
+                            android:layout_gravity="center_horizontal|top"
+                            android:textColor="#ffffffff"
+                            android:textStyle="bold"
+                            android:elegantTextHeight="false" />
+                    </FrameLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Destino:"
-                        android:textColor="#ff444444"
-                        android:id="@+id/tv_local"
-                        android:layout_gravity="center_vertical|right"
-                        android:textAllCaps="false"
-                        android:soundEffectsEnabled="false"
-                        android:singleLine="false"
-                        android:typeface="sans" />
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="12dp">
 
-                    <Spinner
-                        android:id="@+id/sp_local_prestamo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"
-                        android:background="@drawable/spinner_background_ab_verde"
-                        android:popupBackground="@android:drawable/editbox_background"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Destino:"
+                            android:textColor="#ff444444"
+                            android:id="@+id/tv_local"
+                            android:layout_gravity="center_vertical|right"
+                            android:textAllCaps="false"
+                            android:soundEffectsEnabled="false"
+                            android:singleLine="false"
+                            android:typeface="sans" />
 
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px" />
-                </TableRow>
+                        <Spinner
+                            android:id="@+id/sp_local_prestamo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown"
+                            android:background="@drawable/spinner_background_ab_verde"
+                            android:popupBackground="@android:drawable/editbox_background"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp" />
 
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="12dp">
+                        <Space
+                            android:layout_width="20px"
+                            android:layout_height="20px" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Marca:"
-                        android:id="@+id/tv_marca"
-                        android:textColor="#ff444444"
-                        android:layout_gravity="center_vertical|right"
-                        android:textAllCaps="false"
-                        android:soundEffectsEnabled="false"
-                        android:singleLine="false"
-                        android:typeface="sans" />
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="12dp">
 
-                    <Spinner
-                        android:id="@+id/sp_marca_prestamo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"
-                        android:background="@drawable/spinner_background_ab_verde"
-                        android:popupBackground="@android:drawable/editbox_background"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Marca:"
+                            android:id="@+id/tv_marca"
+                            android:textColor="#ff444444"
+                            android:layout_gravity="center_vertical|right"
+                            android:textAllCaps="false"
+                            android:soundEffectsEnabled="false"
+                            android:singleLine="false"
+                            android:typeface="sans" />
 
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px" />
-                </TableRow>
+                        <Spinner
+                            android:id="@+id/sp_marca_prestamo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown"
+                            android:background="@drawable/spinner_background_ab_verde"
+                            android:popupBackground="@android:drawable/editbox_background"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp" />
 
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="12dp">
+                        <Space
+                            android:layout_width="20px"
+                            android:layout_height="20px" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#ff444444"
-                        android:id="@+id/tv_codigo"
-                        android:typeface="sans"
-                        android:text="Codigo:"
-
-                        android:layout_gravity="center_vertical|right" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/et_codigo"
-                        android:layout_weight="1"
-                        android:inputType="textCapWords"
-                        android:background="@android:drawable/editbox_background_normal"
-                        android:textColor="@color/black"
-                        android:textCursorDrawable="@null"
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="12dp">
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageButton2"
-                        android:src="@android:drawable/ic_menu_camera"
-                        android:visibility="invisible" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#ff444444"
+                            android:id="@+id/tv_codigo"
+                            android:typeface="sans"
+                            android:text="Codigo:"
 
-                </TableRow>
+                            android:layout_gravity="center_vertical|right" />
 
-                <TableRow
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/et_codigo_item"
+                            android:layout_weight="1"
+                            android:inputType="textCapWords"
+                            android:background="@android:drawable/editbox_background_normal"
+                            android:textColor="@color/black"
+                            android:textCursorDrawable="@null"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageButton2"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:visibility="invisible" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Descripcion:"
+                            android:textColor="#ff444444"
+                            android:id="@+id/tv_descripcion"
+                            android:textAllCaps="false"
+                            android:typeface="sans"
+                            android:layout_gravity="center_vertical|right" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/et_descripcion_item"
+                            android:layout_weight="1"
+                            android:inputType="textCapWords"
+                            android:background="@android:drawable/editbox_background_normal"
+                            android:textColor="@color/black"
+                            android:textCursorDrawable="@null"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageButton"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:visibility="invisible" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center_vertical"
+
+                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Talla:"
+                            android:textColor="#ff444444"
+                            android:id="@+id/tv_talla"
+                            android:layout_gravity="center_vertical|right"
+                            android:textAllCaps="false"
+                            android:soundEffectsEnabled="false"
+                            android:singleLine="false"
+                            android:typeface="sans" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/et_talla_item"
+                            android:inputType="numberDecimal"
+                            android:background="@android:drawable/editbox_background_normal"
+                            android:textColor="@color/black"
+                            android:cursorVisible="false"
+                            android:textCursorDrawable="@null"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:editable="false"
+                            android:clickable="true"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageButton3"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:visibility="invisible" />
+
+                        <!--android:track="@drawable/track_bg"-->
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/ploplo"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Persona:"
+                            android:textColor="#ff444444"
+                            android:id="@+id/textView13"
+                            android:layout_gravity="center_vertical|right"
+                            android:textAllCaps="false"
+                            android:soundEffectsEnabled="false"
+                            android:singleLine="false"
+                            android:typeface="sans" />
+
+                        <Spinner
+                            android:id="@+id/sp_persona_prestamo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown"
+                            android:background="@drawable/spinner_background_ab_verde"
+                            android:popupBackground="@android:drawable/editbox_background"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp" />
+
+                        <Space
+                            android:layout_width="20px"
+                            android:layout_height="20px" />
+                    </TableRow>
+
+                </TableLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:weightSum="3"
+                >
+
+                <Button
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="12dp">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_registrar_item"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
+                    style="?android:attr/buttonStyleSmall"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:drawableLeft="@drawable/ico_nuevo"
+                    android:elegantTextHeight="false"
+                    android:gravity="left|center_vertical"
+                    android:text="REGISTRAR" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Descripcion:"
-                        android:textColor="#ff444444"
-                        android:id="@+id/tv_descripcion"
-                        android:textAllCaps="false"
-                        android:typeface="sans"
-                        android:layout_gravity="center_vertical|right" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/et_descripcion"
-                        android:layout_weight="1"
-                        android:inputType="textCapWords"
-                        android:background="@android:drawable/editbox_background_normal"
-                        android:textColor="@color/black"
-                        android:textCursorDrawable="@null"
-                        android:layout_marginLeft="10dp" />
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageButton"
-                        android:src="@android:drawable/ic_menu_camera" />
-
-                </TableRow>
-
-                <TableRow
+                <Button
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="12dp"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:text="New Button"
+                    android:id="@+id/button3"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
+                    style="?android:attr/buttonStyleSmall"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:visibility="invisible" />
 
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Talla:"
-                        android:textColor="#ff444444"
-                        android:id="@+id/tv_talla"
-                        android:layout_gravity="center_vertical|right"
-                        android:textAllCaps="false"
-                        android:soundEffectsEnabled="false"
-                        android:singleLine="false"
-                        android:typeface="sans" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/et_talla"
-                        android:inputType="numberDecimal"
-                        android:background="@android:drawable/editbox_background_normal"
-                        android:textColor="@color/black"
-                        android:cursorVisible="false"
-                        android:textCursorDrawable="@null"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp" />
-
-                    <ToggleButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New ToggleButton"
-                        android:textOn=""
-                        android:textOff=""
-                        android:id="@+id/toggleButton"
-                        android:background="@drawable/switch_bg"
-                        android:checked="false" />
-
-                    <!--android:track="@drawable/track_bg"-->
-
-                </TableRow>
-
-                <TableRow
+                <Button
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/ploplo"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Persona:"
-                        android:textColor="#ff444444"
-                        android:id="@+id/textView13"
-                        android:layout_gravity="center_vertical|right"
-                        android:textAllCaps="false"
-                        android:soundEffectsEnabled="false"
-                        android:singleLine="false"
-                        android:typeface="sans" />
-
-                    <Spinner
-                        android:id="@+id/sp_persona_prestamo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"
-                        android:background="@drawable/spinner_background_ab_verde"
-                        android:popupBackground="@android:drawable/editbox_background"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp" />
-
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px" />
-                </TableRow>
-
-            </TableLayout>
+                    android:layout_height="wrap_content"
+                    android:text="CANCELAR"
+                    android:id="@+id/btn_cancelar_item"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
+                    style="?android:attr/buttonStyleSmall"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:elegantTextHeight="false"
+                    android:drawableLeft="@drawable/ico_cancelar_rj"
+                    android:gravity="left|center_vertical" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -295,17 +366,19 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:weightSum="1"
-        android:id="@+id/ee"
-        android:layout_weight="1">
+        android:id="@+id/ll_derecho"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp">
 
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="200dp"
+            android:layout_height="fill_parent"
             android:background="@drawable/sombra"
-            android:layout_margin="12dp"
-            android:id="@+id/ttttt">
+            android:id="@+id/ll_contenido_pedido">
 
             <FrameLayout
                 android:layout_width="fill_parent"
@@ -324,12 +397,84 @@
                     android:layout_gravity="center" />
 
             </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/fl_lista"
+                    android:animateLayoutChanges="true">
+
+                    <ListView
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lv_prestamo"
+                        android:layout_marginBottom="80dp" />
+                </FrameLayout>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="3"
+                    android:gravity="bottom"
+                    android:layout_gravity="bottom">
+
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ACEPTAR"
+                        android:id="@+id/btn_aceptar_pedido"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/botonpulsado"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:drawableLeft="@drawable/ico_aceptar_vd" />
+
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="New Button"
+                        android:id="@+id/button8"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/botonpulsado"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:visibility="invisible" />
+
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CANCELAR"
+                        android:id="@+id/btn_cancelar_pedido"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/botonpulsado"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:elegantTextHeight="false"
+                        android:drawableLeft="@drawable/ico_cancelar_rj" />
+                </TableRow>
+
+            </FrameLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:id="@+id/koko">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -380,55 +525,6 @@
                     android:text="New Button"
                     android:id="@+id/button"
                     android:onClick="cargar" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_gravity="bottom">
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:id="@+id/imageView2"
-                    android:src="@drawable/cc"
-                    android:layout_weight="1"
-                    android:clickable="true" />
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:id="@+id/imageView3"
-                    android:src="@drawable/dd"
-                    android:layout_weight="1"
-                    android:clickable="true" />
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:id="@+id/imageView4"
-                    android:src="@drawable/ee"
-                    android:layout_weight="1"
-                    android:clickable="true" />
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:id="@+id/imageView5"
-                    android:src="@drawable/ff"
-                    android:layout_weight="1"
-                    android:clickable="true" />
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:id="@+id/imageView7"
-                    android:src="@drawable/gg"
-                    android:layout_weight="1"
-                    android:clickable="true" />
-
             </LinearLayout>
 
         </LinearLayout>
