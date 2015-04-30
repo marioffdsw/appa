@@ -1,31 +1,17 @@
 package com.paolosport.appa.ui;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.entities.Prestamo;
-
-import java.util.List;
 
 /**
  * Created by mario on 10/03/15.
@@ -36,7 +22,7 @@ public class PrestamoAdapter extends ArrayAdapter<Prestamo> {
         super(context, textViewResourceId);
     }
 
-    public PrestamoAdapter(Context context, int resource, List<Prestamo> prestamos) {
+    public PrestamoAdapter(Context context, int resource, ArrayList<Prestamo> prestamos) {
         super(context, resource, prestamos);
     }
 
@@ -49,7 +35,7 @@ public class PrestamoAdapter extends ArrayAdapter<Prestamo> {
 
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.prestamo_item, null);
+            v = vi.inflate(R.layout.item_lst_prestamos, null);
 
         }
 

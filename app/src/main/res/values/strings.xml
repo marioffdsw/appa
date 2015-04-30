@@ -74,5 +74,6 @@
 
     <string name="lst_prestamos">Lista</string>
     <string name="frm_prestamos">Formulario</string>
+    <string name="delete">Eliminar</string>
 
 </resources>

@@ -78,7 +78,7 @@ public class ActivityListaPrestamos extends ActionBarActivity {
         prestamoDAO.close();
 
         // se crea el adaptador de la vista
-        PrestamoAdapter adapter = new PrestamoAdapter(this, R.layout.prestamo_item, prestamos);
+        PrestamoAdapter adapter = new PrestamoAdapter(this, R.layout.item_lst_prestamos, prestamos);
 
         // si no hay datos sobre prestamos se notifica al usuario
         if (prestamos == null)

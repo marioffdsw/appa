@@ -124,7 +124,8 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         }
         catch (Exception e){
             e.printStackTrace();
-            Log.i(TAG, "NO HAY REGISTROS");}
+            Log.i(TAG, "NO HAY REGISTROS");
+        }
 
         Prestamo prestamo = null;
 
@@ -156,7 +157,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     // asume que se ha asignado los otros daos
     @Override
     public ArrayList<Prestamo> retrieveAll() {
-        Cursor cursor = db.query(TABLE_NAME,            // FROM
+        Cursor cursor = db.query(TABLE_NAME,              // FROM
                 new String[]{
                         KEY_ID,
                         KEY_CODIGO,
@@ -177,6 +178,9 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         Prestamo prestamo = null;
 
         ArrayList listaPrestamos = new ArrayList<Prestamo>();
+
+        cursor.moveToFirst();
+
         if ( cursor != null ){ // ha encontrado el local con la id entregada
             cursor.moveToFirst();
 
