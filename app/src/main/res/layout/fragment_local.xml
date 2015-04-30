@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ingrese Nombre:"
-                        android:textColor="#ff202020"
+                        android:textColor="@color/black"
                         android:id="@+id/tv_nombre_local"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:gravity="center_horizontal" />
@@ -171,7 +171,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_lista_locales"
-                android:divider="@color/green"
                 android:footerDividersEnabled="true"
                 >
 

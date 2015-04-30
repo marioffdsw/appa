@@ -37,37 +37,33 @@
     <string name="Telefono">Telefono:</string>
     <string name="telefono_hint">555-555-5555</string>
     <string name="foto">Foto:</string>
-    <string name="texto"><u><b><i>joma_ings@hotmail.com            joma_ings@gmail.com    </i></b></u></string>
+    <string name="texto"><u><b><i>joma_ings@gmail.com</i></b></u></string>
 
     <string name="listaLocales"><b><i>LISTA DE LOCALES</i></b></string>
-    <string name="listaPersonal"><b><i>LISTA DEl PERSONAL</i></b></string>
+    <string name="listaPersonal"><b><i>LISTA DE PERSONAL</i></b></string>
     <string name="listaMarcas"><b><i>LISTA DE MARCAS</i></b></string>
 
     <string name="localesPaolo"><b><i>LOCALES PAOLOSPORT</i></b></string>
-    <string name="personalPaolo"><b><i>LOCALES PAOLOSPORT</i></b></string>
+    <string name="personalPaolo"><b><i>PERSONAL PAOLOSPORT</i></b></string>
     <string name="marcasPaolo"><b><i>MARCAS PAOLOSPORT</i></b></string>
 
     <string name="title_activity_activity_configuracion">Configuración</string>
 
-    <string-array name="nav_options">
-        <item>Perfil</item>
-        <item>Favoritos</item>
-        <item>Eventos</item>
-        <item>Lugares</item>
-        <item>Etiquetas</item>
-        <item>ConfiguraciÃ³n</item>
-        <item>Compartir</item>
-    </string-array>
 
-    <!-- Lista de iconos de navegacion-->
+    <!-- Lista de iconos de locales-->
     <array name="navigation_iconos">
-        <item>@drawable/adidas</item>
-        <item>@drawable/puma</item>
-        <item>@drawable/lacoste</item>
-        <item>@drawable/dolomite</item>
-        <item>@drawable/converse</item>
-        <item>@drawable/cat</item>
-        <item>@drawable/lecoq</item>
+        <item>@drawable/casa_i</item>
+        <item>@drawable/casa_g</item>
+        <item>@drawable/casa_c</item>
+        <item>@drawable/casa_o</item>
+        <item>@drawable/casa_e</item>
+        <item>@drawable/casa_f</item>
+        <item>@drawable/casa_b</item>
+        <item>@drawable/casa_h</item>
+        <item>@drawable/casa_a</item>
+        <item>@drawable/casa_d</item>
+        <item>@drawable/casa_p</item>
+
     </array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

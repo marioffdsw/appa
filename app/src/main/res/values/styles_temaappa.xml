@@ -21,12 +21,9 @@
 
     <style name="Theme.Temaappa" parent="@style/Theme.AppCompat">
         <item name="actionBarItemBackground">@drawable/selectable_background_temaappa</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Temaappa</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Temaappa</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Temaappa</item>
         <item name="actionDropDownStyle">@style/DropDownNav.Temaappa</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_temaappa</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Temaappa</item>
         <item name="android:actionBarStyle">@style/MyActionBar2</item>
         <item name="actionBarStyle">@style/MyActionBar2</item>
     </style>
@@ -45,19 +42,9 @@
         <item name="background">@color/action_bar2</item>
     </style>
 
-    <style name="ActionBar.Solid.Temaappa" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="background">@drawable/ab_solid_temaappa</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_temaappa</item>
-        <item name="progressBarStyle">@style/ProgressBar.Temaappa</item>
-    </style>
-
     <style name="ActionBar.Transparent.Temaappa" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@drawable/ab_transparent_estiloandres</item>
         <item name="progressBarStyle">@style/ProgressBar.Temaappa</item>
-    </style>
-	
-    <style name="PopupMenu.Temaappa" parent="@style/Widget.AppCompat.PopupMenu">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_temaappa</item>	
     </style>
 	
     <style name="DropDownListView.Temaappa" parent="@style/Widget.AppCompat.ListView.DropDown">
@@ -70,24 +57,14 @@
 	
     <style name="DropDownNav.Temaappa" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_verde</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_temaappa</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_temaappa</item>
     </style>
     
     <style name="ProgressBar.Temaappa" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_temaappa</item>
     </style>
-    
-    <style name="ActionButton.CloseMode.Temaappa" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_temaappa</item>
-    </style>
-    
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Temaappa.Widget" parent="@style/Theme.AppCompat">
-        <item name="popupMenuStyle">@style/PopupMenu.Temaappa</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Temaappa</item>
-    </style>
 
+    <!-- ///////////////////////////////// -->
     <style name="PauseDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -96,8 +73,7 @@
         <item name="android:windowEnterAnimation">@anim/fadein</item>
         <item name="android:windowExitAnimation">@anim/fadeout</item>
     </style>
-
-
+    <!-- ///////////////////////////////// -->
     <style name="SinFondoDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/SinFondoDialogAnimation</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -107,5 +83,17 @@
         <item name="android:windowEnterAnimation">@anim/fadein_acep</item>
         <item name="android:windowExitAnimation">@anim/fadeout_acep</item>
     </style>
+    <!-- ///////////////////////////////// -->
+    <style name="RegistroDialogAnimation" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/RegistroAnim</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    <style name="RegistroAnim">
+        <item name="android:windowEnterAnimation">@anim/fadein_registro_item</item>
+        <item name="android:windowExitAnimation">@anim/fadeout_registro_item</item>
+    </style>
+
+
 
 </resources>

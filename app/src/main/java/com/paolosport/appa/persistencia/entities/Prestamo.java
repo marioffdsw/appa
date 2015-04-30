@@ -14,8 +14,9 @@ public class Prestamo {
     private Persona empleado;
     private Local local;
     private Marca marca;
+    private String origen;
 
-    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca) {
+    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen) {
         this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -25,6 +26,27 @@ public class Prestamo {
         this.empleado = empleado;
         this.local = local;
         this.marca = marca;
+        this.origen = origen;
+    }
+    public Prestamo(String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.foto = foto;
+        this.talla = talla;
+        this.fecha = fecha;
+        this.empleado = empleado;
+        this.local = local;
+        this.marca = marca;
+        this.origen = origen;
+    }
+
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(String origen) {
+        this.origen = origen;
     }
 
     public String getId() {

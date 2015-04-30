@@ -96,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ingrese Nombre:"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/black"
                         android:id="@+id/tv_ingrese_nombre"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -225,7 +225,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_lista_marcas"
-                android:divider="@color/green"
                 android:footerDividersEnabled="true"
                 >
 

@@ -6,14 +6,37 @@
     android:orientation="vertical"
     android:padding="3dp"
     android:gravity="top|center_vertical|center|center_horizontal"
-    android:minWidth="150dp" android:minHeight="190dp">
+    android:minWidth="150dp" android:minHeight="190dp"
+    android:background="@drawable/sombra">
     >
 
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/sombra_titulo_rojo">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Actualizar Contraseña"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:id="@+id/textView4"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:shadowColor="#00ff5f00"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal" />
+
+    </FrameLayout>
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/scrollView2"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:background="@drawable/sombra">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,41 +46,9 @@
             android:id="@+id/asd"
             android:layout_weight="0.71"
             android:gravity="center_vertical|center"
-            android:background="@color/fondo"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:background="@drawable/sombra">
 
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center|center_horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Actualizar Contraseña"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:id="@+id/textView4"
-                    android:textColor="@color/iconos"
-                    android:textStyle="bold"
-                    android:shadowColor="#00ff5f00"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="fill_parent"
-                android:layout_height="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="1dp"
-                android:background="@color/iconos" />
 
             <Space
                 android:layout_width="296dp"
@@ -136,7 +127,7 @@
                 android:text="ACTUALIZAR"
                 android:id="@+id/btn_cambiar_pass"
                 android:nestedScrollingEnabled="false"
-                android:background="@color/fondo"
+                android:background="@color/fondo3"
                 android:textColor="@color/iconos"
                 android:textStyle="bold" />
 

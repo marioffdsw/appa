@@ -1,6 +1,7 @@
 package com.paolosport.appa.ListViewAdapters;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,14 +24,18 @@ import java.util.List;
  */
 public class ListViewAdapterLocal extends ArrayAdapter<Local> {
     LinearLayout layoutAnimado = null;
+    private TypedArray NavIcons;
 
     public ListViewAdapterLocal(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
+
     }
 
 
     public ListViewAdapterLocal(Context context, int resource, List<Local> prestamos) {
         super(context, resource, prestamos);
+        NavIcons = getContext().getResources().obtainTypedArray(R.array.navigation_iconos);
+
     }
 
     @Override
@@ -47,16 +53,16 @@ public class ListViewAdapterLocal extends ArrayAdapter<Local> {
 
         if (p != null) {
 
-            TextView txtIdLocal = (TextView) v.findViewById(R.id.txtIDLocal);
             TextView txtNombreLocal = (TextView) v.findViewById(R.id.txtNombreLocal);
+            ImageView bm = (ImageView)v.findViewById((R.id.iv_icon_local));
             layoutAnimado = (LinearLayout)v.findViewById(R.id.ll_local_item);
 
-            if (txtIdLocal != null) {
-                txtIdLocal.setText(p.getId());
-            }
             if (txtNombreLocal != null) {
-
                 txtNombreLocal.setText(p.getNombre());
+            }
+
+            if (bm != null) {
+                bm.setImageResource(NavIcons.getResourceId(position, -1));
             }
         animar(true);
         }

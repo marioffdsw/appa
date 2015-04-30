@@ -8,7 +8,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
     static final String DATABASE_NAME = "appa.db";
-    static final int DATABASE_VERSION = 9;
+    static final int DATABASE_VERSION = 10;
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
@@ -78,6 +78,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
             "empleado       TEXT        NOT NULL," +
             "local          TEXT        NOT NULL," +
             "marca          TEXT        NOT NULL," +
+            "origen         TEXT        NOT NULL," +
             "FOREIGN KEY ( empleado ) REFERENCES persona( cedula )," +
             "FOREIGN KEY ( local) REFERENCES local( id )" +
             "FOREIGN KEY ( marca ) REFERENCES marca( id )" +

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.paolosport.appa.fragments.PersonaFragment"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/fondo3">
 
     <LinearLayout
         android:layout_weight="7"
@@ -10,72 +11,44 @@
         android:layout_height="0dp"
         android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:layout_weight="1"
-            android:id="@+id/fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" >
-
-            <RelativeLayout
-                android:id="@+id/layoutOops"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/txtOops"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="Oops! :("
-                    android:textSize="40dp"
-                    android:textColor="@color/iconos"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="no se han registrado empleados"
-                    android:textSize="20dp"
-                    android:layout_below="@id/txtOops"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/iconos"/>
-
-            </RelativeLayout>
-
-            <ListView
-                android:id="@+id/lstEmpleados"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-
         <ScrollView
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/foto"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:animateLayoutChanges="true"
+                    android:id="@+id/texto_animado"
+                    android:gravity="center_horizontal">
+                    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:text="@string/personalPaolo"
+                        android:textColor="@color/iconos"
+                        android:shadowColor="@color/white"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal" />
+                </LinearLayout>
+
 
                 <ImageView
                     android:id="@+id/imgContainer"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@color/a"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/ico_persona_gr"
                     android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:layout_margin="5dp" />
 
                 <TextView
                     android:id="@+id/contenido"
@@ -99,7 +72,7 @@
 
                 <Space
                     android:layout_width="12dp"
-                    android:layout_height="24dp" />
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:layout_width="300dp"
@@ -122,7 +95,7 @@
 
                 <Space
                     android:layout_width="12dp"
-                    android:layout_height="24dp" />
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:layout_width="300dp"
@@ -145,15 +118,74 @@
 
             </LinearLayout>
         </ScrollView>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
+
+            <RelativeLayout
+                android:id="@+id/layoutOops"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/txtOops"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Oops! :("
+                    android:textSize="40dp"
+                    android:textColor="@color/iconos"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="no se han registrado empleados"
+                    android:textSize="20dp"
+                    android:layout_below="@id/txtOops"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/iconos" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/listaPersonal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ff202020"
+                android:gravity="center_horizontal"
+                android:id="@+id/textView" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="6dp" />
+
+            <ListView
+                android:id="@+id/lstEmpleados"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_marginTop="30dp" />
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="left|bottom"
         android:alpha="100"
-        android:background="#ff000000">
+        android:background="@color/fondo3"
+        android:gravity="left">
 
         <Button
             android:layout_width="200dp"
@@ -168,7 +200,8 @@
             android:paddingRight="2dp"
             android:paddingTop="2dp"
             android:paddingLeft="4dp"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="false"
+            android:layout_alignParentLeft="true" />
 
         <Button
             android:layout_width="200dp"
@@ -182,8 +215,23 @@
             android:paddingBottom="1dp"
             android:paddingRight="2dp"
             android:paddingTop="2dp"
-            android:paddingLeft="4dp"
-            android:layout_toLeftOf="@+id/btnCancelar"/>
+            android:paddingLeft="4dp" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:id="@+id/btnCancelar"
+            android:drawableLeft="@drawable/ico_lista"
+            android:background="@drawable/botonpulsado2"
+            android:layout_margin="2dp"
+            android:paddingBottom="1dp"
+            android:paddingRight="4dp"
+            android:paddingTop="2dp"
+            android:paddingLeft="2dp"
+            android:layout_alignParentRight="false"
+            android:layout_toRightOf="@+id/btnGuardar" />
 
         <Button
             android:layout_width="200dp"
@@ -198,7 +246,7 @@
             android:paddingRight="2dp"
             android:paddingTop="2dp"
             android:paddingLeft="2dp"
-            android:layout_toLeftOf="@id/btnEliminar"/>
+            android:layout_toLeftOf="@+id/btnEliminar"/>
 
         <Button
             android:layout_width="200dp"
@@ -215,19 +263,5 @@
             android:paddingLeft="2dp"
             android:layout_toLeftOf="@+id/btnCancelar"/>
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancelar"
-            android:id="@+id/btnCancelar"
-            android:drawableLeft="@drawable/ico_lista"
-            android:background="@drawable/botonpulsado2"
-            android:layout_margin="2dp"
-            android:paddingBottom="1dp"
-            android:paddingRight="4dp"
-            android:paddingTop="2dp"
-            android:paddingLeft="2dp"
-            android:layout_alignParentRight="true" />
     </RelativeLayout>
 </LinearLayout>
