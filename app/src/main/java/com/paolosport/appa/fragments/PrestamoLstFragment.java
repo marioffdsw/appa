@@ -5,15 +5,23 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paolosport.appa.R;
@@ -26,9 +34,14 @@ import com.paolosport.appa.persistencia.entities.Prestamo;
 import com.paolosport.appa.ui.PrestamoAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.zip.Inflater;
 
-public class PrestamoLstFragment extends Fragment {
+public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.PrestamosSubject {
 
+    private SearchView searchView;
+    private EditText txtBusqueda;
     private Context context;
 
     private PersonaDAO personaDAO;
@@ -89,8 +102,38 @@ public class PrestamoLstFragment extends Fragment {
         // se carga los datos que existan sobre los prestamos
         Activity activity = ( Activity ) context;
         listPrestamos = ( ListView ) view.findViewById( R.id.lstPrestamos );
-        listPrestamos.setAdapter( adapter );
-        adapter.setNotifyOnChange( true );
+
+        View headerView = View.inflate( context, R.layout.lst_prestamos_header, null );
+
+        TextView ordenarPorEmpleados = (TextView) headerView.findViewById( R.id.ordenarPorEmpleado );
+        ordenarPorEmpleados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.ordenarPorEmpleado();
+            }
+        });
+
+        TextView ordenarPorFecha = (TextView) headerView.findViewById( R.id.ordenarPorFecha );
+
+        ordenarPorFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.ordenarPorFecha();
+            }
+
+        });
+
+        TextView ordenarPorLocal = (TextView) headerView.findViewById( R.id.ordenarPorLocal);
+        ordenarPorLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               adapter.ordenarPorLocal();
+            }
+        });
+
+        listPrestamos.addHeaderView(headerView, null, false);
+
+        listPrestamos.setAdapter(adapter);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("datos",
             Context.MODE_PRIVATE);
@@ -131,13 +174,55 @@ public class PrestamoLstFragment extends Fragment {
             } );
         }
 
+        txtBusqueda = (EditText) view.findViewById( R.id.txtBusqueda );
+
+        txtBusqueda.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter( txtBusqueda.getText() );
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
     public void onAttach( Activity activity ) {
         super.onAttach( activity );
         context = activity;
+    }
+
+    @Override
+    public ArrayList<Prestamo> getListPrestamos() {
+        return lstPrestamos;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_lst_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

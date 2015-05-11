@@ -72,4 +72,9 @@
     <string name="frm_prestamos">Formulario</string>
     <string name="delete">Eliminar</string>
 
+    <string name="empleado">Empleado</string>
+    <string name="fecha">Fecha</string>
+    <string name="estado">Estado</string>
+    <string name="local">Local</string>
+
 </resources>

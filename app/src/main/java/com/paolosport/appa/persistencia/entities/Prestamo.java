@@ -15,8 +15,9 @@ public class Prestamo {
     private Local local;
     private Marca marca;
     private String origen;
+    private String estado;
 
-    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen) {
+    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen, String estado) {
         this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -27,8 +28,10 @@ public class Prestamo {
         this.local = local;
         this.marca = marca;
         this.origen = origen;
+        setEstado( estado );
     }
-    public Prestamo(String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen) {
+    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen ) {
+        this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.foto = foto;
@@ -38,6 +41,31 @@ public class Prestamo {
         this.local = local;
         this.marca = marca;
         this.origen = origen;
+        setEstado( estado );
+    }
+    public Prestamo(String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen, String estado ) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.foto = foto;
+        this.talla = talla;
+        this.fecha = fecha;
+        this.empleado = empleado;
+        this.local = local;
+        this.marca = marca;
+        this.origen = origen;
+        setEstado( estado);
+    }
+    public Prestamo(String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen ) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.foto = foto;
+        this.talla = talla;
+        this.fecha = fecha;
+        this.empleado = empleado;
+        this.local = local;
+        this.marca = marca;
+        this.origen = origen;
+        setEstado( estado);
     }
 
 
@@ -119,5 +147,43 @@ public class Prestamo {
 
     public void setMarca(Marca marca) {
         this.marca = marca;
+    }
+
+    public String getEstado() {
+
+        switch (this.estado){
+
+            case "P":
+                return "Prestado";
+            case "V":
+                return "Vendido";
+            case "D":
+                return "Devuelto";
+            default:
+                return "Prestado";
+        } // end switch
+    }
+
+    public void setEstado(String estado) {
+
+        if (estado != null) {
+            estado.toUpperCase();
+            estado = estado.substring(0, 1);
+
+            switch ( estado ){
+
+                case "P":
+                case "V":
+                case "D":
+                    break;
+                default:
+                    estado = "P";
+                    break;
+            }
+        }
+        else{
+            estado = "P";
+        }
+        this.estado = estado;
     }
 }

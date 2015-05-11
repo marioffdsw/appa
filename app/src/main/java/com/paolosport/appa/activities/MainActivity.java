@@ -56,7 +56,6 @@ public class MainActivity extends ActionBarActivity {
                 .setTabListener(new TabListener<PrestamoLstFragment>(
                         this, "album", PrestamoLstFragment.class));
         actionBar.addTab(tab);
-        actionBar.setLogo( R.drawable.logo_appa );
         actionBar.setDisplayShowTitleEnabled( true );
         actionBar.setDisplayShowTitleEnabled( true );
         actionBar.setDisplayUseLogoEnabled(true);
