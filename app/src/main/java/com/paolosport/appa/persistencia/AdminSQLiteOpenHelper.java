@@ -8,7 +8,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
     static final String DATABASE_NAME = "appa.db";
-    static final int DATABASE_VERSION = 10;
+    static final int DATABASE_VERSION = 11;
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
@@ -87,21 +87,13 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     static final String DROP_TABLE_PRESTAMOS = "DROP TABLE IF EXISTS prestamos";
 
     static final String TEST_PRESTAMOS = "INSERT INTO prestamos " +
-            "( descripcion,              talla,      empleado,     local,    marca   ) VALUES" +
-            "( 'blancos',                32,         '1',          '1',      '1'     )," +
-            "( 'negros',                 38,         '2',          '1',      '2'     )," +
-            "( 'azules',                 37,         '3',          '2',      '4'     )," +
-            "( 'naranjas',               27,         '4',          '5',      '3'     )," +
-            "( 'rojos',                  34,         '5',          '3',      '5'     )," +
-            "( 'manzana',                32,         '2',          '4',      '1'     )," +
-            "( 'banana',                 28,         '4',          '2',      '5'     )," +
-            "( 'pera',                   24,         '3',          '4',      '5'     )," +
-            "( 'sandia',                 38,         '1',          '5',      '1'     )," +
-            "( 'uva',                    22,         '2',          '2',      '3'     )," +
-            "( 'piña',                   39,         '5',          '3',      '2'     )," +
-            "( 'mandarina',              40,         '2',          '2',      '2'     )," +
-            "( 'limon',                  36,         '3',          '3',      '3'     )," +
-            "( 'fresa',                  38,         '4',          '4',      '4'     )";
+            "( codigo,  descripcion,    foto,   talla,   fecha, empleado,   local,  marca,  origen   ) VALUES" +
+            "( 'a1',     've1',         'v',    'bl',    '32',  '1',        '1',    '1',    'h'       )," +
+            "( 'b2',     've2',         'v',    'bl',    '32',  '1',        '1',    '1',    'h'       )," +
+            "( 'c3',     've3',         'v',    'bl',    '32',  '1',        '1',    '1',    'h'       )," +
+            "( 'd4',     've4',         'v',    'bl',    '32',  '1',        '1',    '1',    'h'       )," +
+            "( 'e5',     've5',         'v',    'bl',    '32',  '1',        '1',    '1',    'h'       );";
+
 
     // constructor, just call superclass constructor
     public AdminSQLiteOpenHelper( Context context ){
@@ -136,6 +128,6 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( TEST_PERSONA );
         db.execSQL( INSERT_TABLE_LOCAL );
         db.execSQL( INSERT_TABLE_MARCA );
-       // db.execSQL( TEST_PRESTAMOS );
+        //db.execSQL( TEST_PRESTAMOS );
     } // end method setupTestDatabase
 }

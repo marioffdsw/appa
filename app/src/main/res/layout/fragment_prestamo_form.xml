@@ -333,15 +333,15 @@
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/button3"
+                    android:text="mostrar"
+                    android:id="@+id/btn_mostrar"
                     android:layout_weight="1"
                     android:layout_gravity="bottom"
                     style="?android:attr/buttonStyleSmall"
                     android:background="@drawable/botonpulsado"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
                 <Button
                     android:layout_width="fill_parent"

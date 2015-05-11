@@ -33,6 +33,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     private LocalDAO localDAO;
     private MarcaDAO marcaDAO;
     private PersonaDAO personaDAO;
+    AdminSQLiteOpenHelper helper;
 
     public PrestamoDAO(Context context, AdminSQLiteOpenHelper helper) {
         super(context, helper);
@@ -183,24 +184,31 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
         Prestamo prestamo = null;
 
+        helper     = new AdminSQLiteOpenHelper( context );
+        localDAO   = new LocalDAO( context, helper );
+        marcaDAO   = new MarcaDAO( context, helper );
+        personaDAO = new PersonaDAO( context, helper );
+
         ArrayList listaPrestamos = new ArrayList<Prestamo>();
+        Log.i(TAG, "homero");
         if ( cursor != null ){ // ha encontrado el local con la id entregada
             cursor.moveToFirst();
 
             // itera por todas las filas de la tabla y crea los objetos
             try {
                 do {
-
                     String id= cursor.getString(0);
+
                     String codigo = cursor.getString(1);
                     String descripcion = cursor.getString(2);
                     String foto = cursor.getString(3);
                     String talla = cursor.getString(4);
                     Timestamp fecha = formatearFecha( cursor.getString( 5 ) );
 
-                    personaDAO.open();
-                    Persona empleado = personaDAO.retrieve( cursor.getString( 6) );
-                    personaDAO.close();
+                   personaDAO.open();
+                   Persona empleado = personaDAO.retrieve( cursor.getString( 6) );
+                   personaDAO.close();
+
 
                     localDAO.open();
                     Local local = localDAO.retrieve( cursor.getString( 7 ) );
