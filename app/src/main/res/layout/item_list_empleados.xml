@@ -2,14 +2,13 @@
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/ab_transparent_estiloandres"
+    android:background="@drawable/ab_transparent_verde"
     android:padding="10dp">
 
     <ImageView
         android:id="@+id/fotoPersona"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/margin_test" >
+        android:layout_height="50dp">
     </ImageView>
 
 
@@ -17,7 +16,8 @@
         android:layout_weight="5"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/ll_texto">
 
         <TextView
             android:layout_weight="1"
@@ -38,7 +38,7 @@
                 android:layout_weight="5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="15dp"
                 android:text="c.c.:"
                 android:gravity="left"
@@ -49,16 +49,16 @@
                 android:id="@id/txtCedulaPersona"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="15dp"
-                android:padding="2dp"/>
+                android:padding="2dp"
+                android:gravity="left" />
 
             <TextView
                 android:layout_weight="5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="15dp"
                 android:text="Tel:"
                 android:gravity="left"
@@ -71,10 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/gray"
-                android:gravity="right"
+                android:textColor="@color/black"
                 android:padding="2dp"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:gravity="left" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

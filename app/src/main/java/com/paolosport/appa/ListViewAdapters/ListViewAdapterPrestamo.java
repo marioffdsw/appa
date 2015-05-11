@@ -1,9 +1,6 @@
 package com.paolosport.appa.ListViewAdapters;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +8,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.paolosport.appa.ItemPrestamo;
+import com.paolosport.appa.ui.ItemPrestamo;
 import com.paolosport.appa.R;
-import com.paolosport.appa.persistencia.entities.Marca;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Andres on 04/03/2015.

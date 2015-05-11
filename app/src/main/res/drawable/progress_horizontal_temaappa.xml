@@ -24,12 +24,12 @@
 
     <item android:id="@android:id/secondaryProgress">
         <scale android:scaleWidth="100%"
-               android:drawable="@drawable/progress_secondary_temaappa" />
+               android:drawable="@drawable/progress_secondary_estiloandres" />
     </item>
 
     <item android:id="@android:id/progress">
         <scale android:scaleWidth="100%"
-               android:drawable="@drawable/progress_primary_temaappa" />
+               android:drawable="@drawable/progress_primary_estiloandres" />
     </item>
 
 </layer-list>

@@ -27,6 +27,8 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     static final String KEY_EMPLEADO = "empleado";
     static final String KEY_LOCAL = "local";
     static final String KEY_MARCA = "marca";
+    static final String KEY_ORIGEN = "origen";
+
 
     private LocalDAO localDAO;
     private MarcaDAO marcaDAO;
@@ -65,6 +67,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             initialValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
             initialValues.put( KEY_LOCAL, prestamo.getLocal().getId() );
             initialValues.put( KEY_MARCA, prestamo.getMarca().getId() );
+            initialValues.put( KEY_ORIGEN, prestamo.getOrigen() );
 
             db.insert( TABLE_NAME, null, initialValues );
         }
@@ -89,6 +92,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             updateValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
             updateValues.put( KEY_LOCAL, prestamo.getLocal().getId() );
             updateValues.put( KEY_MARCA, prestamo.getMarca().getId() );
+            updateValues.put( KEY_ORIGEN, prestamo.getOrigen() );
 
             db.update(TABLE_NAME, updateValues, KEY_ID + "=" + prestamo.getId(), null);
         }
@@ -114,7 +118,8 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
                             KEY_FECHA,
                             KEY_EMPLEADO,
                             KEY_LOCAL,
-                            KEY_MARCA },       // SELECT
+                            KEY_MARCA,
+                            KEY_ORIGEN },       // SELECT
                     KEY_ID + "=" + id, null,           // WHERE
                     null,                                   // GROUP BY
                     null,                                   // HAVING
@@ -147,8 +152,9 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             marcaDAO.open();
             Marca marca = marcaDAO.retrieve( cursor.getString( 8 ) );
             marcaDAO.close();
+            String origen = cursor.getString(9);
 
-            prestamo = new Prestamo( id,codigo, descripcion, foto, talla, fecha, empleado, local, marca );
+            prestamo = new Prestamo( id,codigo, descripcion, foto, talla, fecha, empleado, local, marca,origen );
         }
 
         return prestamo;
@@ -167,7 +173,8 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
                         KEY_FECHA,
                         KEY_EMPLEADO,
                         KEY_LOCAL,
-                        KEY_MARCA },       // SELECT
+                        KEY_MARCA,
+                        KEY_ORIGEN},       // SELECT
                 null, null,           // WHERE
                 null,                                   // GROUP BY
                 null,                                   // HAVING
@@ -207,7 +214,9 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
                     Marca marca = marcaDAO.retrieve( cursor.getString( 8 ) );
                     marcaDAO.close();
 
-                    prestamo = new Prestamo( id,codigo, descripcion, foto, talla, fecha, empleado, local, marca );
+                    String origen = cursor.getString(9);
+
+                    prestamo = new Prestamo( id,codigo, descripcion, foto, talla, fecha, empleado, local, marca,origen );
                     listaPrestamos.add(prestamo);
                 } while (cursor.moveToNext());
             }

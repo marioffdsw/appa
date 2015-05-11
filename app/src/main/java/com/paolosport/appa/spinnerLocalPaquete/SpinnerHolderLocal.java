@@ -1,6 +1,7 @@
 package com.paolosport.appa.spinnerLocalPaquete;
 
 import android.graphics.Color;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -9,7 +10,7 @@ import android.widget.TextView;
 public class SpinnerHolderLocal {
     private Color color;
     private TextView textView;
-
+    private ImageView icono;
     public Color getColor() {
         return color;
     }
@@ -25,5 +26,15 @@ public class SpinnerHolderLocal {
     public void setTextView(TextView textView)
     {
         this.textView = textView;
+    }
+
+    public ImageView getIcono()
+    {
+        return icono;
+    }
+
+    public void setIcono(ImageView icono)
+    {
+        this.icono = icono;
     }
 }

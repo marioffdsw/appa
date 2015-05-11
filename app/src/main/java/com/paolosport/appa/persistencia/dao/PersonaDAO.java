@@ -103,7 +103,6 @@ public class PersonaDAO extends BaseDAO <Persona> {
 
         if ( cursor.moveToFirst() ){ // ha encontrado el local con la id entregada
 
-
             id = cursor.getString(0);
             String name = cursor.getString(1);
             String tel = cursor.getString(2);

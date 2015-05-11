@@ -65,7 +65,8 @@
                         android:layout_marginBottom="12dp"
                         android:gravity="center_vertical"
                         android:layout_marginTop="12dp"
-                        android:layout_marginLeft="12dp">
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
                             android:layout_marginLeft="10dp" />
 
                         <Space
-                            android:layout_width="20px"
+                            android:layout_width="15dp"
                             android:layout_height="20px" />
                     </TableRow>
 
@@ -99,7 +100,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginBottom="12dp"
-                        android:layout_marginLeft="12dp">
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -125,7 +127,7 @@
                             android:layout_marginLeft="10dp" />
 
                         <Space
-                            android:layout_width="20px"
+                            android:layout_width="15dp"
                             android:layout_height="20px" />
                     </TableRow>
 
@@ -162,7 +164,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <ImageButton
-                            android:layout_width="wrap_content"
+                            android:layout_width="15dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/imageButton2"
                             android:src="@android:drawable/ic_menu_camera"
@@ -203,7 +205,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <ImageButton
-                            android:layout_width="wrap_content"
+                            android:layout_width="15dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/imageButton"
                             android:src="@android:drawable/ic_menu_camera"
@@ -234,7 +236,7 @@
                             android:typeface="sans" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/et_talla_item"
                             android:inputType="numberDecimal"
@@ -251,7 +253,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <ImageButton
-                            android:layout_width="wrap_content"
+                            android:layout_width="15dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/imageButton3"
                             android:src="@android:drawable/ic_menu_camera"
@@ -294,7 +296,7 @@
                             android:layout_marginLeft="10dp" />
 
                         <Space
-                            android:layout_width="20px"
+                            android:layout_width="15dp"
                             android:layout_height="20px" />
                     </TableRow>
 
@@ -376,9 +378,10 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/sombra"
-            android:id="@+id/ll_contenido_pedido">
+            android:id="@+id/ll_contenido_pedido"
+            android:weightSum="10">
 
             <FrameLayout
                 android:layout_width="fill_parent"
@@ -398,133 +401,73 @@
 
             </FrameLayout>
 
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/fl_lista"
-                    android:animateLayoutChanges="true">
-
-                    <ListView
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/lv_prestamo"
-                        android:layout_marginBottom="80dp" />
-                </FrameLayout>
-
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:weightSum="3"
-                    android:gravity="bottom"
-                    android:layout_gravity="bottom">
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="ACEPTAR"
-                        android:id="@+id/btn_aceptar_pedido"
-                        android:layout_weight="1"
-                        android:layout_gravity="bottom"
-                        android:background="@drawable/botonpulsado"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"
-                        android:drawableLeft="@drawable/ico_aceptar_vd" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="New Button"
-                        android:id="@+id/button8"
-                        android:layout_weight="1"
-                        android:layout_gravity="bottom"
-                        android:background="@drawable/botonpulsado"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"
-                        android:visibility="invisible" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="CANCELAR"
-                        android:id="@+id/btn_cancelar_pedido"
-                        android:layout_weight="1"
-                        android:layout_gravity="bottom"
-                        android:background="@drawable/botonpulsado"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"
-                        android:elegantTextHeight="false"
-                        android:drawableLeft="@drawable/ico_cancelar_rj" />
-                </TableRow>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/koko">
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:visibility="gone"
-                >
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <ListView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/lv_prestamo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="bottom"
+                android:weightSum="3"
+                android:layout_gravity="bottom"
+                android:visibility="visible"
+                android:layout_weight="8">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="locales"
-                    android:id="@+id/btnLocal"
-                    android:onClick="local"
-                    />
+                    android:text="ACEPTAR"
+                    android:id="@+id/btn_aceptar_pedido"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:drawableLeft="@drawable/ico_aceptar_vd"
+                    android:visibility="invisible" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="marca"
-                    android:id="@+id/btnMarca"
-                    android:onClick="marca" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PERSONA"
-                    android:id="@+id/btnPersona"
-                    android:onClick="persona" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PRESTAMOS"
-                    android:id="@+id/btnPrestamos"
-                    android:onClick="prestamos"/>
-
-                <Button android:id="@+id/btnListaPrestamos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lista_prestamos"
-                    android:onClick="listaPrestamos"/>
-
-                <Button
-                    android:layout_width="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="New Button"
                     android:id="@+id/button"
-                    android:onClick="cargar" />
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:visibility="invisible" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CANCELAR"
+                    android:id="@+id/btn_cancelar_pedido"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/botonpulsado"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:elegantTextHeight="false"
+                    android:drawableLeft="@drawable/ico_cancelar_rj"
+                    android:visibility="invisible" />
+
             </LinearLayout>
 
         </LinearLayout>

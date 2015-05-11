@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paolosport.appa.R;
-import com.paolosport.appa.RealPathUtil;
+import com.paolosport.appa.ui.RealPathUtil;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.entities.Marca;

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LstHeaderOrdenar"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/action_bar" >
+
+    <TextView
+        android:id="@+id/ordenarPorEmpleado"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/empleado"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/ordenarPorLocal"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/local"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/ordenarPorFecha"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/fecha"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/ordenarPorEstado"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/estado"
+        android:gravity="center"/>
+
+</LinearLayout>

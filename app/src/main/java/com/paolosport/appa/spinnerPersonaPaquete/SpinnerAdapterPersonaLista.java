@@ -56,7 +56,7 @@ import java.util.List;
             Bitmap bm = null;
 
             if ( datos.get(position).getUrl().equals( "prueba" ) ) {
-                bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.puma);
+                bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ico_persona_az);
             }
             else{
                 bm = BitmapFactory.decodeFile( datos.get(position).getUrl() + "mini" );
@@ -99,7 +99,7 @@ import java.util.List;
 
 
             if ( datos.get(position).getUrl().equals( "prueba" ) ) {
-                bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.puma);
+                bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ico_persona_az);
             }
             else{
                 bm = BitmapFactory.decodeFile( datos.get(position).getUrl() + "mini" );

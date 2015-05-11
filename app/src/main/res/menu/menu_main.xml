@@ -16,18 +16,26 @@
                 android:icon="@drawable/ic_action_settings"
                 android:title="Configuración"
                 android:orderInCategory="100"
-            />
-            <item
-                android:id="@+id/Ayuda"
-                android:icon="@drawable/ic_action_help"
-                android:title="Información"
-                android:orderInCategory="100"
+                android:enabled="false"
             />
             <item
                 android:id="@+id/acercade"
                 android:icon="@drawable/ic_action_about"
                 android:title="Acerca de"
                 android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/iniciar_sesion"
+                android:icon="@drawable/ic_action_person"
+                android:title="Iniciar Sesión"
+                android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/cerrar_sesión"
+                android:icon="@drawable/ico_sesion_bl"
+                android:title="Cerrar Sesión"
+                android:orderInCategory="100"
+                android:visible="false"
                 />
         </menu>
 

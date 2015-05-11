@@ -15,14 +15,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +34,7 @@ import com.paolosport.appa.R;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.entities.Persona;
-import com.paolosport.appa.ui.EmpleadoAdapter;
+import com.paolosport.appa.ListViewAdapters.ListViewAdapterPersona;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,7 +58,7 @@ public class PersonaFragment extends Fragment {
     private EditText txtCedulaPersona;
     private EditText txtTelefonoPersona;
     private ListView lstPersonas;
-    private EmpleadoAdapter adapter;
+    private ListViewAdapterPersona adapter;
     private Persona persona;
 
     private Button btnGuardar;
@@ -63,6 +67,7 @@ public class PersonaFragment extends Fragment {
     private Button btnActualizar;
     private Button btnEliminar;
 
+    private LinearLayout texto_animado;
     // private OnFragmentInteractionListener mListener;
 
     public PersonaFragment() {
@@ -92,7 +97,8 @@ public class PersonaFragment extends Fragment {
         personaDAO.close();
 
         // se crea el adaptador de la vista
-        adapter = new EmpleadoAdapter( context, R.layout.item_list_empleados, listaPersonas );
+        texto_animado = (LinearLayout)view.findViewById(R.id.texto_animado);
+        adapter = new ListViewAdapterPersona( context, R.layout.item_list_empleados, listaPersonas );
 
         // si no hay datos sobre prestamos se notifica al usuario
         if( listaPersonas == null ) {
@@ -132,7 +138,7 @@ public class PersonaFragment extends Fragment {
                     }
                 } );
 
-                btnNuevo.setVisibility( View.INVISIBLE );
+                btnNuevo.setVisibility( View.GONE );
                 btnCancelar.setVisibility( View.VISIBLE );
                 btnActualizar.setVisibility( View.VISIBLE );
                 btnEliminar.setVisibility( View.VISIBLE );
@@ -192,7 +198,7 @@ public class PersonaFragment extends Fragment {
         } );
 
         cancelar();
-
+        animar(true);
         return view;
     } // fin del metodo onCreateView
 
@@ -206,7 +212,7 @@ public class PersonaFragment extends Fragment {
                 getImage( imgFoto );
             }
         } );
-        btnNuevo.setVisibility( View.INVISIBLE );
+        btnNuevo.setVisibility( View.GONE );
         btnGuardar.setVisibility( View.VISIBLE );
         btnCancelar.setVisibility( View.VISIBLE );
     }
@@ -296,13 +302,13 @@ public class PersonaFragment extends Fragment {
         txtNombrePersona.setEnabled( false );
         txtTelefonoPersona.setText( "" );
         txtTelefonoPersona.setEnabled( false );
-        imgFoto.setImageDrawable( getActivity().getResources().getDrawable( R.color.a ) );
+        imgFoto.setImageDrawable( getActivity().getResources().getDrawable( R.drawable.ico_persona_gr ) );
         imgFoto.setOnClickListener( null );
         btnNuevo.setVisibility( View.VISIBLE );
-        btnGuardar.setVisibility( View.INVISIBLE );
-        btnCancelar.setVisibility( View.INVISIBLE );
-        btnActualizar.setVisibility( View.INVISIBLE );
-        btnEliminar.setVisibility( View.INVISIBLE );
+        btnGuardar.setVisibility( View.GONE);
+        btnCancelar.setVisibility( View.GONE );
+        btnActualizar.setVisibility( View.GONE );
+        btnEliminar.setVisibility( View.GONE );
     }
 
     public void ordenarAlfabeticamente(){
@@ -476,6 +482,26 @@ public class PersonaFragment extends Fragment {
             ex.printStackTrace();
         }
         return myPath.getAbsolutePath();
+    }
+    private void animar(boolean mostrar)
+    {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = null;
+        if (mostrar)
+        {
+            //desde la esquina inferior derecha a la superior izquierda
+            //animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 3.0f, Animation.RELATIVE_TO_SELF, 1.0f);
+            animation=new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF,0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        }
+
+        //duración en milisegundos
+        animation.setDuration(200);
+        set.addAnimation(animation);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+
+        texto_animado.setLayoutAnimation(controller);
+        texto_animado.startAnimation(animation);
     }
 } // fin de la clase LocalFragment
 
