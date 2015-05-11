@@ -19,6 +19,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.ui.ItemPrestamo;
 import com.paolosport.appa.ListViewAdapters.ListViewAdapterPrestamo;
 import com.paolosport.appa.R;
@@ -53,7 +55,8 @@ public class PrestamoFormFragment extends Fragment {
     private Button btn_registrar_item,
                    btn_cancelar_item,
                    btn_aceptar_pedido,
-                   btn_cancelar_pedido;
+                   btn_cancelar_pedido,
+                   btn_mostrar;
 
     private EditText  et_codigo_item,et_descripcion_item;
     private TextView et_talla_item;
@@ -63,6 +66,7 @@ public class PrestamoFormFragment extends Fragment {
     MarcaDAO marcaDAO;
     LocalDAO localDAO;
     PersonaDAO personaDAO;
+    PrestamoDAO prestamoDAO;
 
     Boolean tarjeta_result = false;
     List listaItems = new ArrayList();
@@ -85,6 +89,8 @@ public class PrestamoFormFragment extends Fragment {
         localDAO   = new LocalDAO( getActivity().getApplicationContext(), helper );
         marcaDAO   = new MarcaDAO( getActivity().getApplicationContext(), helper );
         personaDAO = new PersonaDAO( getActivity().getApplicationContext(), helper );
+        prestamoDAO = new PrestamoDAO( getActivity().getApplicationContext(), helper );
+
 
         view= inflater.inflate(R.layout.fragment_prestamo_form, container, false);
 
@@ -96,6 +102,8 @@ public class PrestamoFormFragment extends Fragment {
         btn_cancelar_item   = (Button)view.findViewById(R.id.btn_cancelar_item);
         btn_aceptar_pedido  = (Button)view.findViewById(R.id.btn_aceptar_pedido);
         btn_cancelar_pedido = (Button)view.findViewById(R.id.btn_cancelar_pedido);
+        btn_mostrar = (Button)view.findViewById(R.id.btn_mostrar);
+
 
         lv_prestamo   = (ListView)view.findViewById(R.id.lv_prestamo);
 
@@ -158,6 +166,14 @@ public class PrestamoFormFragment extends Fragment {
 
             }
         });
+        btn_mostrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarEntradas();
+
+            }
+        });
+
         et_talla_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -394,6 +410,46 @@ public class PrestamoFormFragment extends Fragment {
         time.schedule(timerTask,600);
     }
 
+    private void mostrarEntradas(){
+        customDialog = new Dialog(getActivity(),R.style.RegistroDialogAnimation);
+        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customDialog.setCancelable(true);
+        customDialog.setContentView(R.layout.dialogo_entradas);
+        customDialog.show();
+
+        final TextView tv_entradas=(TextView)customDialog.findViewById(R.id.tv_entradas);
+        final TextView txtCantidad=(TextView)customDialog.findViewById(R.id.txtCantidad);
+
+        prestamoDAO.open();
+        ArrayList<Prestamo> a = prestamoDAO.retrieveAll();
+        prestamoDAO.close();
+
+        txtCantidad.setText( String.valueOf( a.size() ) );
+
+        final StringBuilder sb = new StringBuilder();
+
+        if(a!=null  && !a.isEmpty()){
+            for( Prestamo prestamo: a ){
+                sb.append( " / " )
+                .append(prestamo.getCodigo()).append( " / " )
+                .append(prestamo.getDescripcion() ).append( " / " )
+                .append(prestamo.getMarca().getNombre()).append( " / " )
+                .append(prestamo.getEmpleado().getNombre()).append( " / " )
+                .append(prestamo.getLocal().getNombre()).append( " / " )
+                .append( "\n\n" );
+                tv_entradas.setText(sb.toString());
+            }
+        }
+        else{
+            sb.append("Ya no hay registros");
+            tv_entradas.setText((sb.toString()));
+        }
+
+
+
+
+    }
+
     private void dialogoTeclado(){
 
 
@@ -603,7 +659,11 @@ public class PrestamoFormFragment extends Fragment {
         Date date = new Date();
         Timestamp fecha = new Timestamp( date.getTime() );
 
-        Prestamo prest = new Prestamo( codigo,descripcion,foto,talla, fecha, empleado, local, marca,origen );}
+        Prestamo prest = new Prestamo( codigo,descripcion,foto,talla, fecha, empleado, local, marca,origen );
+        prestamoDAO.open();
+        prestamoDAO.create(prest);
+        prestamoDAO.close();
+    }
 
     } // end method crear
 

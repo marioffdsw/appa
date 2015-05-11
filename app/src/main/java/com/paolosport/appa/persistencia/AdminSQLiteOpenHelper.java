@@ -137,6 +137,6 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( TEST_PERSONA );
         db.execSQL( INSERT_TABLE_LOCAL );
         db.execSQL( INSERT_TABLE_MARCA );
-        db.execSQL( TEST_PRESTAMOS );
+       // db.execSQL( TEST_PRESTAMOS );
     } // end method setupTestDatabase
 }

@@ -34,6 +34,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
     private LocalDAO localDAO;
     private MarcaDAO marcaDAO;
     private PersonaDAO personaDAO;
+    AdminSQLiteOpenHelper helper;
 
     public PrestamoDAO(Context context, AdminSQLiteOpenHelper helper) {
         super(context, helper);
@@ -56,7 +57,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
         try{
 
-            Log.i(TAG + " prestamo", "PrestamoDAO.create()");
+            Log.i( TAG + " prestamo", "PrestamoDAO.create()" );
 
             ContentValues initialValues = new ContentValues();
 
@@ -191,6 +192,11 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         );
 
         Prestamo prestamo = null;
+
+        helper     = new AdminSQLiteOpenHelper( context );
+        localDAO   = new LocalDAO( context, helper );
+        marcaDAO   = new MarcaDAO( context, helper );
+        personaDAO = new PersonaDAO( context, helper );
 
         ArrayList listaPrestamos = new ArrayList<Prestamo>();
 
