@@ -225,7 +225,7 @@ public class PersonaFragment extends Fragment {
         Bitmap foto = ( ( BitmapDrawable ) imgFoto.getDrawable() ).getBitmap();
 
         Persona persona = new Persona( id, nombre, telefono, "prueba" );
-        persona.setUrl( guardarImange( context, persona.getCedula(), foto ) );
+        persona.setUrl( guardarImagen(context, persona.getCedula(), foto) );
 
 
         personaDAO.open();
@@ -258,7 +258,7 @@ public class PersonaFragment extends Fragment {
         persona.setCedula( id );
         persona.setNombre( nombre );
         persona.setTelefono( telefono );
-        persona.setUrl( guardarImange( context, persona.getCedula(), foto ) );
+        persona.setUrl( guardarImagen(context, persona.getCedula(), foto) );
 
         personaDAO.open();
         PersonaDAO.Estado estado = personaDAO.update( persona, cedulaAntigua );
@@ -458,7 +458,7 @@ public class PersonaFragment extends Fragment {
         imageView.setImageBitmap( bitmap );
     }
 
-    public String guardarImange( Context context, String nombre, Bitmap imagen ) {
+    public String guardarImagen(Context context, String nombre, Bitmap imagen) {
         ContextWrapper cw = new ContextWrapper( context );
         File dirImages = cw.getDir( "Imagenes", Context.MODE_PRIVATE );
         File dirImagesMini = cw.getDir( "Imagenes", Context.MODE_PRIVATE );

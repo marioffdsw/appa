@@ -8,7 +8,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /** DATA BASE HELPER PARAMETERS */
     static final String DATABASE_NAME = "appa.db";
-    static final int DATABASE_VERSION = 13;
+    static final int DATABASE_VERSION = 14;
 
 
     /** DATABASE TABLE DEFINITION AND DROP STATEMENTS */
@@ -105,6 +105,13 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         "( 'fresa',                  38,         '4',          '4',      '4',    'n'     )";
 
 
+    static final String TEST_PRESTAMOS2 = "INSERT INTO prestamos " +
+            "( descripcion,              talla,      empleado,     local,    marca, origen, estado   ) VALUES" +
+            "( 'prestado',                32,         '1',          '1',      '1',    'a',   'P'    )," +
+            "( 'devuelto',                 38,         '2',          '1',      '2',    'b',   'D'     )," +
+            "( 'vendido',                 37,         '3',          '2',      '4',    'c',   'V'    )";
+
+
     // constructor, just call superclass constructor
     public AdminSQLiteOpenHelper( Context context ){
         super( context, DATABASE_NAME, null, DATABASE_VERSION  );
@@ -138,6 +145,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( TEST_PERSONA );
         db.execSQL( INSERT_TABLE_LOCAL );
         db.execSQL( INSERT_TABLE_MARCA );
-       // db.execSQL( TEST_PRESTAMOS );
+        db.execSQL( TEST_PRESTAMOS );
+        db.execSQL( TEST_PRESTAMOS2 );
     } // end method setupTestDatabase
 }

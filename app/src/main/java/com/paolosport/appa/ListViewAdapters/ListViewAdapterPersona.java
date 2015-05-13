@@ -110,7 +110,7 @@ public class ListViewAdapterPersona extends ArrayAdapter<Persona> {
         Bitmap bitmap = b;
 
         if(square){
-            if(bitmap.getWidth() < bitmap.getHeight()){
+            if( bitmap.getWidth() < bitmap.getHeight() ){
                 width = bitmap.getWidth();
                 height = bitmap.getWidth();
             } else {

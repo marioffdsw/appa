@@ -6,20 +6,6 @@
               android:orientation="vertical"
               android:background="@color/white">
 
-
-    <EditText
-        android:id="@+id/txtBusqueda"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:singleLine="true"
-        android:hint="Introduce el nombre del empleado a buscar"
-        android:maxLines="1"
-        android:lines="1"
-        android:imeOptions="actionDone"
-        android:textColor="@color/white"
-        android:drawableRight="@drawable/ico_buscar"
-        android:background="@color/action_bar2"/>
-
     <LinearLayout
         android:layout_weight="7"
         android:layout_width="match_parent"
@@ -62,6 +48,7 @@
                 android:id="@+id/lstPrestamos"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
+                android:listSelector="@drawable/selection_prestamos"
                 android:visibility="invisible" />
 
         </RelativeLayout>

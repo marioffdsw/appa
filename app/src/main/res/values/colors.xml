@@ -19,5 +19,8 @@
     <color name="fondoBotones">#ff00522C </color>
     <color name="fondoBotones2">#002513 </color>
     <color name="fondoBotones3">#005d31 </color>
+    <color name="prestado_peligro">#ffff0e1a</color>
+    <color name="prestado">#ff234aff</color>
+    <color name="solucionado">#c700aa59</color>
 
 </resources>

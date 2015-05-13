@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SearchView;
+
+import android.support.v4.widget.SearchViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
@@ -40,7 +41,7 @@ import java.util.zip.Inflater;
 
 public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.PrestamosSubject {
 
-    private SearchView searchView;
+    private SearchViewCompat searchView;
     private EditText txtBusqueda;
     private Context context;
 
@@ -103,36 +104,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         Activity activity = ( Activity ) context;
         listPrestamos = ( ListView ) view.findViewById( R.id.lstPrestamos );
 
-        View headerView = View.inflate( context, R.layout.lst_prestamos_header, null );
-
-        TextView ordenarPorEmpleados = (TextView) headerView.findViewById( R.id.ordenarPorEmpleado );
-        ordenarPorEmpleados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.ordenarPorEmpleado();
-            }
-        });
-
-        TextView ordenarPorFecha = (TextView) headerView.findViewById( R.id.ordenarPorFecha );
-
-        ordenarPorFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.ordenarPorFecha();
-            }
-
-        });
-
-        TextView ordenarPorLocal = (TextView) headerView.findViewById( R.id.ordenarPorLocal);
-        ordenarPorLocal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               adapter.ordenarPorLocal();
-            }
-        });
-
-        listPrestamos.addHeaderView(headerView, null, false);
-
         listPrestamos.setAdapter(adapter);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("datos",
@@ -174,26 +145,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
             } );
         }
 
-        txtBusqueda = (EditText) view.findViewById( R.id.txtBusqueda );
-
-        txtBusqueda.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter( txtBusqueda.getText() );
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
         // Inflate the layout for this fragment
         return view;
     }
@@ -218,11 +169,50 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_lst_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem item=menu.add("Search");
+        item.setIcon(android.R.drawable.ic_menu_search);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        View searchView =SearchViewCompat.newSearchView(getActivity());
+        if (searchView != null) {
+            SearchViewCompat.setOnQueryTextListener(searchView,new SearchViewCompat.OnQueryTextListenerCompat() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    return true;
+                }
+            });
+            item.setActionView(searchView);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch ( item.getItemId() ){
+            case R.id.ordenarPorEmpleado:
+                adapter.ordenarPorEmpleado();
+                break;
+            case R.id.ordenarPorEstado:
+                adapter.ordenarPorEstado();
+                break;
+            case R.id.ordenarPorFecha:
+                adapter.ordenarPorFecha();
+                break;
+            case R.id.ordenarPorLocal:
+                adapter.ordenarPorLocal();
+                break;
+            case R.id.ordenarPorMarca:
+                adapter.ordenarPorMarca();
+                break;
+            case R.id.ordenarPorOrigen:
+                adapter.ordenarPorOrigen();
+                break;
+        } // end switch
+
         return super.onOptionsItemSelected(item);
+
     }
 }

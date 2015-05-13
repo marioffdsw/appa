@@ -2,7 +2,60 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
 
+<!--
+    <item android:id="@+id/action_search"
+        yourapp:showAsAction="always"
+        android:title="Buscar"
+        android:icon="@android:drawable/ic_menu_search"
+        android:actionViewClass="android.widget.SearchView" />
+-->
+
+    <item
+        android:id="@+id/opciones"
+        android:icon="@drawable/ic_action_view_as_grid"
+        android:orderInCategory="100"
+        android:title="Ordenar"
+        yourapp:showAsAction="always" >
+
+        <menu>
+            <item
+                android:id="@+id/ordenarPorEmpleado"
+                android:icon="@drawable/ic_action_settings"
+                android:title="Por Empleado"
+                android:orderInCategory="100" />
+
+            <item
+                android:id="@+id/ordenarPorEstado"
+                android:icon="@drawable/ic_action_about"
+                android:title="Por Estado"
+                android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/ordenarPorFecha"
+                android:icon="@drawable/ic_action_person"
+                android:title="Por Fecha"
+                android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/ordenarPorLocal"
+                android:icon="@drawable/ico_sesion_bl"
+                android:title="Por Local"
+                android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/ordenarPorMarca"
+                android:icon="@drawable/ico_sesion_bl"
+                android:title="Por Marca"
+                android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/ordenarPorOrigen"
+                android:icon="@drawable/ico_sesion_bl"
+                android:title="Por Origen"
+                android:orderInCategory="100"
+                />
+        </menu>
 
 
-
+    </item>
 </menu>

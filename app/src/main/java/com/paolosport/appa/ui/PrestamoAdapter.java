@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -91,6 +92,13 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             ImageView fotoEmpleado = (ImageView) v.findViewById( R.id.foto_empleado);
             ImageView fotoMarca = (ImageView) v.findViewById( R.id.foto_marca );
             TextView txtTelefonoEmpleado = (TextView) v.findViewById( R.id.txtTelefonoEmpleado );
+            View colorView = (View) v.findViewById( R.id.cuadro_color2 );
+
+            if( p.getEstado().substring(0,1).equals( "P" ) )
+                colorView.setBackgroundColor( mContext.getResources().getColor(R.color.sombra_titulo_rojo) );
+            else if( p.getEstado().substring(0,1).equals("V") || p.getEstado().substring(0,1).equals("D") )
+                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.sombra_titulo_verde) );
+
 
             if (txtDescripcionPrestamo != null) {
                 txtDescripcionPrestamo.setText(p.getDescripcion());
@@ -136,6 +144,24 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         notifyDataSetChanged();
     }
 
+    public void ordenarPorEstado(){
+        Collections.sort(mList, new Comparator<Prestamo>() {
+            @Override
+            public int compare(Prestamo lhs, Prestamo rhs) {
+                return lhs.getEstado().compareToIgnoreCase(rhs.getEstado());
+            }
+        });
+    }
+
+    public void ordenarPorMarca() {
+        Collections.sort(mList, new Comparator<Prestamo>() {
+            @Override
+            public int compare(Prestamo lhs, Prestamo rhs) {
+                return lhs.getMarca().getNombre().compareToIgnoreCase( rhs.getMarca().getNombre() );
+            }
+        });
+    }
+
     public void ordenarPorLocal(){
         Collections.sort(mList, new Comparator<Prestamo>() {
             @Override
@@ -154,6 +180,15 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             }
         });
         notifyDataSetChanged();
+    }
+
+    public void ordenarPorOrigen(){
+        Collections.sort(mList, new Comparator<Prestamo>() {
+            @Override
+            public int compare(Prestamo lhs, Prestamo rhs) {
+                return lhs.getOrigen().compareToIgnoreCase( rhs.getOrigen() );
+            }
+        });
     }
 
     public Filter getFilter(){
