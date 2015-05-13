@@ -10,14 +10,17 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -28,6 +31,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.paolosport.appa.R;
+import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.persistencia.entities.Prestamo;
 
 import org.w3c.dom.Text;
@@ -40,6 +44,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     Context mContext;
     WeakReference<ArrayList<Prestamo> > mListPrestamos;
     ArrayList<Prestamo> mList;
+    ArrayList<Prestamo> mListaSeleccionados = new ArrayList<>();
     Filter mPrestamosFilter;
 
     public interface PrestamosSubject{
@@ -283,6 +288,46 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+    }
+
+    public void selecionarElementos( AdapterView<?> parent, View view, int position, long id ){
+        if( isItemSelected(position ) ){
+            mListaSeleccionados.remove( mList.get( position ) );
+        }
+        else{
+            mListaSeleccionados.add( mList.get( position ) );
+            Log.e( "PrestamoAdapter", "seleccionado" );
+        }
+    } // end method seleccionarElementos
+
+    public boolean isItemSelected( int position ){
+        return mListaSeleccionados.contains( mList.get( position ) );
+    } // end method isItemSelected
+
+    public void borrarSeleccion(){
+        mListaSeleccionados.clear();
+    } // end emthod borrarSeleccion
+
+    public int selectedNumber(){
+        return mListaSeleccionados.size();
+    }
+
+    public void showToast(){
+        Toast.makeText( mContext,
+            "items selected: " + mListaSeleccionados.size(),
+            Toast.LENGTH_SHORT ).show();
+    }
+
+    public void vender( PrestamoDAO prestamoDAO ){
+        /*
+        for(){}
+        prestamoDAO.open();
+        prestamoDAO.delete(  )
+        */
+    } // end method vender
+
+    public void devolver( PrestamoDAO prestamoDAO ){
+
     }
 
 } // end class PrestamoAdapter
