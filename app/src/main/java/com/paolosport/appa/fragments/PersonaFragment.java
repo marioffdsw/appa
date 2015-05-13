@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class PersonaFragment extends Fragment {
     private PersonaDAO personaDAO;
     private ArrayList< Persona > listaPersonas;
     private ImageView imgFoto;
+    String url;
 
     private EditText txtNombrePersona;
     private EditText txtCedulaPersona;
@@ -218,28 +220,35 @@ public class PersonaFragment extends Fragment {
     }
 
     public void crearPersona() {
+
         String id = txtCedulaPersona.getText().toString();
         String nombre = txtNombrePersona.getText().toString();
         String telefono = txtTelefonoPersona.getText().toString();
-
-        Bitmap foto = ( ( BitmapDrawable ) imgFoto.getDrawable() ).getBitmap();
-
-        Persona persona = new Persona( id, nombre, telefono, "prueba" );
-        persona.setUrl( guardarImange( context, persona.getCedula(), foto ) );
+        Bitmap foto = ((BitmapDrawable) imgFoto.getDrawable()).getBitmap();
 
 
-        personaDAO.open();
-        PersonaDAO.Estado estado = personaDAO.create( persona );
-        personaDAO.close();
+        if(!((id==null || id.isEmpty())||(nombre==null || nombre.isEmpty()))){
+            Log.e("hola","entroooooooo");
+            Persona persona = new Persona(id, nombre, telefono, "prueba");
+            persona.setUrl(guardarImange(context, persona.getCedula(), foto));
 
-        if( estado == PersonaDAO.Estado.INSERTADO ) {
-            listaPersonas.add( persona );
-            ordenarAlfabeticamente();
-        } else {
-            Toast.makeText( context, ":( Error al insertar persona\n" + "Es posible que un empleado con ese numero de cedula ya haya sido registrado", Toast.LENGTH_LONG ).show();
+            personaDAO.open();
+            PersonaDAO.Estado estado = personaDAO.create(persona);
+            personaDAO.close();
+
+            if (estado == PersonaDAO.Estado.INSERTADO) {
+                listaPersonas.add(persona);
+                ordenarAlfabeticamente();
+            } else {
+                Toast.makeText(context, ":( Error al insertar persona\n" + "Es posible que un empleado con ese numero de cedula ya haya sido registrado", Toast.LENGTH_LONG).show();
+            }
+            cancelar();
+
         }
-
-        cancelar();
+        else{
+            Toast.makeText(getActivity().getApplicationContext(), "Complete los Campos", Toast.LENGTH_SHORT).show();
+            cancelar();
+        }
     }
 
     public void actualizarPersona() {
@@ -305,9 +314,9 @@ public class PersonaFragment extends Fragment {
         imgFoto.setImageDrawable( getActivity().getResources().getDrawable( R.drawable.ico_persona_gr ) );
         imgFoto.setOnClickListener( null );
         btnNuevo.setVisibility( View.VISIBLE );
-        btnGuardar.setVisibility( View.GONE);
-        btnCancelar.setVisibility( View.GONE );
-        btnActualizar.setVisibility( View.GONE );
+        btnGuardar.setVisibility( View.INVISIBLE);
+        btnCancelar.setVisibility( View.INVISIBLE );
+        btnActualizar.setVisibility( View.INVISIBLE );
         btnEliminar.setVisibility( View.GONE );
     }
 
@@ -481,6 +490,7 @@ public class PersonaFragment extends Fragment {
         } catch( IOException ex ) {
             ex.printStackTrace();
         }
+        url= myPath.getAbsolutePath();
         return myPath.getAbsolutePath();
     }
     private void animar(boolean mostrar)

@@ -42,6 +42,8 @@ public class MainActivity extends ActionBarActivity {
         // setup action bar for tabs
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setIcon(R.drawable.logo_appa);
+        actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         ActionBar.Tab tab = actionBar.newTab()
                 .setText(R.string.frm_prestamos)

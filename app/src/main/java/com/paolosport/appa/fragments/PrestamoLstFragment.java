@@ -106,6 +106,8 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         View headerView = View.inflate( context, R.layout.lst_prestamos_header, null );
 
         TextView ordenarPorEmpleados = (TextView) headerView.findViewById( R.id.ordenarPorEmpleado );
+
+
         ordenarPorEmpleados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,4 +227,5 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
 }
