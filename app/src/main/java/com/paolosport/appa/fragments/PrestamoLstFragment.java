@@ -19,9 +19,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,19 +44,18 @@ import java.util.zip.Inflater;
 public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.PrestamosSubject {
 
     private SearchViewCompat searchView;
-    private EditText txtBusqueda;
     private Context context;
 
     private PersonaDAO personaDAO;
     private MarcaDAO marcaDAO;
     private LocalDAO localDAO;
     private PrestamoDAO prestamoDAO;
+    private RelativeLayout opciones;
 
     private PrestamoAdapter adapter;
     private View view;
 
     private ListView listPrestamos;
-
     private ArrayList<Prestamo> lstPrestamos;
 
     public PrestamoLstFragment() {
@@ -103,37 +104,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         // se carga los datos que existan sobre los prestamos
         Activity activity = ( Activity ) context;
         listPrestamos = ( ListView ) view.findViewById( R.id.lstPrestamos );
-
-        View headerView = View.inflate( context, R.layout.lst_prestamos_header, null );
-
-        TextView ordenarPorEmpleados = (TextView) headerView.findViewById( R.id.ordenarPorEmpleado );
-        ordenarPorEmpleados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.ordenarPorEmpleado();
-            }
-        });
-
-        TextView ordenarPorFecha = (TextView) headerView.findViewById( R.id.ordenarPorFecha );
-
-        ordenarPorFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.ordenarPorFecha();
-            }
-
-        });
-
-        TextView ordenarPorLocal = (TextView) headerView.findViewById( R.id.ordenarPorLocal);
-        ordenarPorLocal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               adapter.ordenarPorLocal();
-            }
-        });
-
-        listPrestamos.addHeaderView(headerView, null, false);
-
         listPrestamos.setAdapter(adapter);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("datos",
@@ -142,39 +112,29 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         sesion= preferences.getBoolean("sesion",sesion);
         if ( sesion == true ) {
             listPrestamos.setChoiceMode( ListView.CHOICE_MODE_MULTIPLE );
-            listPrestamos.setMultiChoiceModeListener( new AbsListView.MultiChoiceModeListener() {
+            listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemCheckedStateChanged( ActionMode mode, int position, long id, boolean checked ) {
-                    final int checkedCount = listPrestamos.getCheckedItemCount();
-
-
-                    getActivity().getActionBar().setTitle( checkedCount + " " +
-                        "Seleccionados" );
-
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.selecionarElementos( parent, view, position, id );
+                    adapter.showToast();
+                    alternarOpciones();
                 }
-
-                @Override
-                public boolean onCreateActionMode( ActionMode mode, Menu menu ) {
-                    mode.getMenuInflater().inflate( R.menu.fragment_lst_menu, menu );
-                    return false;
-                }
-
-                @Override
-                public boolean onPrepareActionMode( ActionMode mode, Menu menu ) {
-                    return false;
-                }
-
-                @Override
-                public boolean onActionItemClicked( ActionMode mode, MenuItem item ) {
-                    return false;
-                }
-
-                @Override
-                public void onDestroyActionMode( ActionMode mode ) {
-                }
-            } );
+            });
         }
 
+        opciones = (RelativeLayout) view.findViewById( R.id.opciones );
+        view.findViewById( R.id.btnVendido ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.vender( prestamoDAO );
+            }
+        });
+        view.findViewById( R.id.btnDevuelto ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.devolver( prestamoDAO );
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }
@@ -200,6 +160,22 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_lst_menu, menu);
         super.onCreateOptionsMenu(menu,inflater);
+        MenuItem item=menu.add("Search");
+        item.setIcon(android.R.drawable.ic_menu_search);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        View searchView =SearchViewCompat.newSearchView(getActivity());
+        if (searchView != null) {
+           SearchViewCompat.setOnQueryTextListener(searchView,new SearchViewCompat.OnQueryTextListenerCompat() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    deselecionarPrestamos();
+                    alternarOpciones();
+                    return true;
+                }
+           });
+           item.setActionView(searchView);
+        }
     }
 
     @Override
@@ -209,25 +185,64 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         switch ( item.getItemId() ){
             case R.id.ordenarPorEmpleado:
                 adapter.ordenarPorEmpleado();
+                deselecionarPrestamos();
+                alternarOpciones();
                 break;
             case R.id.ordenarPorEstado:
                 adapter.ordenarPorEstado();
+                deselecionarPrestamos();
+                alternarOpciones();
                 break;
             case R.id.ordenarPorFecha:
                 adapter.ordenarPorFecha();
+                deselecionarPrestamos();
+                alternarOpciones();
                 break;
             case R.id.ordenarPorLocal:
                 adapter.ordenarPorLocal();
+                deselecionarPrestamos();
+                alternarOpciones();
                 break;
             case R.id.ordenarPorMarca:
                 adapter.ordenarPorMarca();
+                deselecionarPrestamos();
+                alternarOpciones();
                 break;
             case R.id.ordenarPorOrigen:
                 adapter.ordenarPorOrigen();
+                deselecionarPrestamos();
+                alternarOpciones();
                 break;
         } // end switch
 
         return super.onOptionsItemSelected(item);
 
     }
+
+    public void deselecionarPrestamos(){
+        listPrestamos.requestLayout();
+        listPrestamos.clearChoices();
+        adapter.borrarSeleccion();
+    } // end method deselecionarPrestamos
+
+    public void alternarOpciones(){
+        int seleccionados = adapter.selectedNumber();
+
+        if( seleccionados > 0 ){
+            mostrarOpciones();
+        }
+        else{
+            ocultarOpciones();
+        }
+    } // end method alternarOpciones
+
+    public void mostrarOpciones(){
+        opciones.setVisibility( View.VISIBLE );
+    } // end method mostrarOpciones
+
+    public void ocultarOpciones(){
+        opciones.setVisibility( View.GONE );
+
+    } // end method ocultarOpciones
+
 }

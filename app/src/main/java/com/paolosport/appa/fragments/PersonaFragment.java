@@ -230,7 +230,7 @@ public class PersonaFragment extends Fragment {
         if(!((id==null || id.isEmpty())||(nombre==null || nombre.isEmpty()))){
             Log.e("hola","entroooooooo");
             Persona persona = new Persona(id, nombre, telefono, "prueba");
-            persona.setUrl(guardarImange(context, persona.getCedula(), foto));
+            persona.setUrl(guardarImagen(context, persona.getCedula(), foto));
 
             personaDAO.open();
             PersonaDAO.Estado estado = personaDAO.create(persona);
@@ -467,7 +467,7 @@ public class PersonaFragment extends Fragment {
         imageView.setImageBitmap( bitmap );
     }
 
-    public String guardarImange( Context context, String nombre, Bitmap imagen ) {
+    public String guardarImagen( Context context, String nombre, Bitmap imagen ) {
         ContextWrapper cw = new ContextWrapper( context );
         File dirImages = cw.getDir( "Imagenes", Context.MODE_PRIVATE );
         File dirImagesMini = cw.getDir( "Imagenes", Context.MODE_PRIVATE );
