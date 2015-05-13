@@ -89,7 +89,8 @@
                             android:background="@drawable/spinner_background_ab_verde"
                             android:popupBackground="@android:drawable/editbox_background"
                             android:layout_weight="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_marginLeft="10dp"
+                            android:soundEffectsEnabled="false" />
 
                         <Space
                             android:layout_width="15dp"
@@ -124,7 +125,9 @@
                             android:background="@drawable/spinner_background_ab_verde"
                             android:popupBackground="@android:drawable/editbox_background"
                             android:layout_weight="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_marginLeft="10dp"
+                            android:clickable="true"
+                            android:soundEffectsEnabled="true" />
 
                         <Space
                             android:layout_width="15dp"
@@ -202,7 +205,8 @@
                             android:textCursorDrawable="@null"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="4dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:clickable="false" />
 
                         <ImageButton
                             android:layout_width="15dp"
@@ -250,7 +254,8 @@
                             android:clickable="true"
                             android:layout_marginTop="4dp"
                             android:gravity="center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:soundEffectsEnabled="false" />
 
                         <ImageButton
                             android:layout_width="15dp"
@@ -293,7 +298,8 @@
                             android:background="@drawable/spinner_background_ab_verde"
                             android:popupBackground="@android:drawable/editbox_background"
                             android:layout_weight="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_marginLeft="10dp"
+                            android:soundEffectsEnabled="false" />
 
                         <Space
                             android:layout_width="15dp"
@@ -328,7 +334,8 @@
                     android:drawableLeft="@drawable/ico_nuevo"
                     android:elegantTextHeight="false"
                     android:gravity="left|center_vertical"
-                    android:text="REGISTRAR" />
+                    android:text="REGISTRAR"
+                    android:soundEffectsEnabled="false" />
 
                 <Button
                     android:layout_width="fill_parent"
@@ -341,7 +348,7 @@
                     android:background="@drawable/botonpulsado"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
-                    android:visibility="visible" />
+                    android:visibility="invisible" />
 
                 <Button
                     android:layout_width="fill_parent"
@@ -356,7 +363,8 @@
                     android:layout_marginRight="2dp"
                     android:elegantTextHeight="false"
                     android:drawableLeft="@drawable/ico_cancelar_rj"
-                    android:gravity="left|center_vertical" />
+                    android:gravity="left|center_vertical"
+                    android:soundEffectsEnabled="false" />
             </LinearLayout>
 
         </LinearLayout>
@@ -438,7 +446,8 @@
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
                     android:drawableLeft="@drawable/ico_aceptar_vd"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:soundEffectsEnabled="false" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -466,7 +475,8 @@
                     android:layout_marginRight="2dp"
                     android:elegantTextHeight="false"
                     android:drawableLeft="@drawable/ico_cancelar_rj"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:soundEffectsEnabled="false" />
 
             </LinearLayout>
 

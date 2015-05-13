@@ -179,13 +179,10 @@
     </LinearLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="left|bottom"
-        android:alpha="100"
-        android:background="@color/fondo3"
-        android:gravity="left">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_width="200dp"
@@ -199,9 +196,7 @@
             android:paddingBottom="1dp"
             android:paddingRight="2dp"
             android:paddingTop="2dp"
-            android:paddingLeft="4dp"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentLeft="true" />
+            android:paddingLeft="4dp" />
 
         <Button
             android:layout_width="200dp"
@@ -209,7 +204,6 @@
             android:layout_weight="1"
             android:text="Guardar"
             android:id="@+id/btnGuardar"
-            android:drawableLeft="@drawable/ico_nuevo"
             android:background="@drawable/botonpulsado2"
             android:layout_margin="2dp"
             android:paddingBottom="1dp"
@@ -223,15 +217,13 @@
             android:layout_weight="1"
             android:text="Cancelar"
             android:id="@+id/btnCancelar"
-            android:drawableLeft="@drawable/ico_lista"
             android:background="@drawable/botonpulsado2"
             android:layout_margin="2dp"
             android:paddingBottom="1dp"
             android:paddingRight="4dp"
             android:paddingTop="2dp"
             android:paddingLeft="2dp"
-            android:layout_alignParentRight="false"
-            android:layout_toRightOf="@+id/btnGuardar" />
+            android:layout_alignParentRight="false" />
 
         <Button
             android:layout_width="200dp"
@@ -239,14 +231,12 @@
             android:layout_weight="1"
             android:text="Actualizar"
             android:id="@+id/btnActualizar"
-            android:drawableLeft="@drawable/ico_editar"
             android:background="@drawable/botonpulsado2"
             android:layout_margin="2dp"
             android:paddingBottom="1dp"
             android:paddingRight="2dp"
             android:paddingTop="2dp"
-            android:paddingLeft="2dp"
-            android:layout_toLeftOf="@+id/btnEliminar"/>
+            android:paddingLeft="2dp" />
 
         <Button
             android:layout_width="200dp"
@@ -254,14 +244,11 @@
             android:layout_weight="1"
             android:text="Eliminar"
             android:id="@+id/btnEliminar"
-            android:drawableLeft="@drawable/ico_eliminar"
             android:background="@drawable/botonpulsado2"
             android:layout_margin="2dp"
             android:paddingBottom="1dp"
             android:paddingRight="2dp"
             android:paddingTop="2dp"
-            android:paddingLeft="2dp"
-            android:layout_toLeftOf="@+id/btnCancelar"/>
-
-    </RelativeLayout>
+            android:paddingLeft="2dp" />
+    </LinearLayout>
 </LinearLayout>

@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
 
-<!--
-    <item android:id="@+id/action_search"
-        yourapp:showAsAction="always"
-        android:title="Buscar"
-        android:icon="@android:drawable/ic_menu_search"
-        android:actionViewClass="android.widget.SearchView" />
--->
+    <!--
+        <item android:id="@+id/action_search"
+            yourapp:showAsAction="always"
+            android:title="Buscar"
+            android:icon="@android:drawable/ic_menu_search"
+            android:actionViewClass="android.widget.SearchView" />
+    -->
 
     <item
         android:id="@+id/opciones"

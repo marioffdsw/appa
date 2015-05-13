@@ -2,14 +2,20 @@ package com.paolosport.appa.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +25,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.ui.ItemPrestamo;
@@ -50,13 +57,11 @@ public class PrestamoFormFragment extends Fragment {
     TimerTask timerTask;
     Dialog customDialog = null;
     String destino_item,marca_item,persona_item,origen_tarjeta;
-
     private Spinner sp_marca,   sp_local, sp_persona;
     private Button btn_registrar_item,
                    btn_cancelar_item,
                    btn_aceptar_pedido,
-                   btn_cancelar_pedido,
-                   btn_mostrar;
+                   btn_cancelar_pedido;
 
     private EditText  et_codigo_item,et_descripcion_item;
     private TextView et_talla_item;
@@ -67,6 +72,15 @@ public class PrestamoFormFragment extends Fragment {
     LocalDAO localDAO;
     PersonaDAO personaDAO;
     PrestamoDAO prestamoDAO;
+
+    MediaPlayer mp_click,
+                mp_click2,
+                mp_borrar2,
+                mp_borrar_3,
+                mp_tarjeta,
+                mp_registro_item2,
+                mp_otro,
+                mp_registro_pedido;
 
     Boolean tarjeta_result = false;
     List listaItems = new ArrayList();
@@ -94,6 +108,15 @@ public class PrestamoFormFragment extends Fragment {
 
         view= inflater.inflate(R.layout.fragment_prestamo_form, container, false);
 
+        mp_click = MediaPlayer.create(getActivity(),R.raw.a_click);
+        mp_click2 = MediaPlayer.create(getActivity(), R.raw.a_click2);
+        mp_borrar2 = MediaPlayer.create(getActivity(), R.raw.a_borrar2);
+        mp_borrar_3 = MediaPlayer.create(getActivity(), R.raw.a_borrar_3);
+        mp_tarjeta = MediaPlayer.create(getActivity(), R.raw.a_tarjeta);
+        mp_registro_item2 = MediaPlayer.create(getActivity(), R.raw.a_registro_item2);
+        mp_otro = MediaPlayer.create(getActivity(), R.raw.a_otro);
+        mp_registro_pedido = MediaPlayer.create(getActivity(), R.raw.a_regitro_pedido);
+
         et_codigo_item      =(EditText)view.findViewById(R.id.et_codigo_item);
         et_descripcion_item =(EditText)view.findViewById(R.id.et_descripcion_item);
         et_talla_item       =(TextView)view.findViewById(R.id.et_talla_item);
@@ -102,11 +125,14 @@ public class PrestamoFormFragment extends Fragment {
         btn_cancelar_item   = (Button)view.findViewById(R.id.btn_cancelar_item);
         btn_aceptar_pedido  = (Button)view.findViewById(R.id.btn_aceptar_pedido);
         btn_cancelar_pedido = (Button)view.findViewById(R.id.btn_cancelar_pedido);
-        btn_mostrar = (Button)view.findViewById(R.id.btn_mostrar);
+
+        sp_marca= (android.widget.Spinner)view.findViewById(R.id.sp_marca_prestamo);
+        sp_local= (android.widget.Spinner)view.findViewById(R.id.sp_local_prestamo);
+        sp_persona= (android.widget.Spinner)view.findViewById(R.id.sp_persona_prestamo);
 
 
         lv_prestamo   = (ListView)view.findViewById(R.id.lv_prestamo);
-
+        lv_prestamo.setSoundEffectsEnabled(false);
         SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
                         lv_prestamo,
@@ -119,7 +145,11 @@ public class PrestamoFormFragment extends Fragment {
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
+                                    mp_borrar_3.start();
                                     listaItems.remove(listaItems.get(position));
+                                }
+                                if (listaItems.isEmpty()){
+                                    cancelarPedido();
                                 }
                                 //listaItems.notify();
                             }
@@ -132,6 +162,7 @@ public class PrestamoFormFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemPrestamo tarjeta = (ItemPrestamo)parent.getItemAtPosition(position);
+                mp_tarjeta.start();
                 dialogoTarjeta(tarjeta);
                 }
         });
@@ -141,7 +172,7 @@ public class PrestamoFormFragment extends Fragment {
         btn_registrar_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mp_registro_item2.start();
                 registrarItem();
 
             }
@@ -149,8 +180,8 @@ public class PrestamoFormFragment extends Fragment {
         btn_cancelar_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp_click2.start();
                 cancelarItem();
-
             }
         });
         btn_aceptar_pedido.setOnClickListener(new View.OnClickListener() {
@@ -162,23 +193,28 @@ public class PrestamoFormFragment extends Fragment {
         btn_cancelar_pedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 cancelarPedido();
-
-            }
-        });
-        btn_mostrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarEntradas();
-
             }
         });
 
         et_talla_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp_click.start();
                 dialogoTeclado();
-
+            }
+        });
+        et_descripcion_item.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    dialogoTeclado();
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -200,12 +236,10 @@ public class PrestamoFormFragment extends Fragment {
         final ArrayList<Local> listaLocales = localDAO.retrieveAll();
         final ArrayList<Persona> listaPersonas = personaDAO.retrieveAll();
 
-        sp_marca= (android.widget.Spinner)view.findViewById(R.id.sp_marca_prestamo);
-        sp_local= (android.widget.Spinner)view.findViewById(R.id.sp_local_prestamo);
-        sp_persona= (android.widget.Spinner)view.findViewById(R.id.sp_persona_prestamo);
 
-        sp_marca.setAdapter(new SpinnerAdapterMarca(getActivity().getApplicationContext(),listaMarcas));
-        sp_local.setAdapter(new SpinnerAdapterLocal(getActivity().getApplicationContext(),listaLocales));
+
+        sp_marca.setAdapter(new SpinnerAdapterMarca(getActivity().getApplicationContext(), listaMarcas));
+        sp_local.setAdapter(new SpinnerAdapterLocal(getActivity().getApplicationContext(), listaLocales));
         sp_persona.setAdapter(new SpinnerAdapterPersonaLista(getActivity().getApplicationContext(),listaPersonas));
 
         marcaDAO.close();
@@ -218,9 +252,9 @@ public class PrestamoFormFragment extends Fragment {
             {
                 marca_item=((Marca) adapterView.getItemAtPosition(position)).getId();
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView){}
+            public void onNothingSelected(AdapterView<?> adapterView){
+            }
         });
 
         sp_local.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -232,6 +266,7 @@ public class PrestamoFormFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
+
         });
 
         sp_persona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -245,12 +280,36 @@ public class PrestamoFormFragment extends Fragment {
             }
         });
 
+
+
+        sp_marca.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mp_click.start();
+                return false;
+            }
+        });
+        sp_local.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mp_click.start();
+                return false;
+            }
+        });
+        sp_persona.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mp_click.start();
+                return false;
+            }
+        });
+
     }//end method DatosPorDefecto
 
 
     public void registrarItem(){
 
-        dialogoRegistro();
+        //dialogoRegistro();
 
         String codigo = et_codigo_item.getText().toString();
         String descripcion = et_descripcion_item.getText().toString();
@@ -290,6 +349,7 @@ public class PrestamoFormFragment extends Fragment {
             cancelarItem();
             crearPedido();//metodo para registar pedido
             listaItems.clear();
+
             dialogoAcepation();
             lv_prestamo.setAdapter(new ListViewAdapterPrestamo(getActivity().getApplicationContext(), listaItems));
             btn_cancelar_pedido.setVisibility(View.INVISIBLE);
@@ -303,6 +363,10 @@ public class PrestamoFormFragment extends Fragment {
             listaItems.clear();
             dialogoCancelacion();
             lv_prestamo.setAdapter(new ListViewAdapterPrestamo(getActivity().getApplicationContext(), listaItems));
+            btn_cancelar_pedido.setVisibility(View.INVISIBLE);
+            btn_aceptar_pedido.setVisibility(View.INVISIBLE);
+        }
+        else{
             btn_cancelar_pedido.setVisibility(View.INVISIBLE);
             btn_aceptar_pedido.setVisibility(View.INVISIBLE);
         }
@@ -338,11 +402,15 @@ public class PrestamoFormFragment extends Fragment {
         rg_origen_tarjeta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
                 if (r1.isChecked() == true) {
+                    mp_click.start();
                     tv_origen_tarjeta.setText("L.124");
                 } else if (r2.isChecked() == true) {
+                    mp_click.start();
                     tv_origen_tarjeta.setText("L.126");
                 } else if (r3.isChecked() == true) {
+                    mp_click.start();
                     tv_origen_tarjeta.setText("Bodega");
                 }
             }
@@ -351,6 +419,8 @@ public class PrestamoFormFragment extends Fragment {
         ((Button) customDialog.findViewById(R.id.btn_cancelar_teclado)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mp_click2.start();
                 customDialog.dismiss();
             }
         });
@@ -360,6 +430,7 @@ public class PrestamoFormFragment extends Fragment {
             public void onClick(View view) {
                 String aux = tv_origen_tarjeta.getText().toString();
                 if (aux != "" && aux != null && !aux.isEmpty()) {
+                    mp_click.start();
                     tarjeta_result = true;
                     origen_tarjeta = aux;
                     item_tarjeta.setOrigen(aux);
@@ -383,9 +454,11 @@ public class PrestamoFormFragment extends Fragment {
         customDialog.setCancelable(true);
         customDialog.setContentView(R.layout.dialogo_aceptacion);
         customDialog.show();
+
         Timer time = new Timer();
         initializeTimerTask();
         time.schedule(timerTask, 1200);
+        mp_registro_pedido.start();
     }
 
     private void dialogoCancelacion(){
@@ -397,6 +470,7 @@ public class PrestamoFormFragment extends Fragment {
         Timer time = new Timer();
         initializeTimerTask();
         time.schedule(timerTask,1200);
+        mp_borrar2.start();
     }
 
     private void dialogoRegistro(){
@@ -410,54 +484,15 @@ public class PrestamoFormFragment extends Fragment {
         time.schedule(timerTask,600);
     }
 
-    private void mostrarEntradas(){
-        customDialog = new Dialog(getActivity(),R.style.RegistroDialogAnimation);
-        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        customDialog.setCancelable(true);
-        customDialog.setContentView(R.layout.dialogo_entradas);
-        customDialog.show();
-
-        final TextView tv_entradas=(TextView)customDialog.findViewById(R.id.tv_entradas);
-        final TextView txtCantidad=(TextView)customDialog.findViewById(R.id.txtCantidad);
-
-        prestamoDAO.open();
-        ArrayList<Prestamo> a = prestamoDAO.retrieveAll();
-        prestamoDAO.close();
-
-        txtCantidad.setText( String.valueOf( a.size() ) );
-
-        final StringBuilder sb = new StringBuilder();
-
-        if(a!=null  && !a.isEmpty()){
-            for( Prestamo prestamo: a ){
-                sb.append( " / " )
-                .append(prestamo.getCodigo()).append( " / " )
-                .append(prestamo.getDescripcion() ).append( " / " )
-                .append(prestamo.getMarca().getNombre()).append( " / " )
-                .append(prestamo.getEmpleado().getNombre()).append( " / " )
-                .append(prestamo.getLocal().getNombre()).append( " / " )
-                .append( "\n\n" );
-                tv_entradas.setText(sb.toString());
-            }
-        }
-        else{
-            sb.append("Ya no hay registros");
-            tv_entradas.setText((sb.toString()));
-        }
-
-
-
-
-    }
-
     private void dialogoTeclado(){
 
 
         customDialog = new Dialog(getActivity(),R.style.PauseDialog);
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        customDialog.setCancelable(false);
+        customDialog.setCancelable(true);
         customDialog.setContentView(R.layout.dialogo_teclado_talla);
         customDialog.show();
+
 
         final TextView tv_lista_tallas=(TextView)customDialog.findViewById(R.id.tv_lista_tallas);
         final TextView tv_talla_teclado  =(TextView)customDialog.findViewById(R.id.tv_talla_teclado);
@@ -537,40 +572,86 @@ public class PrestamoFormFragment extends Fragment {
         ((Button) customDialog.findViewById(R.id.btn_medio)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("½");
+                String aux = tv_talla_teclado.getText().toString();
+
+                if(aux.indexOf("½")>-1 ) {
+                    aux = aux.replace("½","½");
+
+                    tv_talla_teclado.setText("");
+                    tv_talla_teclado.setText(aux);
+                }
+                else {
+                    tv_talla_teclado.append("½");
+                }
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_us)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("Us ");
+                String aux = tv_talla_teclado.getText().toString();
+
+                if(aux.indexOf("Eu")>-1 ||aux.indexOf("Us")>-1 ) {
+                    aux = aux.replace("Eu","Us");
+                    aux = aux.replace("Us","Us");
+
+                    tv_talla_teclado.setText("");
+                    tv_talla_teclado.setText(aux);
+                }
+                else {
+                    tv_talla_teclado.append("Us ");
+                }
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_uk)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("Eu ");
+                String aux = tv_talla_teclado.getText().toString();
+                if(aux.indexOf("Us")>-1 ||aux.indexOf("Eu")>-1  ) {
+                    aux = aux.replace("Us","Eu");
+                    aux = aux.replace("Eu","Eu");
+
+                    tv_talla_teclado.setText("");
+                    tv_talla_teclado.setText(aux);
+                }
+                else {
+                    tv_talla_teclado.append("Eu ");
+                }
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_delete)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String aux = tv_talla_teclado.getText().toString();
-                if(aux!="" && aux!=null && !aux.isEmpty()){
-                    aux=aux.substring(0,aux.length()-1);
-                    tv_talla_teclado.setText(aux);}
+
+                if (aux != "" && aux != null && !aux.isEmpty()) {
+                    if (aux.substring(aux.length()-1, aux.length()).equals("u")
+                            || aux.substring(aux.length()-1, aux.length()).equals("s")) {
+                        aux = aux.substring(0, aux.length() - 2);
+                        tv_talla_teclado.setText(aux);
+                    }
+                    else if(aux.substring(aux.length()-1, aux.length()).equals(" ")){
+                        aux = aux.substring(0, aux.length() - 3);
+                        tv_talla_teclado.setText(aux);
+                    }
+                    else {
+                        aux = aux.substring(0, aux.length() - 1);
+                        tv_talla_teclado.setText(aux);
+                    }
+                }
             }
         });
 
         ((Button) customDialog.findViewById(R.id.btn_cancelar_teclado)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp_click2.start();
                 customDialog.dismiss();
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_aceptar_teclado)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp_click.start();
                 String aux = tv_lista_tallas.getText().toString();
                 String aux2 = tv_talla_teclado.getText().toString();
 
@@ -609,6 +690,7 @@ public class PrestamoFormFragment extends Fragment {
                 Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down);
                 String aux = tv_talla_teclado.getText().toString();
                 if(aux!="" && aux!=null && !aux.isEmpty()){
+                    mp_otro.start();
                     tallas.add(aux);
                     tv_lista_tallas.append(aux+"\n");
                     tv_talla_teclado.setText("");
@@ -618,6 +700,7 @@ public class PrestamoFormFragment extends Fragment {
         ((Button) customDialog.findViewById(R.id.btn_borrar_teclado)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp_borrar_3.start();
                 Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up);
                 tv_talla_teclado.setText("");
                 tallas.clear();

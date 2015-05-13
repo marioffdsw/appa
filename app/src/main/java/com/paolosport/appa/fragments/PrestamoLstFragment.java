@@ -104,6 +104,36 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         Activity activity = ( Activity ) context;
         listPrestamos = ( ListView ) view.findViewById( R.id.lstPrestamos );
 
+        View headerView = View.inflate( context, R.layout.lst_prestamos_header, null );
+
+        TextView ordenarPorEmpleados = (TextView) headerView.findViewById( R.id.ordenarPorEmpleado );
+        ordenarPorEmpleados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.ordenarPorEmpleado();
+            }
+        });
+
+        TextView ordenarPorFecha = (TextView) headerView.findViewById( R.id.ordenarPorFecha );
+
+        ordenarPorFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.ordenarPorFecha();
+            }
+
+        });
+
+        TextView ordenarPorLocal = (TextView) headerView.findViewById( R.id.ordenarPorLocal);
+        ordenarPorLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               adapter.ordenarPorLocal();
+            }
+        });
+
+        listPrestamos.addHeaderView(headerView, null, false);
+
         listPrestamos.setAdapter(adapter);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("datos",
@@ -169,22 +199,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_lst_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-
-        MenuItem item=menu.add("Search");
-        item.setIcon(android.R.drawable.ic_menu_search);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        View searchView =SearchViewCompat.newSearchView(getActivity());
-        if (searchView != null) {
-            SearchViewCompat.setOnQueryTextListener(searchView,new SearchViewCompat.OnQueryTextListenerCompat() {
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    adapter.getFilter().filter(newText);
-                    return true;
-                }
-            });
-            item.setActionView(searchView);
-        }
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override

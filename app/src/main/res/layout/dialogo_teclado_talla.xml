@@ -74,7 +74,8 @@
                         android:drawableLeft="@drawable/ico_borrar"
                         android:gravity="left|center_vertical"
                         android:textColor="@color/white"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:soundEffectsEnabled="false" />
 
                     <FrameLayout
                         android:layout_width="fill_parent"
@@ -139,7 +140,8 @@
                         android:layout_gravity="fill_horizontal"
                         android:gravity="left|center_vertical"
                         android:drawableLeft="@drawable/ico_otro_bl"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:soundEffectsEnabled="false" />
 
                 </GridLayout>
 
@@ -412,7 +414,8 @@
             android:textColor="@color/white"
             android:layout_weight="1"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:soundEffectsEnabled="false" />
 
         <Button
             android:layout_width="fill_parent"
@@ -428,7 +431,8 @@
             android:textColor="@color/white"
             android:layout_weight="1"
             android:layout_marginLeft="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:soundEffectsEnabled="false" />
     </LinearLayout>
 
 
