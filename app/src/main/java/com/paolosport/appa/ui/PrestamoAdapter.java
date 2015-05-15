@@ -25,12 +25,21 @@ import android.widget.Toast;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.paolosport.appa.R;
+import com.paolosport.appa.persistencia.dao.BaseDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.persistencia.entities.Prestamo;
 
@@ -46,6 +55,9 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     ArrayList<Prestamo> mList;
     ArrayList<Prestamo> mListaSeleccionados = new ArrayList<>();
     Filter mPrestamosFilter;
+
+    private static final String VENDIDO = "Vendido";
+    private static final String DEVUELTO = "Devuelto";
 
     public interface PrestamosSubject{
         ArrayList<Prestamo> getListPrestamos();
@@ -97,12 +109,17 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             ImageView fotoEmpleado = (ImageView) v.findViewById( R.id.foto_empleado);
             ImageView fotoMarca = (ImageView) v.findViewById( R.id.foto_marca );
             TextView txtTelefonoEmpleado = (TextView) v.findViewById( R.id.txtTelefonoEmpleado );
-            View colorView = (View) v.findViewById( R.id.cuadro_color2 );
+            View colorView = v.findViewById( R.id.cuadro_color2 );
+            TextView txtOrigenPrestamo = (TextView) v.findViewById( R.id.txtOrigenPrestamo );
+            TextView txtDestinoPrestamo = (TextView) v.findViewById( R.id.txtDestinoPrestamo );
 
-            if( p.getEstado().substring(0,1).equals( "P" ) )
+
+            if( p.getEstado().substring(0,1).equals("V") )
+                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.blue) );
+            else if( p.getEstado().substring(0,1).equals("D") )
+                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.green) );
+            else // if( p.getEstado().substring(0,1).equals( "P" ) )
                 colorView.setBackgroundColor( mContext.getResources().getColor(R.color.sombra_titulo_rojo) );
-            else if( p.getEstado().substring(0,1).equals("V") || p.getEstado().substring(0,1).equals("D") )
-                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.sombra_titulo_verde) );
 
 
             if (txtDescripcionPrestamo != null) {
@@ -113,11 +130,40 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 txtNombreEmpleado.setText(p.getEmpleado().getNombre());
             }
             if (txtTallaPrestamo != null) {
-
                 txtTallaPrestamo.setText( String.valueOf( p.getTalla() ) );
             }
+            if( txtTelefonoEmpleado != null ){
+                txtTelefonoEmpleado.setText( p.getEmpleado().getTelefono() );
+            }
+            if( txtOrigenPrestamo != null ){
+                txtOrigenPrestamo.setText( "Origen: " + p.getOrigen() );
+            }
+            if( txtDestinoPrestamo != null ){
+                txtDestinoPrestamo.setText( "Destino: " + p.getLocal().getNombre() );
+            }
             if (txtFechaPrestamo != null) {
-                txtFechaPrestamo.setText(p.getFecha().toString());
+
+                Date date = new Date( p.getFecha().getTime() );
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get( Calendar.YEAR );
+                DateFormatSymbols simbols = new DateFormatSymbols();
+
+                String[] weekdays = simbols.getShortWeekdays();
+                String[] months = simbols.getMonths();
+
+                String hora = new SimpleDateFormat( "K:mm" ).format(date);
+                int amPm = Integer.parseInt(new SimpleDateFormat("H").format(date));
+
+                String amPmCadena = amPm > 12 ? "pm" : "am";
+
+                String fechaAMostrar = weekdays[weekDay] + ", " +
+                    day + " de " + months[month] + " de " + year +
+                    " " + hora + " " +amPmCadena;
+
+                txtFechaPrestamo.setText( fechaAMostrar );
             }
             if ( fotoEmpleado != null ){
                 Bitmap bm = null;
@@ -132,7 +178,19 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
             }
             if( fotoMarca != null ){
-                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), p.getMarca().getIcon(mContext));
+
+                Pattern pat = Pattern.compile(".*/.*");
+                Matcher mat = pat.matcher(p.getMarca().getUrl());
+//            Bitmap b = Bitmap.createScaledBitmap(bmImg,48,48,true);
+
+                Bitmap bmImg;
+                if (mat.matches()) {
+                    bmImg = BitmapFactory.decodeFile(p.getMarca().getUrl());
+                    fotoMarca.setImageBitmap(bmImg);
+                } else {
+                    fotoMarca.setImageResource(p.getMarca().getIcon(mContext));
+                }
+
             }
         }
 
@@ -143,7 +201,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         Collections.sort(mList, new Comparator<Prestamo>() {
             @Override
             public int compare(Prestamo lhs, Prestamo rhs) {
-                return lhs.getEmpleado().getNombre().compareTo(rhs.getEmpleado().getNombre());
+                return lhs.getEmpleado().getNombre().compareToIgnoreCase(rhs.getEmpleado().getNombre());
             }
         });
         notifyDataSetChanged();
@@ -162,7 +220,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         Collections.sort(mList, new Comparator<Prestamo>() {
             @Override
             public int compare(Prestamo lhs, Prestamo rhs) {
-                return lhs.getMarca().getNombre().compareToIgnoreCase( rhs.getMarca().getNombre() );
+                return lhs.getMarca().getNombre().compareToIgnoreCase(rhs.getMarca().getNombre());
             }
         });
     }
@@ -171,7 +229,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         Collections.sort(mList, new Comparator<Prestamo>() {
             @Override
             public int compare(Prestamo lhs, Prestamo rhs) {
-                return lhs.getLocal().getNombre().compareTo(rhs.getLocal().getNombre());
+                return lhs.getLocal().getNombre().compareToIgnoreCase(rhs.getLocal().getNombre());
             }
         });
         notifyDataSetChanged();
@@ -199,56 +257,14 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter(){
 
         if ( mPrestamosFilter  == null)
-            mPrestamosFilter = new PrestamoEmpleadoFilter();
+            mPrestamosFilter = new FilterWithOptions();
 
         return mPrestamosFilter;
     }
 
-    private class PrestamoEmpleadoFilter extends Filter{
-        @Override
-        protected FilterResults performFiltering( CharSequence constraint ){
-
-            // create a FilterResults object
-            FilterResults results = new FilterResults();
-
-            // if the constraint (search patterns) is null
-            // or its length is 0, it's empty
-            // then we just set the 'values' property to the
-            // original listPrestamos which contains all of them
-            if( constraint == null || constraint.length() == 0 ){
-                results.values = mListPrestamos.get() ;
-                results.count = mListPrestamos.get().size();
-            }
-            else{
-                // realizar filtro
-                ArrayList<Prestamo> prestamosFiltradosPorEmpleado = new ArrayList<>();
-
-                // ahora recorremos todos los prestamos y verificamos que tengan la
-                // cadena "patron de busqueda"
-                for( Prestamo p : mListPrestamos.get() ){
-                    if( p.getEmpleado().getNombre().toUpperCase().contains(
-                            constraint.toString().toUpperCase() ) ){
-                        prestamosFiltradosPorEmpleado.add( p );
-                    }
-                }
-
-                // finalmente establecemos los valores filtrados
-                // y su tamaño en los resultados
-                results.values = prestamosFiltradosPorEmpleado;
-                results.count = prestamosFiltradosPorEmpleado.size();
-            }
-
-            // retornamos los resultados de aplicar el filtro
-            return results;
-
-        } // end method performFiltering
-
-        @Override
-        protected void publishResults( CharSequence constraint, FilterResults results ){
-            mList = ( ArrayList<Prestamo> ) results.values;
-            notifyDataSetChanged();
-        } // end method publishResults
-    }
+    public void setFilter(){
+        mPrestamosFilter = null;
+    } // end setFilter method
 
 
     public static Bitmap getRoundedCornerBitmap( Bitmap b, boolean square) {
@@ -277,7 +293,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, width, height);
         final RectF rectF = new RectF(rect);
-        final float roundPx = 90;
+        final float roundPx = 100;
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
@@ -319,15 +335,371 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     }
 
     public void vender( PrestamoDAO prestamoDAO ){
-        /*
-        for(){}
-        prestamoDAO.open();
-        prestamoDAO.delete(  )
-        */
+
+        for( Prestamo p : mListaSeleccionados ){
+            prestamoDAO.open();
+            BaseDAO.Estado estado = prestamoDAO.update(p);
+            prestamoDAO.close();
+            if ( estado == BaseDAO.Estado.ACTUALIZADO ){
+                p.setEstado( VENDIDO );
+            }
+
+        } // end for
+        borrarSeleccion();
+        notifyDataSetChanged();
     } // end method vender
 
     public void devolver( PrestamoDAO prestamoDAO ){
 
+        for( Prestamo p : mListaSeleccionados ){
+            prestamoDAO.open();
+            BaseDAO.Estado estado = prestamoDAO.update( p );
+            prestamoDAO.close();
+            if ( estado == BaseDAO.Estado.ACTUALIZADO ){
+                p.setEstado( DEVUELTO );
+            }
+
+        } // end for
+        borrarSeleccion();
+        notifyDataSetChanged();
     }
+
+    public class FilterWithOptions extends Filter {
+
+        private Object[] parameters;
+        public boolean filtrarPorEmpleado = true;
+        public boolean filtrarPorLocal = true;
+        public boolean filtrarPorMarca = true;
+        public boolean filtrarPorOrigen = true;
+
+        public void setParameters(Object[] parameters) {
+            this.parameters = parameters;
+        }
+
+        @Override
+        protected FilterResults performFiltering( CharSequence constraint ){
+
+            // create a FilterResults object
+            FilterResults results = new FilterResults();
+
+            // if the constraint (search patterns) is null
+            // or its length is 0, it's empty
+            // then we just set the 'values' property to the
+            // original listPrestamos which contains all of them
+            PrestamosFilterAlgorithm component = new ComponentFilterAlgorithm();
+
+            if( filtrarPorEmpleado ){
+                component = new DecoratorEmpleadoFilterAlgorithm( component, constraint.toString() );
+            }
+            if( filtrarPorLocal ){
+                component = new DecoratorLocalFilterAlgorithm( component, constraint.toString() );
+            }
+            if( filtrarPorMarca ){
+                component = new DecoratorLocalFilterAlgorithm( component, constraint.toString() );
+            }
+            if( parameters != null ){
+                component = new DecoratorFechaFilterAlgorithm( component, parameters );
+            }
+            if( filtrarPorOrigen ){
+                component = new DecoratorOrigenFilterAlgorithm( component, constraint.toString() );
+            }
+
+            ArrayList<Prestamo> prestamosFiltrados = component.filter();;
+            results.values = prestamosFiltrados;
+            results.count = prestamosFiltrados.size();
+
+            return results;
+
+        } // end method performFiltering
+
+        @Override
+        protected void publishResults( CharSequence constraint, FilterResults results ){
+            mList = ( ArrayList<Prestamo> ) results.values;
+            notifyDataSetChanged();
+        } // end method publishResults
+    } // end filterClass
+
+    private interface PrestamosFilterAlgorithm {
+        ArrayList<Prestamo> filter();
+    }
+
+    private class ComponentFilterAlgorithm implements PrestamosFilterAlgorithm {
+        public ArrayList<Prestamo> filter(){
+            return mListPrestamos.get();
+        } // end method filter
+    } // end class ComponentFilterAlgorithm
+
+    private class DecoratorEmpleadoFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorEmpleadoFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorEmpleado = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+                String[] palabrasABuscar = searchPattern.split( " " );
+                for( Prestamo p : lstPrestamos ){
+                    for( String palabra : palabrasABuscar ){
+                        if( p.getEmpleado().getNombre().toUpperCase().contains( palabra.toUpperCase() ) ){
+                            prestamosFiltradosPorEmpleado.add( p );
+                            break;
+                        }
+                    } // end for interno
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorEmpleado.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorEmpleado;
+        } // end method filter
+    } // end class DecoratorEmpleadoFilterAlgorithm
+
+    public class DecoratorLocalFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorLocalFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorLocal = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+                String[] palabrasABuscar = searchPattern.split( " " );
+                for( Prestamo p : lstPrestamos ){
+                    for( String palabra : palabrasABuscar ){
+                        if( p.getLocal().getNombre().toUpperCase().contains( palabra.toUpperCase() ) ){
+                            prestamosFiltradosPorLocal.add( p );
+                            break;
+                        }
+                    } // end for interno
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorLocal.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorLocal;
+        } // end method filter
+    } // end class DecoratorLocalFilterAlgorithm
+
+    public class DecoratorOrigenFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorOrigenFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorOrigen = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+                String[] palabrasABuscar = searchPattern.split( " " );
+                for( Prestamo p : lstPrestamos ){
+                    for( String palabra : palabrasABuscar ){
+                        if( p.getOrigen().toUpperCase().contains( palabra.toUpperCase() ) ){
+                            prestamosFiltradosPorOrigen.add( p );
+                            break;
+                        }
+                    } // end for interno
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorOrigen.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorOrigen;
+        } // end method filter
+    } // end class DecoratorLocalFilterAlgorithm
+
+    private class DecoratorMarcaFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorMarcaFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorMarca = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+                String[] palabrasABuscar = searchPattern.split( " " );
+                for( Prestamo p : lstPrestamos ){
+                    for( String palabra : palabrasABuscar ){
+                        if( p.getMarca().getNombre().toUpperCase().contains( palabra.toUpperCase() ) ){
+                            prestamosFiltradosPorMarca.add( p );
+                            break;
+                        }
+                    } // end for interno
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorMarca.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorMarca;
+        } // end method filter
+    } // end class DecoratorEmpleadoFilterAlgorithm
+
+    public class DecoratorFechaFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        Object[] objParameters;
+
+        public DecoratorFechaFilterAlgorithm( PrestamosFilterAlgorithm filter, Object[] objParameters ){
+            mFilter = filter;
+            this.objParameters = objParameters;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
+
+            //TODO cambiar esta instruccion por la equivalente para la Enumeration
+            switch( ((Integer) objParameters[0]).intValue() ){
+                case 1:
+                    prestamosFiltradosPorFecha = filtrarPorDia(lstPrestamos);
+                    break;
+                case 2:
+                    prestamosFiltradosPorFecha = filtrarPorMes(lstPrestamos);
+                    break;
+                case 3:
+                    prestamosFiltradosPorFecha  = filtrarPorRango(lstPrestamos);
+                    break;
+            } // end switch
+
+            if( prestamosFiltradosPorFecha.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorFecha;
+        } // end method filter
+
+        private ArrayList<Prestamo> filtrarPorDia( ArrayList<Prestamo> lstPrestamos ){
+
+            ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
+
+            Calendar cal = Calendar.getInstance();
+            if( objParameters[1] != null )
+                cal.setTime( (Date) objParameters[1] );
+            else
+                cal.setTime( new java.util.Date() ); // filtrara el dia con el presente dia (hoy)
+
+            int diaAFiltrar = cal.get( Calendar.DAY_OF_MONTH );
+            int mesAFiltrar = cal.get( Calendar.MONTH );
+            int añoAFiltrar = cal.get( Calendar.YEAR );
+
+            for( Prestamo p : lstPrestamos ){
+                cal.setTime( p.getFecha() );
+                int diaEnElMesDelPrestamo = cal.get( Calendar.DAY_OF_MONTH );
+                int mesDelPrestamo = cal.get( Calendar.MONTH );
+                int añoDelPrestamo = cal.get( Calendar.YEAR );
+
+                if ( diaEnElMesDelPrestamo == diaAFiltrar &&
+                        mesDelPrestamo == mesAFiltrar &&
+                        añoDelPrestamo == añoAFiltrar ){
+                    prestamosFiltradosPorFecha.add(p);
+                }
+            } // end for
+            if( prestamosFiltradosPorFecha.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorFecha;
+        } // end method filtrarPorDia
+
+        private ArrayList<Prestamo> filtrarPorMes( ArrayList<Prestamo> lstPrestamos ){
+
+            ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
+            for( Prestamo p : lstPrestamos ){
+                Calendar cal = Calendar.getInstance();
+                cal.setTime( p.getFecha() );
+                int mesDelPrestamo = cal.get( Calendar.MONTH );
+                int añoDelPrestamo = cal.get( Calendar.YEAR );
+
+                cal.setTime( (Date) objParameters[1] );
+                int mesAFiltrar = cal.get( Calendar.MONTH );
+                int añoAFiltrar = cal.get( Calendar.YEAR );
+
+                if ( mesDelPrestamo == mesAFiltrar &&
+                        añoDelPrestamo == añoAFiltrar ){
+                    prestamosFiltradosPorFecha.add(p);
+                }
+            } // end for
+            if( prestamosFiltradosPorFecha.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorFecha;
+        } // end method filtrarPorMes
+
+        private ArrayList<Prestamo> filtrarPorRango( ArrayList<Prestamo> lstPrestamos ){
+
+            ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
+            for( Prestamo p : lstPrestamos ){
+
+                Date min, max;   // assume these are set to something
+                max = ( Date ) objParameters[1];
+                min = ( Date ) objParameters[2];
+
+                // los ordenamos
+                if( max.before( min ) ){
+                    Date aux = max;
+                    max = min;
+                    min = aux;
+                }
+                Date d = new Date( p.getFecha().getTime() );
+                if (  d.after(min) && d.before(max)  ){
+                    prestamosFiltradosPorFecha.add(p);
+                }
+            } // end for
+            if( prestamosFiltradosPorFecha.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorFecha;
+        } // end method filtrarPorMes
+
+    } // end class DecoratorFechaFilterAlgorithm
 
 } // end class PrestamoAdapter
