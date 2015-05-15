@@ -20,37 +20,37 @@
         <menu>
             <item
                 android:id="@+id/ordenarPorEmpleado"
-                android:icon="@drawable/ic_action_settings"
+                android:icon="@drawable/ic_action_person"
                 android:title="Por Empleado"
                 android:orderInCategory="100" />
 
             <item
                 android:id="@+id/ordenarPorEstado"
-                android:icon="@drawable/ic_action_about"
+                android:icon="@drawable/ic_action_half_important"
                 android:title="Por Estado"
                 android:orderInCategory="100"
                 />
             <item
                 android:id="@+id/ordenarPorFecha"
-                android:icon="@drawable/ic_action_person"
+                android:icon="@drawable/ic_action_go_to_today"
                 android:title="Por Fecha"
                 android:orderInCategory="100"
                 />
             <item
                 android:id="@+id/ordenarPorLocal"
-                android:icon="@drawable/ico_sesion_bl"
+                android:icon="@drawable/ic_action_place"
                 android:title="Por Local"
                 android:orderInCategory="100"
                 />
             <item
                 android:id="@+id/ordenarPorMarca"
-                android:icon="@drawable/ico_sesion_bl"
+                android:icon="@drawable/ic_action_labels"
                 android:title="Por Marca"
                 android:orderInCategory="100"
                 />
             <item
                 android:id="@+id/ordenarPorOrigen"
-                android:icon="@drawable/ico_sesion_bl"
+                android:icon="@drawable/ic_action_location_found"
                 android:title="Por Origen"
                 android:orderInCategory="100"
                 />
