@@ -22,5 +22,11 @@
     <color name="prestado_peligro">#ffff0e1a</color>
     <color name="prestado">#ff234aff</color>
     <color name="solucionado">#c700aa59</color>
-
+    <color name="blue">#ff234aff</color>
+    <color name="green">#ff00ff0c</color>
+    <color name="blue_pressed">#96234aff</color>
+    <color name="green_focus">#ff3aff00</color>
+    <color name="item_selected">#9662c1ff</color>
+    <color name="item_pressed">#9654a3ff</color>
+    <color name="white_color">#ffffff</color>
 </resources>

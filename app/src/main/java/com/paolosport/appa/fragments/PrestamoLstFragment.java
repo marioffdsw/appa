@@ -104,6 +104,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         // se carga los datos que existan sobre los prestamos
         Activity activity = ( Activity ) context;
         listPrestamos = ( ListView ) view.findViewById( R.id.lstPrestamos );
+        listPrestamos.setSelector( R.drawable.selection_prestamos );
         listPrestamos.setAdapter(adapter);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("datos",
@@ -115,9 +116,15 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
             listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    adapter.selecionarElementos( parent, view, position, id );
-                    adapter.showToast();
+                    adapter.selecionarElementos(parent, view, position, id);
                     alternarOpciones();
+                }
+            });
+            listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText( context, "test", Toast.LENGTH_LONG ).show();
+                    return false;
                 }
             });
         }
@@ -127,17 +134,27 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
             @Override
             public void onClick(View v) {
                 adapter.vender( prestamoDAO );
+                deselecionarPrestamos();
+                alternarOpciones();
             }
         });
         view.findViewById( R.id.btnDevuelto ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapter.devolver( prestamoDAO );
+                deselecionarPrestamos();
+                alternarOpciones();
             }
         });
         // Inflate the layout for this fragment
         return view;
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        deselecionarPrestamos();
+    } // end method onStart
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -166,9 +183,11 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         View searchView =SearchViewCompat.newSearchView(getActivity());
         if (searchView != null) {
            SearchViewCompat.setOnQueryTextListener(searchView,new SearchViewCompat.OnQueryTextListenerCompat() {
-                @Override
+                @Override /** This is a demo of how to use the filter, REMEMBER setFilter() to create a new filter  */
                 public boolean onQueryTextChange(String newText) {
-                    adapter.getFilter().filter(newText);
+                    PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+                    filter.setParameters( null );
+                    filter.filter( newText );
                     deselecionarPrestamos();
                     alternarOpciones();
                     return true;

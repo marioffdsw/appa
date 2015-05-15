@@ -3,10 +3,7 @@
     android:orientation="horizontal"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:background="?android:attr/activatedBackgroundIndicator" >
-    <!--
-    android:background="?android:attr/activatedBackgroundIndicator"
-    -->
+    android:background="@drawable/selection_prestamos" >
 
     <View
         android:id="@+id/cuadro_color2"
@@ -26,8 +23,7 @@
         android:layout_toLeftOf="@id/cuadro_color2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:padding="10dp"
-        android:background="?android:attr/activatedBackgroundIndicator">
+        android:padding="10dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -124,8 +120,7 @@
                     android:id="@+id/txtDestinoPrestamo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:background="?android:attr/activatedBackgroundIndicator"/>
+                    android:textColor="@color/black" />
 
             </RelativeLayout>
 
