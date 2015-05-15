@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="3dp"
+    android:gravity="center_vertical|center|center_horizontal"
+    android:id="@+id/ll_teclado"
+    android:background="@android:color/transparent"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center|center_horizontal"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_dia"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/cala"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Día"
+                android:id="@+id/textView30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="1dp"
+            android:layout_height="60dp"
+            android:background="@color/button_material_light" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_mes"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ico_mayoa"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Mes"
+                android:id="@+id/textView31"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="1dp"
+            android:layout_height="60dp"
+            android:background="@color/button_material_light" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_rango"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/blancoa"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Rango"
+                android:id="@+id/textView32"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

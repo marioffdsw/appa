@@ -58,4 +58,12 @@
 
 
     </item>
+
+    <item
+        android:id="@+id/calendario"
+        android:icon="@drawable/ic_action_go_to_today"
+        android:orderInCategory="100"
+        android:title="Calendario"
+        yourapp:showAsAction="always" >
+        </item>
 </menu>

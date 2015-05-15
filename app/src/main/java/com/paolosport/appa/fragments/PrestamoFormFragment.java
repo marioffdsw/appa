@@ -91,6 +91,12 @@ public class PrestamoFormFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        DatosPorDefecto();
+    }
+
+    @Override
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );

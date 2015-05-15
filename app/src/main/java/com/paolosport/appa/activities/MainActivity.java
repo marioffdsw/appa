@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -165,7 +166,7 @@ public class MainActivity extends ActionBarActivity {
         private final Activity mActivity;
         private final String mTag;
         private final Class<T> mClass;
-
+        MediaPlayer mp;
         /** Constructor used each time a new tab is created.
          * @param activity  The host Activity, used to instantiate the fragment
          * @param tag  The identifier tag for the fragment
@@ -173,6 +174,7 @@ public class MainActivity extends ActionBarActivity {
          */
         public TabListener(Activity activity, String tag, Class<T> clz) {
             mActivity = activity;
+            mp = MediaPlayer.create(mActivity, R.raw.a_tab);
             mTag = tag;
             mClass = clz;
         }
@@ -181,14 +183,19 @@ public class MainActivity extends ActionBarActivity {
 
         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
             // Check if the fragment is already initialized
+            mp.start();
+
             if (mFragment == null) {
                 // If not, instantiate and add it to the activity
                 mFragment = Fragment.instantiate(mActivity, mClass.getName());
                 ft.add(android.R.id.content, mFragment, mTag);
+
+
             } else {
                 // If it exists, simply attach it in order to show it
                 ft.attach(mFragment);
             }
+
         }
 
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {

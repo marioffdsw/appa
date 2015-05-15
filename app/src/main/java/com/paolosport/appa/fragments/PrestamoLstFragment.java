@@ -1,6 +1,8 @@
 package com.paolosport.appa.fragments;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,10 +20,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +43,7 @@ import com.paolosport.appa.persistencia.entities.Prestamo;
 import com.paolosport.appa.ui.PrestamoAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.zip.Inflater;
@@ -57,6 +64,15 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
 
     private ListView listPrestamos;
     private ArrayList<Prestamo> lstPrestamos;
+    Dialog customDialog = null;
+
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+
+    private int año;
+    private int mes;
+    private int dia;
 
     public PrestamoLstFragment() {
         // Required empty public constructor
@@ -87,6 +103,13 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         prestamoDAO.open();
         lstPrestamos = prestamoDAO.retrieveAll();
         prestamoDAO.close();
+
+        // Get the current date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
 
         adapter = new PrestamoAdapter( context, R.layout.item_lst_prestamos, lstPrestamos );
 
@@ -163,6 +186,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         MenuItem item=menu.add("Search");
         item.setIcon(android.R.drawable.ic_menu_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
         View searchView =SearchViewCompat.newSearchView(getActivity());
         if (searchView != null) {
            SearchViewCompat.setOnQueryTextListener(searchView,new SearchViewCompat.OnQueryTextListenerCompat() {
@@ -176,6 +200,8 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
            });
            item.setActionView(searchView);
         }
+
+
     }
 
     @Override
@@ -213,11 +239,102 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                 deselecionarPrestamos();
                 alternarOpciones();
                 break;
+            case R.id.calendario:
+                dialogoCalendario();
+                //customDialog=new DatePickerDialog(context, mDateSetListener, mYear, mMonth,mDay);
+                //customDialog.show();
         } // end switch
 
         return super.onOptionsItemSelected(item);
 
     }
+    //para mostrar el resultado de la fecha
+    private void updateDisplay() {
+        Toast.makeText(context,mDay+"/"+mMonth+"/"+mYear,Toast.LENGTH_SHORT).show();
+       /* mDateDisplay.setText(new StringBuilder()
+                // Month is 0 based so add 1
+                .append(mMonth + 1).append("-").append(mDay).append("-")
+                .append(mYear).append(" "));*/
+    }
+
+    private void dialogoCalendario() {
+        customDialog = new Dialog(getActivity());
+        //customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customDialog.setTitle("Seleccione Modo");
+        customDialog.setCancelable(true);
+        customDialog.setContentView(R.layout.dialogo_calendario);
+        customDialog.show();
+
+        final ImageView iv_dia = (ImageView)customDialog.findViewById(R.id.iv_dia);
+        final ImageView iv_mes = (ImageView)customDialog.findViewById(R.id.iv_mes);
+        final ImageView iv_rango = (ImageView)customDialog.findViewById(R.id.iv_rango);
+
+        iv_dia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                customDialog =  new DatePickerDialog(getActivity(), mDateSetListener, mYear, mMonth,mDay);
+                customDialog.show();
+            }
+        });
+        iv_mes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                customDialog =  new DatePickerDialog(getActivity(), mDateSetListener, mYear, mMonth,mDay);
+                customDialog.show();
+            }
+        });
+
+        iv_rango.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                dialogoRango();
+            }
+        });
+    }
+
+    private void dialogoRango() {
+        customDialog = new Dialog(getActivity());
+        //customDialog.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        customDialog.setTitle("Seleccione El Rango");
+        customDialog.setCancelable(true);
+        customDialog.setContentView(R.layout.dialogo_rango);
+        customDialog.show();
+
+        final DatePicker dp_inicio = (DatePicker)customDialog.findViewById(R.id.dp_inicio);
+        final DatePicker dp_fin    = (DatePicker)customDialog.findViewById(R.id.dp_fin);
+        final FrameLayout fl_listo_rango=(FrameLayout)customDialog.findViewById(R.id.fl_listo_rango);
+
+        fl_listo_rango.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+
+                mDay    =dp_inicio.getDayOfMonth();
+                mMonth  =dp_inicio.getMonth();
+                mYear   =dp_inicio.getYear();
+
+                dia =dp_fin.getDayOfMonth();
+                mes =dp_fin.getMonth();
+                año =dp_fin.getYear();
+
+                Toast.makeText(context,mDay+"/"+mMonth+"/"+mYear+" --- "+dia+"/"+mes+"/"+año,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            updateDisplay();
+        }
+    };
 
     public void deselecionarPrestamos(){
         listPrestamos.requestLayout();
