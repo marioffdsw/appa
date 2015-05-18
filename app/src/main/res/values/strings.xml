@@ -53,14 +53,14 @@
     <!-- Lista de iconos de locales-->
     <array name="navigation_iconos">
         <item>@drawable/casa_i</item>
+        <item>@drawable/casa_a</item>
+        <item>@drawable/casa_e</item>
+        <item>@drawable/casa_o</item>
         <item>@drawable/casa_g</item>
         <item>@drawable/casa_c</item>
-        <item>@drawable/casa_o</item>
-        <item>@drawable/casa_e</item>
-        <item>@drawable/casa_f</item>
         <item>@drawable/casa_b</item>
         <item>@drawable/casa_h</item>
-        <item>@drawable/casa_a</item>
+        <item>@drawable/casa_f</item>
         <item>@drawable/casa_d</item>
         <item>@drawable/casa_p</item>
 

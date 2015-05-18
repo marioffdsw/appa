@@ -1,11 +1,16 @@
 package com.paolosport.appa.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.widget.SearchViewCompat;
@@ -21,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -58,6 +64,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     private LocalDAO localDAO;
     private PrestamoDAO prestamoDAO;
     private RelativeLayout opciones;
+    String seleccion,buscarReferencia;
 
     private PrestamoAdapter adapter;
     private View view;
@@ -146,7 +153,12 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
             listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText( context, "test", Toast.LENGTH_LONG ).show();
+                    StringBuilder sb= new StringBuilder();
+                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getMarca().getNombre()).toString();
+                    sb.append("+");
+                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getCodigo()).toString();
+                    buscarReferencia = sb.toString();
+                    dialogo();
                     return false;
                 }
             });
@@ -380,5 +392,35 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         opciones.setVisibility( View.GONE );
 
     } // end method ocultarOpciones
+
+    public void dialogo() {
+
+        final String[] items = {"Buscar Referencia", "Eliminar","Cancelar"};
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Acción")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        seleccion=items[item];
+
+                        if("Buscar Referencia".equals(seleccion)){buscarReferencia();}
+                        if("Eliminar".equals(seleccion)){eliminar();}
+                        if("Cancelar".equals(seleccion)){           }
+                    }
+                });
+        builder.show();
+    }
+
+    public void buscarReferencia(){
+        Intent i = new Intent("android.intent.action.VIEW",
+                Uri.parse("http://www.google.com"+"/search?q="+buscarReferencia+"&source=lnms&tbm=isch&sa=X&ei=YDtZVaCgGNLHsQTGrIHwDQ&ved=0CAcQ_AUoAQ&biw=1247&bih=580"));
+        startActivity(i);
+    }
+
+    public void eliminar(){
+
+    }
 
 }

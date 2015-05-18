@@ -94,7 +94,19 @@ public class PrestamoFormFragment extends Fragment {
     public void onStart() {
         super.onStart();
         DatosPorDefecto();
+        if (!listaItems.isEmpty()) {
+            cancelarItem();
+            listaItems.clear();
+            lv_prestamo.setAdapter(new ListViewAdapterPrestamo(getActivity().getApplicationContext(), listaItems));
+            btn_cancelar_pedido.setVisibility(View.INVISIBLE);
+            btn_aceptar_pedido.setVisibility(View.INVISIBLE);
+        }
+        else{
+            btn_cancelar_pedido.setVisibility(View.INVISIBLE);
+            btn_aceptar_pedido.setVisibility(View.INVISIBLE);
+        }
     }
+
 
     @Override
     public void onCreate( Bundle savedInstanceState )

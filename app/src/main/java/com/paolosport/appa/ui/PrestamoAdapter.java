@@ -106,40 +106,41 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             TextView txtTallaPrestamo = (TextView) v.findViewById(R.id.txtTallaPrestamo);
             TextView txtFechaPrestamo = (TextView) v.findViewById(R.id.txtFechaPrestamo);
             TextView txtNombreEmpleado = (TextView) v.findViewById(R.id.txtNombreEmpleado);
-            ImageView fotoEmpleado = (ImageView) v.findViewById( R.id.foto_empleado);
+            //ImageView fotoEmpleado = (ImageView) v.findViewById( R.id.foto_empleado);
             ImageView fotoMarca = (ImageView) v.findViewById( R.id.foto_marca );
-            TextView txtTelefonoEmpleado = (TextView) v.findViewById( R.id.txtTelefonoEmpleado );
             View colorView = v.findViewById( R.id.cuadro_color2 );
             TextView txtOrigenPrestamo = (TextView) v.findViewById( R.id.txtOrigenPrestamo );
             TextView txtDestinoPrestamo = (TextView) v.findViewById( R.id.txtDestinoPrestamo );
+            TextView txtCodigoPrestamo = (TextView) v.findViewById( R.id.txtCodigoPrestamo );
+
 
 
             if( p.getEstado().substring(0,1).equals("V") )
-                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.blue) );
+                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.sombra_titulo) );
             else if( p.getEstado().substring(0,1).equals("D") )
-                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.green) );
+                colorView.setBackgroundColor( mContext.getResources().getColor( R.color.sombra_titulo_verde) );
             else // if( p.getEstado().substring(0,1).equals( "P" ) )
                 colorView.setBackgroundColor( mContext.getResources().getColor(R.color.sombra_titulo_rojo) );
 
 
             if (txtDescripcionPrestamo != null) {
-                txtDescripcionPrestamo.setText(p.getDescripcion());
+                txtDescripcionPrestamo.setText("Descripción: " +p.getDescripcion());
             }
             if (txtNombreEmpleado != null) {
 
-                txtNombreEmpleado.setText(p.getEmpleado().getNombre());
+                txtNombreEmpleado.setText("Encargado: " +p.getEmpleado().getNombre());
             }
             if (txtTallaPrestamo != null) {
-                txtTallaPrestamo.setText( String.valueOf( p.getTalla() ) );
-            }
-            if( txtTelefonoEmpleado != null ){
-                txtTelefonoEmpleado.setText( p.getEmpleado().getTelefono() );
+                txtTallaPrestamo.setText( "Talla: " +String.valueOf( p.getTalla() ) );
             }
             if( txtOrigenPrestamo != null ){
-                txtOrigenPrestamo.setText( "Origen: " + p.getOrigen() );
+                txtOrigenPrestamo.setText( "Origen:  " + p.getOrigen() );
             }
             if( txtDestinoPrestamo != null ){
-                txtDestinoPrestamo.setText( "Destino: " + p.getLocal().getNombre() );
+                txtDestinoPrestamo.setText( "Destino: " + p.getLocal().getNombre().toString() );
+            }
+            if( txtCodigoPrestamo != null ){
+                txtCodigoPrestamo.setText( "Referencia: " + p.getCodigo() );
             }
             if (txtFechaPrestamo != null) {
 
@@ -161,11 +162,11 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
                 String fechaAMostrar = weekdays[weekDay] + ", " +
                     day + " de " + months[month] + " de " + year +
-                    " " + hora + " " +amPmCadena;
+                    "\n" + hora + " " +amPmCadena;
 
                 txtFechaPrestamo.setText( fechaAMostrar );
             }
-            if ( fotoEmpleado != null ){
+            /*if ( fotoEmpleado != null ){
                 Bitmap bm = null;
                 if ( p.getEmpleado().getUrl().equals( "prueba" ) ) {
                     bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ico_persona_az);
@@ -176,7 +177,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 Bitmap aux = getRoundedCornerBitmap(bm, true);
                 fotoEmpleado.setImageBitmap( aux );
 
-            }
+            }*/
             if( fotoMarca != null ){
 
                 Pattern pat = Pattern.compile(".*/.*");
