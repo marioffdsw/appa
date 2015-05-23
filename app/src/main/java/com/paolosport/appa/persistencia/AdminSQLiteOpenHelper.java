@@ -112,6 +112,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
             "( 'vendido',                 37,         '3',          '2',      '4',    'c',   'V'    )";
 
 
+
     // constructor, just call superclass constructor
     public AdminSQLiteOpenHelper( Context context ){
         super( context, DATABASE_NAME, null, DATABASE_VERSION  );

@@ -58,6 +58,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
     private static final String VENDIDO = "Vendido";
     private static final String DEVUELTO = "Devuelto";
+    private static final String PRESTADO = "Prestado";
 
     public interface PrestamosSubject{
         ArrayList<Prestamo> getListPrestamos();
@@ -131,7 +132,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 txtNombreEmpleado.setText("Encargado: " +p.getEmpleado().getNombre());
             }
             if (txtTallaPrestamo != null) {
-                txtTallaPrestamo.setText( "Talla: " +String.valueOf( p.getTalla() ) );
+                txtTallaPrestamo.setText( "Talla: " +String.valueOf(p.getTalla()) );
             }
             if( txtOrigenPrestamo != null ){
                 txtOrigenPrestamo.setText( "Origen:  " + p.getOrigen() );
@@ -145,12 +146,16 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if (txtFechaPrestamo != null) {
 
                 Date date = new Date( p.getFecha().getTime() );
-                Calendar calendar = Calendar.getInstance();
+                Log.e( "Prestamo", date.toString() );
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime( date );
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get( Calendar.YEAR );
+                year -= 1900;
                 DateFormatSymbols simbols = new DateFormatSymbols();
+
 
                 String[] weekdays = simbols.getShortWeekdays();
                 String[] months = simbols.getMonths();
@@ -161,7 +166,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 String amPmCadena = amPm > 12 ? "pm" : "am";
 
                 String fechaAMostrar = weekdays[weekDay] + ", " +
-                    day + " de " + months[month] + " de " + year +
+                    day + " de " + months[month - 1] + " de " + year +
                     "\n" + hora + " " +amPmCadena;
 
                 txtFechaPrestamo.setText( fechaAMostrar );
@@ -215,6 +220,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 return lhs.getEstado().compareToIgnoreCase(rhs.getEstado());
             }
         });
+        notifyDataSetChanged();
     }
 
     public void ordenarPorMarca() {
@@ -224,6 +230,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 return lhs.getMarca().getNombre().compareToIgnoreCase(rhs.getMarca().getNombre());
             }
         });
+        notifyDataSetChanged();
     }
 
     public void ordenarPorLocal(){
@@ -250,9 +257,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         Collections.sort(mList, new Comparator<Prestamo>() {
             @Override
             public int compare(Prestamo lhs, Prestamo rhs) {
-                return lhs.getOrigen().compareToIgnoreCase( rhs.getOrigen() );
+                return lhs.getOrigen().compareToIgnoreCase(rhs.getOrigen());
             }
         });
+        notifyDataSetChanged();
     }
 
     public Filter getFilter(){
@@ -338,27 +346,49 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     public void vender( PrestamoDAO prestamoDAO ){
 
         for( Prestamo p : mListaSeleccionados ){
+            p.setEstado( VENDIDO );
             prestamoDAO.open();
             BaseDAO.Estado estado = prestamoDAO.update(p);
             prestamoDAO.close();
-            if ( estado == BaseDAO.Estado.ACTUALIZADO ){
-                p.setEstado( VENDIDO );
-            }
 
         } // end for
         borrarSeleccion();
         notifyDataSetChanged();
     } // end method vender
 
+    public void eliminar( int position, PrestamoDAO prestamoDAO ){
+        Prestamo p = mList.get( position );
+
+        prestamoDAO.open();
+        BaseDAO.Estado estado = prestamoDAO.delete( p );
+        prestamoDAO.close();
+
+        mList.remove( p );
+        mListaSeleccionados.remove( p );
+        mListPrestamos.get().remove( p );
+        notifyDataSetChanged();
+    } // end method eliminar
+
     public void devolver( PrestamoDAO prestamoDAO ){
 
         for( Prestamo p : mListaSeleccionados ){
+            p.setEstado( DEVUELTO );
             prestamoDAO.open();
             BaseDAO.Estado estado = prestamoDAO.update( p );
             prestamoDAO.close();
-            if ( estado == BaseDAO.Estado.ACTUALIZADO ){
-                p.setEstado( DEVUELTO );
-            }
+        } // end for
+        borrarSeleccion();
+        notifyDataSetChanged();
+
+    }
+
+    public void prestar( PrestamoDAO prestamoDAO ){
+
+        for( Prestamo p : mListaSeleccionados ){
+            p.setEstado( PRESTADO );
+            prestamoDAO.open();
+            BaseDAO.Estado estado = prestamoDAO.update( p );
+            prestamoDAO.close();
 
         } // end for
         borrarSeleccion();
@@ -700,7 +730,5 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 return lstPrestamos;
             return prestamosFiltradosPorFecha;
         } // end method filtrarPorMes
-
     } // end class DecoratorFechaFilterAlgorithm
-
 } // end class PrestamoAdapter

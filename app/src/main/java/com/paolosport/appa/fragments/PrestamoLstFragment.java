@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SearchViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -64,7 +65,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     private LocalDAO localDAO;
     private PrestamoDAO prestamoDAO;
     private RelativeLayout opciones;
-    String seleccion,buscarReferencia;
+    String seleccion;
 
     private PrestamoAdapter adapter;
     private View view;
@@ -134,41 +135,16 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         // se carga los datos que existan sobre los prestamos
         Activity activity = ( Activity ) context;
         listPrestamos = ( ListView ) view.findViewById( R.id.lstPrestamos );
-        listPrestamos.setSelector( R.drawable.selection_prestamos );
+        listPrestamos.setSelector(R.drawable.selection_prestamos);
         listPrestamos.setAdapter(adapter);
 
-        SharedPreferences preferences = getActivity().getSharedPreferences("datos",
-            Context.MODE_PRIVATE);
-        boolean sesion = false;
-        sesion= preferences.getBoolean("sesion",sesion);
-        if ( sesion == true ) {
-            listPrestamos.setChoiceMode( ListView.CHOICE_MODE_MULTIPLE );
-            listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    adapter.selecionarElementos(parent, view, position, id);
-                    alternarOpciones();
-                }
-            });
-            listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    StringBuilder sb= new StringBuilder();
-                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getMarca().getNombre()).toString();
-                    sb.append("+");
-                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getCodigo()).toString();
-                    buscarReferencia = sb.toString();
-                    dialogo();
-                    return false;
-                }
-            });
-        }
+        configurarLista();
 
         opciones = (RelativeLayout) view.findViewById( R.id.opciones );
         view.findViewById( R.id.btnVendido ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.vender( prestamoDAO );
+                adapter.vender(prestamoDAO);
                 deselecionarPrestamos();
                 alternarOpciones();
             }
@@ -176,7 +152,16 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         view.findViewById( R.id.btnDevuelto ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.devolver( prestamoDAO );
+                adapter.devolver(prestamoDAO);
+                deselecionarPrestamos();
+                alternarOpciones();
+            }
+        });
+
+        view.findViewById( R.id.btnPrestado ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.prestar( prestamoDAO );
                 deselecionarPrestamos();
                 alternarOpciones();
             }
@@ -189,7 +174,21 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     public void onStart(){
         super.onStart();
         deselecionarPrestamos();
+
     } // end method onStart
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        configurarLista();
+        //TODO registrar broadcast receiver
+    } // end method onResume
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        // TODO des-registrar el broadcast receiver
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -211,7 +210,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_lst_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
         MenuItem item=menu.add("Search");
         item.setIcon(android.R.drawable.ic_menu_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -393,7 +392,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
 
     } // end method ocultarOpciones
 
-    public void dialogo() {
+    public void dialogo( final String buscarReferencia, final int position ) {
 
         final String[] items = {"Buscar Referencia", "Eliminar","Cancelar"};
 
@@ -405,22 +404,85 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                     public void onClick(DialogInterface dialog, int item) {
                         seleccion=items[item];
 
-                        if("Buscar Referencia".equals(seleccion)){buscarReferencia();}
-                        if("Eliminar".equals(seleccion)){eliminar();}
+                        if("Buscar Referencia".equals(seleccion)){buscarReferencia( buscarReferencia );}
+                        if("Eliminar".equals(seleccion)){dialogoEliminar( position );}
                         if("Cancelar".equals(seleccion)){           }
                     }
                 });
         builder.show();
     }
 
-    public void buscarReferencia(){
+    public void dialogoEliminar( final int position ) {
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(getActivity());
+
+        builder.setMessage("¿Realmente deseas eliminar este registro?")
+                .setTitle("Confirmacion")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        eliminar(position);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
+    }
+
+    public void buscarReferencia( String buscarReferencia ){
         Intent i = new Intent("android.intent.action.VIEW",
-                Uri.parse("http://www.google.com"+"/search?q="+buscarReferencia+"&source=lnms&tbm=isch&sa=X&ei=YDtZVaCgGNLHsQTGrIHwDQ&ved=0CAcQ_AUoAQ&biw=1247&bih=580"));
+                Uri.parse("http://www.google.com" + "/search?q=" + buscarReferencia + "&source=lnms&tbm=isch&sa=X&ei=YDtZVaCgGNLHsQTGrIHwDQ&ved=0CAcQ_AUoAQ&biw=1247&bih=580"));
         startActivity(i);
     }
 
-    public void eliminar(){
+    public void eliminar( int position ){
+        adapter.eliminar( position, prestamoDAO );
+    } // end method position
 
+    public void configurarLista(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("datos",
+                Context.MODE_PRIVATE);
+        boolean sesion = false;
+        sesion= preferences.getBoolean("sesion",sesion);
+        if ( sesion == true ) {
+            listPrestamos.setChoiceMode( ListView.CHOICE_MODE_MULTIPLE );
+            listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.selecionarElementos(parent, view, position, id);
+                    alternarOpciones();
+                }
+            });
+            listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    StringBuilder sb= new StringBuilder();
+                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getMarca().getNombre()).toString();
+                    sb.append("+");
+                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getCodigo()).toString();
+                    String referencia = sb.toString();
+                    dialogo( referencia, position );
+                    return false;
+                }
+            });
+        }
+        else {
+            listPrestamos.setChoiceMode( ListView.CHOICE_MODE_NONE );
+            listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    return false;
+                }
+            });
+            listPrestamos.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return false;
+                }
+            });
+        }
     }
-
 }

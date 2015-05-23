@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
 
     int id=0;
     Dialog customDialog=null;
+    static Fragment mActivityFragment;
 
     public boolean sesion;
     public String pass ;
@@ -139,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
                     break;
                 }
                 mostrar(findViewById(id),item);
+
                break;
             case R.id.cerrar_sesión:
                 break;
@@ -189,13 +191,10 @@ public class MainActivity extends ActionBarActivity {
                 // If not, instantiate and add it to the activity
                 mFragment = Fragment.instantiate(mActivity, mClass.getName());
                 ft.add(android.R.id.content, mFragment, mTag);
-
-
             } else {
                 // If it exists, simply attach it in order to show it
                 ft.attach(mFragment);
             }
-
         }
 
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -241,6 +240,9 @@ public class MainActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Contraseña Incorrecta", Toast.LENGTH_SHORT).show();
                     password.setText("");
                 }
+
+                //TODO broadcast intent
+
             }
         });
     }
