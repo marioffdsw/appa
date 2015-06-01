@@ -80,6 +80,7 @@ public class ActivityConfiguracion extends ActionBarActivity {
         personaFragment = new PersonaFragment();
         containerFragment = localFragment;
         fragmentManager = getSupportFragmentManager();
+        changeFragment(localFragment);
 
         tv_ini_sesion.setVisibility(View.VISIBLE);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(

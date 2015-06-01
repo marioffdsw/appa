@@ -266,4 +266,51 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
         return new Timestamp( anio, mes, dia, hora, minutos, segundos, 0 );
     } // end method formatearFecha
+
+
+    public ArrayList<String> nombreLocales() {
+
+        Cursor cursor= null;
+        try{
+            cursor = db.query(TABLE_NAME,            // FROM
+                    new String[]{KEY_LOCAL},         // SELECT
+                    null, null,         // WHERE
+                    null,                                   // GROUP BY
+                    null,                                   // HAVING
+                    null,                                   // ORDER BY
+                    null                                    // LIMIT
+            );
+        }
+
+        catch (Exception e){
+            e.printStackTrace();
+            Log.i(TAG, "NO HAY REGISTROS");
+        }
+
+        helper     = new AdminSQLiteOpenHelper( context );
+        localDAO   = new LocalDAO( context, helper );
+
+        ArrayList<String> locales = new ArrayList<String>();
+
+        cursor.moveToFirst();
+
+        if ( cursor != null ){ // ha encontrado el local con la id entregada
+            cursor.moveToFirst();
+
+            // itera por todas las filas de la tabla y crea los objetos
+            try {
+                do {
+                    localDAO.open();
+                    Local local = localDAO.retrieve( cursor.getString( 0 ) );
+                    localDAO.close();
+                    locales.add(local.getNombre().toString());
+                } while (cursor.moveToNext());
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return locales;
+    }//end method buscar nombreLocales
+
 } // end class FPrestamoDAO

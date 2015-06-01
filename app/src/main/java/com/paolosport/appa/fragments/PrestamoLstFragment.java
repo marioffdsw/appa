@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 
@@ -45,14 +47,38 @@ import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
+import com.paolosport.appa.persistencia.entities.Persona;
 import com.paolosport.appa.persistencia.entities.Prestamo;
 import com.paolosport.appa.ui.PrestamoAdapter;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.zip.Inflater;
+
+import jxl.CellView;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.Colour;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.PrestamosSubject {
 
@@ -271,7 +297,8 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                 alternarOpciones();
                 break;
             case R.id.calendario:
-                dialogoCalendario();
+                generarExcel();
+                //dialogoCalendario();
                 //customDialog=new DatePickerDialog(context, mDateSetListener, mYear, mMonth,mDay);
                 //customDialog.show();
         } // end switch
@@ -421,6 +448,191 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
 
     public void eliminar(){
 
+    }
+
+    public void generarExcel(){
+
+        String Fnamexls="archivoPrueba"  + ".xls";
+        File sdCard = Environment.getExternalStorageDirectory();
+        File directory = new File (sdCard.getAbsolutePath() + "/newfolder");
+        directory.mkdirs();
+        File file = new File(directory, Fnamexls);
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
+        WritableWorkbook workbook;
+
+        try {
+            workbook = Workbook.createWorkbook(file, wbSettings);//nombre archivo,opciones
+            WritableFont estilo = new WritableFont(WritableFont.ARIAL, 12);
+            WritableFont estilo2 = new WritableFont(WritableFont.ARIAL, 11);
+            WritableFont estilo3 = new WritableFont(WritableFont.ARIAL, 10);
+
+            estilo2.setColour(Colour.WHITE);
+            estilo2.setBoldStyle(WritableFont.BOLD);
+
+            WritableCellFormat fuente = new WritableCellFormat(estilo);
+            fuente.setBorder(Border.ALL, BorderLineStyle.MEDIUM, Colour.BLACK);
+            fuente.setShrinkToFit(true); //reducir hasta ajustar
+            fuente.setAlignment(Alignment.CENTRE);
+            fuente.setBackground(Colour.GRAY_25);//background de la celda
+
+            WritableCellFormat fuente2 = new WritableCellFormat(estilo2);
+            //fuente2.setWrap(true); //ajustar texto
+            fuente2.setBorder(Border.ALL, BorderLineStyle.MEDIUM, Colour.BLACK);
+            fuente2.setBackground(Colour.GRAY_50);
+            fuente2.setAlignment(Alignment.CENTRE);
+
+            WritableCellFormat fuente3 = new WritableCellFormat(estilo3);
+            fuente3.setShrinkToFit(true); //reducir hasta ajustar
+
+
+            ArrayList<String> nombres = new ArrayList<String>();
+
+            prestamoDAO.open();
+            nombres = prestamoDAO.nombreLocales();//metodo para obtener el nombre de locales
+            prestamoDAO.close();
+
+            HashSet hs = new HashSet();
+            hs.addAll(nombres);
+            nombres.clear();
+            nombres.addAll(hs);//arreglo de locales sin repetidos
+
+            WritableSheet sheet = workbook.createSheet("Hoja1", 0);//obtener nombre del local
+
+            lstPrestamos = getListPrestamos();
+
+            ArrayList<Prestamo> lstOrdenada = getListPrestamos();
+            Collections.sort( lstOrdenada, new Comparator<Prestamo>() {
+                @Override
+                public int compare( Prestamo lhs, Prestamo rhs ) {
+                    return lhs.getLocal().getNombre().compareToIgnoreCase(rhs.getLocal().getNombre());
+                }
+            } );
+
+            int u = lstPrestamos.size() * 9;// 9 son las columnas del excel
+            Label[] contenido2 = new Label[u];
+            int j = 0, k = 0;
+
+            //---------------------------------------
+            // VARIABLES DE ENCABEZADO
+            int n_locales=nombres.size();
+            Label[] encabezado = new Label[n_locales];
+            int[] merge = new int[n_locales];
+            Label[] label = new Label[9];
+            int index=0;
+            String aux=lstOrdenada.get(0).getLocal().getNombre();
+            //----------------------------------------
+
+            for (int i = 0; i < u; i++) {
+
+                if(!aux.equals(lstOrdenada.get(j).getLocal().getNombre())){
+                    k=k+3;
+                    encabezado[index]=new Label(0, k,lstOrdenada.get(j).getLocal().getNombre(),fuente2);//añadir encabezado
+                    merge[index]=k;
+                    k++;
+                    label[0]= new Label(0, k, "ORIGEN",fuente);
+                    label[1]= new Label(1, k, "CODIGO",fuente);
+                    label[2]= new Label(2, k, "MARCA",fuente);
+                    label[3]= new Label(3, k, "DESCRIPCION",fuente);
+                    label[4]= new Label(4, k, "TALLA",fuente);
+                    label[5]= new Label(5, k, "FECHA",fuente);
+                    label[6]= new Label(6, k, "HORA",fuente);
+                    label[7]= new Label(7, k, "ESTADO",fuente);
+                    label[8]= new Label(8, k, "ENCARGADO",fuente);
+                    for (int m=0;m<9;m++){sheet.addCell(label[m]);}//Etiquetas de encabezado
+                    k++;index++;
+                }
+                if(index==0){
+                    encabezado[index]=new Label(0, k,lstOrdenada.get(index).getLocal().getNombre(),fuente2);//añadir encabezado
+                    merge[index]=k;
+                    k=k+1;
+                    label[0]= new Label(0, k, "ORIGEN",fuente);
+                    label[1]= new Label(1, k, "CODIGO",fuente);
+                    label[2]= new Label(2, k, "MARCA",fuente);
+                    label[3]= new Label(3, k, "DESCRIPCION",fuente);
+                    label[4]= new Label(4, k, "TALLA",fuente);
+                    label[5]= new Label(5, k, "FECHA",fuente);
+                    label[6]= new Label(6, k, "HORA",fuente);
+                    label[7]= new Label(7, k, "ESTADO",fuente);
+                    label[8]= new Label(8, k, "ENCARGADO",fuente);
+                    for (int m=0;m<9;m++){sheet.addCell(label[m]);}//Etiquetas de encabezado
+                    k++;index++;
+                }
+                contenido2[i] = new Label(0, k, (lstOrdenada.get(j)).getOrigen().toString(),fuente3);
+                contenido2[i + 1] = new Label(1, k, (lstOrdenada.get(j)).getCodigo().toString(),fuente3);
+                contenido2[i + 2] = new Label(2, k, (lstOrdenada.get(j)).getMarca().getNombre(),fuente3);
+                contenido2[i + 3] = new Label(3, k, (lstOrdenada.get(j)).getDescripcion().toString(),fuente3);
+                contenido2[i + 4] = new Label(4, k, (lstOrdenada.get(j)).getTalla().toString(),fuente3);
+                contenido2[i + 5] = new Label(5, k, (formatearFecha(lstOrdenada.get(j).getFecha())),fuente3);
+                contenido2[i + 6] = new Label(6, k, (formatearHora(lstOrdenada.get(j).getFecha())),fuente3);
+                contenido2[i + 7] = new Label(7, k, (lstOrdenada.get(j)).getEstado().toString(),fuente3);
+                contenido2[i + 8] = new Label(8, k, (lstOrdenada.get(j)).getEmpleado().getNombre(),fuente3);
+                aux=lstOrdenada.get(j).getLocal().getNombre();
+
+                i = i + 8;
+                j++;
+                k++;
+            }//end for i
+
+            try {
+                for (int i=0;i<n_locales;i++){sheet.addCell(encabezado[i]);}//encabezado de cada local
+                for(int i=0;i<u;i++){sheet.addCell(contenido2[i]);}//contenido
+
+                sheet.mergeCells(0,0,8,0);//c,f - c,f //merge de el nombre del local
+                for (int i =0;i<n_locales;i++){
+                    sheet.mergeCells(0,merge[i],8,merge[i]);//merge de los encabezados
+                }
+
+                CellView cv = new CellView();
+
+                cv.setSize(48 * 100);   sheet.setColumnView(0,cv);
+                cv.setSize(45 * 100);   sheet.setColumnView(1,cv);
+                cv.setSize(40 * 100);   sheet.setColumnView(2,cv);
+                cv.setSize(90 * 100);   sheet.setColumnView(3,cv);
+                cv.setSize(25 * 100);   sheet.setColumnView(4,cv);
+                cv.setSize(38 * 100);   sheet.setColumnView(5,cv);
+                cv.setSize(38 * 100);   sheet.setColumnView(6,cv);
+                cv.setSize(25 * 100);   sheet.setColumnView(7,cv);
+                cv.setSize(25 * 100);   sheet.setColumnView(8,cv);
+            }
+            catch (RowsExceededException e) {}
+            catch (WriteException e) {}
+
+
+            workbook.write();
+            try {workbook.close();}
+            catch (WriteException e) {}
+        }
+        catch (IOException e) {}
+        catch (WriteException e) {}
+    }
+
+    public String formatearHora(Timestamp stamp ){
+        Date date = new Date(stamp.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm:ss a");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String formattedDate = sdf.format(date);
+        return formattedDate;
+    }
+
+    public String formatearFecha(Timestamp stamp ){
+        Date date = new Date(stamp.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        //sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(stamp);
+
+        int dia = cal.get( Calendar.DAY_OF_MONTH);
+        int mes = cal.get( Calendar.MONTH );
+        int año = cal.get( Calendar.YEAR)-1900;
+
+        String[] meses = new String[13];
+        meses[1]="Ene";meses[2]="Feb";meses[3]="Mar";meses[4]="Abr";meses[5]="May";meses[6]="Jun";
+        meses[7]="Jul";meses[8]="Ago";meses[9]="Sep";meses[10]="Oct";meses[11]="Nov";meses[12]="Dic";
+
+        String formattedDate = dia+"/"+meses[mes]+"/"+año ;
+        return formattedDate;
     }
 
 }
