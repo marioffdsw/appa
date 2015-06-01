@@ -126,7 +126,7 @@
         android:layout_gravity="start"
         android:divider="@color/material_blue_grey_900"
 
-        android:background="@color/green"
+        android:background="@color/gray_light"
         android:dividerHeight="0dp">
 
         <LinearLayout
@@ -164,7 +164,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Locales" />
+                    android:text="Estados" />
 
                 <TextView
                     android:id="@+id/orden_filtro_estados"
@@ -173,12 +173,80 @@
 
             </FrameLayout>
 
-            <ListView
-                android:id="@+id/filtro_estados"
+            <RelativeLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+               android:id="@+id/filtro_estados_prestado" >
 
-            </ListView>
+                <View
+                    android:id="@+id/colorPrestado"
+                    android:layout_width="10dp"
+                    android:layout_height="60dp"
+                    android:background="@color/action_bar2"
+                    android:layout_alignParentRight="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center"
+                    android:text="Prestados"
+                    android:layout_toLeftOf="@id/colorPrestado"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filtro_estados_devuelto" >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_gravity="center"
+                    android:text="Devueltos"
+                    />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/green" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filtro_estados_vendido" >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_gravity="center"
+                    android:text="Vendidos"
+                    />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/blue" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnSeleccion"
