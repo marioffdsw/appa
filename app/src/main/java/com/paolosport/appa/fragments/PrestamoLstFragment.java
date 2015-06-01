@@ -10,55 +10,49 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SearchViewCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
-import android.view.KeyEvent;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.webkit.WebView;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paolosport.appa.ListViewAdapters.ListViewAdapterLocal;
 import com.paolosport.appa.R;
+import com.paolosport.appa.activities.MainActivity;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
 import com.paolosport.appa.persistencia.dao.LocalDAO;
 import com.paolosport.appa.persistencia.dao.MarcaDAO;
 import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
+import com.paolosport.appa.persistencia.entities.Local;
 import com.paolosport.appa.persistencia.entities.Prestamo;
 import com.paolosport.appa.ui.PrestamoAdapter;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.zip.Inflater;
 
 public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.PrestamosSubject {
 
     private SearchViewCompat searchView;
     private Context context;
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mDrawerToggle;
 
     private PersonaDAO personaDAO;
     private MarcaDAO marcaDAO;
@@ -81,6 +75,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     private int año;
     private int mes;
     private int dia;
+
 
     public PrestamoLstFragment() {
         // Required empty public constructor
@@ -161,12 +156,77 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         view.findViewById( R.id.btnPrestado ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.prestar( prestamoDAO );
+                adapter.prestar(prestamoDAO);
                 deselecionarPrestamos();
                 alternarOpciones();
             }
         });
         // Inflate the layout for this fragment
+
+
+        mDrawerLayout = (DrawerLayout) view.findViewById( R.id.drawer_layout );
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,  GravityCompat.START);
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                getActivity(),
+                mDrawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close
+        ) {
+            public void onDrawerClosed(View view) {
+                MainActivity activity =  (MainActivity) getActivity();
+                ActionBar actionBar = activity.getSupportActionBar();
+                actionBar.setTitle("Appa");
+
+                getActivity().invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                MainActivity activity =  (MainActivity) getActivity();
+                ActionBar actionBar = activity.getSupportActionBar();
+                actionBar.setTitle("Configura la Busqueda");
+                getActivity().invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu
+            }
+        };
+
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        Button button = (Button) view.findViewById( R.id.button );
+
+        FrameLayout frameLayout = (FrameLayout) view.findViewById( R.id.frame_filtros );
+        frameLayout.setOnClickListener(null);
+
+        localDAO.open();
+        final ArrayList<Local> lstLocales = localDAO.retrieveAll();
+        localDAO.close();
+
+        ListView filtroLocales = (ListView) view.findViewById( R.id.filtro_locales );
+        filtroLocales.setAdapter( new ListViewAdapterLocal( context, R.layout.local_item_lv, lstLocales ));
+        filtroLocales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Local local = lstLocales.get( position );
+                PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+                filter.setParameters( null );
+                filter.filtrarPorMarca = false;
+                filter.filtrarPorLocal = false;
+                filter.filtrarPorEmpleado = false;
+                filter.filtrarPorNombreLocal = true;
+                filter.filtrarPorOrigen = false;
+                filter.filtrarPorDescripcion = false;
+                filter.filter( local.getNombre() );
+                deselecionarPrestamos();
+                alternarOpciones();
+                filter.filtrarPorMarca = true;
+                filter.filtrarPorLocal = true;
+                filter.filtrarPorEmpleado = true;
+                filter.filtrarPorNombreLocal = false;
+                filter.filtrarPorOrigen = true;
+                filter.filtrarPorDescripcion = true;
+            }
+        });
+
         return view;
     }
 
@@ -181,7 +241,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     public void onResume(){
         super.onResume();
         configurarLista();
-        //TODO registrar broadcast receiver
     } // end method onResume
 
     @Override
@@ -200,6 +259,15 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     public void onAttach( Activity activity ) {
         super.onAttach( activity );
         context = activity;
+        MainActivity mainActivity = (MainActivity) activity;
+        mainActivity.prestamoLstFragment = this;
+    }
+
+    @Override
+    public void onDetach() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.prestamoLstFragment = null;
+        super.onDetach();
     }
 
     @Override
@@ -389,7 +457,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
 
     public void ocultarOpciones(){
         opciones.setVisibility( View.GONE );
-
     } // end method ocultarOpciones
 
     public void dialogo( final String buscarReferencia, final int position ) {
@@ -446,9 +513,10 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         SharedPreferences preferences = getActivity().getSharedPreferences("datos",
                 Context.MODE_PRIVATE);
         boolean sesion = false;
+        deselecionarPrestamos();
         sesion= preferences.getBoolean("sesion",sesion);
         if ( sesion == true ) {
-            listPrestamos.setChoiceMode( ListView.CHOICE_MODE_MULTIPLE );
+            listPrestamos.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -456,31 +524,34 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                     alternarOpciones();
                 }
             });
+
             listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    StringBuilder sb= new StringBuilder();
-                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getMarca().getNombre()).toString();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(((Prestamo) parent.getItemAtPosition(position)).getMarca().getNombre()).toString();
                     sb.append("+");
-                    sb.append(((Prestamo)parent.getItemAtPosition(position)).getCodigo()).toString();
+                    sb.append(((Prestamo) parent.getItemAtPosition(position)).getCodigo()).toString();
                     String referencia = sb.toString();
-                    dialogo( referencia, position );
+                    dialogo(referencia, position);
                     return false;
                 }
             });
         }
         else {
-            listPrestamos.setChoiceMode( ListView.CHOICE_MODE_NONE );
+            listPrestamos.setChoiceMode(ListView.CHOICE_MODE_NONE);
+            deselecionarPrestamos();
+            listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+            });
+
             listPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    return false;
-                }
-            });
-            listPrestamos.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return false;
+                   return false;
                 }
             });
         }

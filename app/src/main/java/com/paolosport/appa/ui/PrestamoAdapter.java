@@ -275,7 +275,6 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         mPrestamosFilter = null;
     } // end setFilter method
 
-
     public static Bitmap getRoundedCornerBitmap( Bitmap b, boolean square) {
         int width = 0;
         int height = 0;
@@ -402,6 +401,8 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         public boolean filtrarPorLocal = true;
         public boolean filtrarPorMarca = true;
         public boolean filtrarPorOrigen = true;
+        public boolean filtrarPorNombreLocal = false;
+        public boolean filtrarPorDescripcion = true;
 
         public void setParameters(Object[] parameters) {
             this.parameters = parameters;
@@ -425,14 +426,20 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if( filtrarPorLocal ){
                 component = new DecoratorLocalFilterAlgorithm( component, constraint.toString() );
             }
+            if( filtrarPorNombreLocal ){
+                component = new DecoratorNameLocalFilterAlgorithm( component, constraint.toString() );
+            }
             if( filtrarPorMarca ){
-                component = new DecoratorLocalFilterAlgorithm( component, constraint.toString() );
+                component = new DecoratorMarcaFilterAlgorithm( component, constraint.toString() );
             }
             if( parameters != null ){
                 component = new DecoratorFechaFilterAlgorithm( component, parameters );
             }
             if( filtrarPorOrigen ){
                 component = new DecoratorOrigenFilterAlgorithm( component, constraint.toString() );
+            }
+            if( filtrarPorDescripcion ){
+                component = new DecoratorDescripcionFilterAlgorithm( component, constraint.toString() );
             }
 
             ArrayList<Prestamo> prestamosFiltrados = component.filter();;
@@ -522,9 +529,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 // ahora recorremos todos los prestamos y verificamos que tengan la
                 // cadena "patron de busqueda"
                 String[] palabrasABuscar = searchPattern.split( " " );
+
                 for( Prestamo p : lstPrestamos ){
                     for( String palabra : palabrasABuscar ){
-                        if( p.getLocal().getNombre().toUpperCase().contains( palabra.toUpperCase() ) ){
+                        if( p.getLocal().getNombre().toUpperCase().contains( palabra.toUpperCase() ) && !palabra.toUpperCase().equals( "CC." ) ){
                             prestamosFiltradosPorLocal.add( p );
                             break;
                         }
@@ -538,6 +546,45 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             return prestamosFiltradosPorLocal;
         } // end method filter
     } // end class DecoratorLocalFilterAlgorithm
+
+
+    public class DecoratorNameLocalFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorNameLocalFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorLocal = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+
+                for( Prestamo p : lstPrestamos ){
+                    if( p.getLocal().getNombre().toUpperCase().contains( searchPattern.toUpperCase() ) ){
+                        prestamosFiltradosPorLocal.add( p );
+                    }
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorLocal.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorLocal;
+        } // end method filter
+    } // end class DecoratorLocalFilterAlgorithm
+
+
 
     public class DecoratorOrigenFilterAlgorithm implements PrestamosFilterAlgorithm {
 
@@ -576,7 +623,46 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 return lstPrestamos;
             return prestamosFiltradosPorOrigen;
         } // end method filter
-    } // end class DecoratorLocalFilterAlgorithm
+    } // end class DecoratorOrigenFilterAlgorithm
+
+    public class DecoratorDescripcionFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorDescripcionFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorOrigen = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+                String[] palabrasABuscar = searchPattern.split( " " );
+                for( Prestamo p : lstPrestamos ){
+                    for( String palabra : palabrasABuscar ){
+                        if( p.getDescripcion().toUpperCase().contains( palabra.toUpperCase() ) ){
+                            prestamosFiltradosPorOrigen.add( p );
+                            break;
+                        }
+                    } // end for interno
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorOrigen.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorOrigen;
+        } // end method filter
+    } // end class DecoratorOrigenFilterAlgorithm
 
     private class DecoratorMarcaFilterAlgorithm implements PrestamosFilterAlgorithm {
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -31,10 +32,12 @@ public class MainActivity extends ActionBarActivity {
     int id=0;
     Dialog customDialog=null;
     static Fragment mActivityFragment;
+    public PrestamoLstFragment prestamoLstFragment;
 
     public boolean sesion;
     public String pass ;
     public MenuItem conf;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +138,13 @@ public class MainActivity extends ActionBarActivity {
                     item.setIcon(R.drawable.ic_action_person);
                     SharedPreferences.Editor editor=preferences.edit();
                     sesion=false;
-                    editor.putBoolean("sesion",sesion);
+                    editor.putBoolean("sesion", sesion);
                     editor.commit();
+                    prestamoLstFragment.configurarLista();
+                    prestamoLstFragment.ocultarOpciones();
                     break;
                 }
-                mostrar(findViewById(id),item);
+                mostrar(findViewById(id), item);
 
                break;
             case R.id.cerrar_sesión:
@@ -241,8 +246,8 @@ public class MainActivity extends ActionBarActivity {
                     password.setText("");
                 }
 
-                //TODO broadcast intent
-
+                prestamoLstFragment.configurarLista();
+                prestamoLstFragment.ocultarOpciones();
             }
         });
     }
