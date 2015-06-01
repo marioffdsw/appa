@@ -66,6 +66,7 @@ public class PrestamoFormFragment extends Fragment {
     private EditText  et_codigo_item,et_descripcion_item;
     private TextView et_talla_item;
     private ListView lv_prestamo;
+    public boolean estado_teclado=true;
 
     AdminSQLiteOpenHelper helper;
     MarcaDAO marcaDAO;
@@ -516,6 +517,20 @@ public class PrestamoFormFragment extends Fragment {
         final TextView tv_talla_teclado  =(TextView)customDialog.findViewById(R.id.tv_talla_teclado);
         final FrameLayout fl_tallas = (FrameLayout)customDialog.findViewById(R.id.fl_tallas);
 
+        final    Button uno= (Button)customDialog.findViewById(R.id.btn_uno);
+        final    Button dos= (Button)customDialog.findViewById(R.id.btn_dos);
+        final    Button tres= (Button)customDialog.findViewById(R.id.btn_tres);
+        final    Button cuatro= (Button)customDialog.findViewById(R.id.btn_cuatro);
+        final    Button cinco= (Button)customDialog.findViewById(R.id.btn_cinco);
+        final    Button seis= (Button)customDialog.findViewById(R.id.btn_seis);
+        final    Button siete= (Button)customDialog.findViewById(R.id.btn_siete);
+        final    Button ocho= (Button)customDialog.findViewById(R.id.btn_ocho);
+        final    Button nueve= (Button)customDialog.findViewById(R.id.btn_nueve);
+        final    Button cero= (Button)customDialog.findViewById(R.id.btn_cero);
+        final    Button uk= (Button)customDialog.findViewById(R.id.btn_uk);
+        final    Button us= (Button)customDialog.findViewById(R.id.btn_us);
+        final    Button medio= (Button)customDialog.findViewById(R.id.btn_medio);
+
         tallas.clear();
         String aux = et_talla_item.getText().toString();
         if(aux!="" && aux!=null && !aux.isEmpty()){
@@ -530,61 +545,61 @@ public class PrestamoFormFragment extends Fragment {
         ((Button) customDialog.findViewById(R.id.btn_uno)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("1");
+                tv_talla_teclado.append(uno.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_dos)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("2");
+                tv_talla_teclado.append(dos.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_tres)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("3");
+                tv_talla_teclado.append(tres.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_cuatro)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("4");
+                tv_talla_teclado.append(cuatro.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_cinco)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("5");
+                tv_talla_teclado.append(cinco.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_seis)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("6");
+                tv_talla_teclado.append(seis.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_siete)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("7");
+                tv_talla_teclado.append(siete.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_ocho)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("8");
+                tv_talla_teclado.append(ocho.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_nueve)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("9");
+                tv_talla_teclado.append(nueve.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_cero)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_talla_teclado.append("0");
+                tv_talla_teclado.append(cero.getText().toString());
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_medio)).setOnClickListener(new View.OnClickListener() {
@@ -592,23 +607,28 @@ public class PrestamoFormFragment extends Fragment {
             public void onClick(View view) {
                 String aux = tv_talla_teclado.getText().toString();
 
-                if(aux.indexOf("½")>-1 ) {
-                    aux = aux.replace("½","½");
+                if(aux.indexOf(medio.getText().toString())>-1 ) {
+                    aux = aux.replace(medio.getText().toString(),medio.getText().toString());
 
                     tv_talla_teclado.setText("");
                     tv_talla_teclado.setText(aux);
                 }
                 else {
-                    tv_talla_teclado.append("½");
+                    tv_talla_teclado.append(medio.getText().toString());
                 }
             }
         });
         ((Button) customDialog.findViewById(R.id.btn_us)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String aux2 = us.getText().toString();
                 String aux = tv_talla_teclado.getText().toString();
 
-                if(aux.indexOf("Eu")>-1 ||aux.indexOf("Us")>-1 ) {
+                if(aux2.equals("12M")){
+                    tv_talla_teclado.setText("12M");
+                }
+
+                else if(aux.indexOf("Eu")>-1 ||aux.indexOf("Us")>-1 ) {
                     aux = aux.replace("Eu","Us");
                     aux = aux.replace("Us","Us");
 
@@ -618,13 +638,21 @@ public class PrestamoFormFragment extends Fragment {
                 else {
                     tv_talla_teclado.append("Us ");
                 }
+                aux2="";
             }
         });
+
         ((Button) customDialog.findViewById(R.id.btn_uk)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String aux2 = uk.getText().toString();
                 String aux = tv_talla_teclado.getText().toString();
-                if(aux.indexOf("Us")>-1 ||aux.indexOf("Eu")>-1  ) {
+
+                if(aux2.equals("24M")){
+                    tv_talla_teclado.setText("24M");
+                }
+
+                else if(aux.indexOf("Us")>-1 ||aux.indexOf("Eu")>-1  ) {
                     aux = aux.replace("Us","Eu");
                     aux = aux.replace("Eu","Eu");
 
@@ -634,8 +662,47 @@ public class PrestamoFormFragment extends Fragment {
                 else {
                     tv_talla_teclado.append("Eu ");
                 }
+                aux2="";
             }
         });
+
+        ((Button) customDialog.findViewById(R.id.btn_setings)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(estado_teclado==true) {
+                    uno.setText("4T");
+                    dos.setText("3T");
+                    tres.setText("2T");
+                    cuatro.setText("S");
+                    cinco.setText("Xs");
+                    seis.setText("2Xs");
+                    siete.setText("XL");
+                    ocho.setText("L");
+                    nueve.setText("M");
+                    cero.setText("OFS");
+                    uk.setText("24M");
+                    us.setText("12M");
+                    estado_teclado=false;
+                }
+                else{
+                    uno.setText("1");
+                    dos.setText("2");
+                    tres.setText("3");
+                    cuatro.setText("4");
+                    cinco.setText("5");
+                    seis.setText("6");
+                    siete.setText("7");
+                    ocho.setText("8");
+                    nueve.setText("9");
+                    cero.setText("0");
+                    uk.setText("Eu");
+                    us.setText("Us");
+                    estado_teclado=true;
+
+                }
+            }
+        });
+
         ((Button) customDialog.findViewById(R.id.btn_delete)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
