@@ -264,12 +264,47 @@
                 </RelativeLayout>
 
                 <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@android:drawable/divider_horizontal_textfield"/>
+
+                <RelativeLayout
+                    android:id="@+id/item_cuenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clickable="true"
+                    android:onClick="muestre"
+                    android:background="@drawable/selectable_background_estiloandres">
+                    <ImageView
+                        android:id="@+id/iv_cuenta"
+                        android:background="@drawable/ico_yave"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/tv_cuenta"
+                        android:text="Contraseña"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#fffffff1"
+                        android:layout_toRightOf="@+id/iv_cuenta"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center_vertical"
+                        android:paddingRight="3dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp" />
+                </RelativeLayout>
+                <View
                     android:layout_width="fill_parent"
                     android:layout_height="2dp"
                     android:background="@android:drawable/divider_horizontal_textfield"/>
 
                 <RelativeLayout
-                    android:id="@+id/item_cuenta"
+                    android:id="@+id/item_vincular"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:clickable="true"
@@ -287,7 +322,7 @@
 
                     <TextView
                         android:id="@+id/tv_cuenta"
-                        android:text="Cuenta"
+                        android:text="Vincular Cuenta"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:textColor="#fffffff1"

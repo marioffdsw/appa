@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
     public PrestamoLstFragment prestamoLstFragment;
 
     public boolean sesion;
-    public String pass ;
+    public String pass ,cuenta;
     public MenuItem conf;
 
 
@@ -71,16 +71,21 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         sesion=preferences.getBoolean("sesion",sesion);
         pass = preferences.getString("pass",pass);
+        cuenta = preferences.getString("cuenta",cuenta);
 
         try{
             if(pass==null) {
                 pass = "123";
+                cuenta = "andres_solarteo@hotmail.com";
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("pass", "123");
+                editor.putString("cuenta","andres_solarteo@hotmail.com");
                 editor.commit();
+
             }
             else{
                 pass = preferences.getString("pass",pass);
+                cuenta = preferences.getString("cuenta",cuenta);
             }
         }
         catch (Exception e){}

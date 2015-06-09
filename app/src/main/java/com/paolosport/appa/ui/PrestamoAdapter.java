@@ -147,17 +147,31 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
                 Date date = new Date( p.getFecha().getTime() );
                 Log.e( "Prestamo", date.toString() );
-                Calendar calendar = new GregorianCalendar();
+
+                Calendar calendar=Calendar.getInstance();
+                int year = calendar.get( Calendar.YEAR );
+                year -= 1900;
+                date.setYear(year);
                 calendar.setTime( date );
+
+                year = calendar.get( Calendar.YEAR );
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
                 int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get( Calendar.YEAR );
-                year -= 1900;
+
                 DateFormatSymbols simbols = new DateFormatSymbols();
 
 
-                String[] weekdays = simbols.getShortWeekdays();
+                String[] weekdays = new String[8] ;
+                weekdays[1]="vie";
+                weekdays[2]="sab";
+                weekdays[3]="dom";
+                weekdays[4]="lun";
+                weekdays[5]="mar";
+                weekdays[6]="mie";
+                weekdays[7]="jue";
+
+
                 String[] months = simbols.getMonths();
 
                 String hora = new SimpleDateFormat( "K:mm" ).format(date);
@@ -165,7 +179,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
                 String amPmCadena = amPm > 12 ? "pm" : "am";
 
-                String fechaAMostrar = weekdays[weekDay] + ", " +
+                String fechaAMostrar = weekdays[weekDay] + ", " +//dom lun mar mier juev vie sab
                     day + " de " + months[month - 1] + " de " + year +
                     "\n" + hora + " " +amPmCadena;
 

@@ -21,10 +21,12 @@ public class Local {
     }
 
     public String getNombre() {
+        this.nombre = nombre.replaceAll(" ","_");
         return nombre;
     }
 
     public void setNombre(String nombre) {
+        nombre.replaceAll(" ","_");
         this.nombre = nombre;
     }
 } // end class Local
