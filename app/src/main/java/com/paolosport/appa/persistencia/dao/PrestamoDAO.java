@@ -90,6 +90,8 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
                 throw new Exception();
         }
         catch( Exception e ){
+
+            Log.e( TAG + "prestamos", "Error insertar" );
             return Estado.ERROR_INSERTAR;
         } // end catch
 
