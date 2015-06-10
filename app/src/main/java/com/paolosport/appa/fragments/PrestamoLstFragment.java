@@ -433,7 +433,7 @@ public class PrestamoLstFragment extends Fragment {
                                 });
                         builder.show();
                     }
-                }
+        }
                 else{}
                 break;
         } // end switch
