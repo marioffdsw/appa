@@ -88,28 +88,28 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     static final String DROP_TABLE_PRESTAMOS = "DROP TABLE IF EXISTS prestamos";
 
     static final String TEST_PRESTAMOS = "INSERT INTO prestamos " +
-        "( descripcion,              talla,      empleado,     local,    marca, origen   ) VALUES" +
-        "( 'blancos',                32,         '1',          '1',      '1',    'a'    )," +
-        "( 'negros',                 38,         '2',          '1',      '2',    'b'     )," +
-        "( 'azules',                 37,         '3',          '2',      '4',    'c'    )," +
-        "( 'naranjas',               27,         '4',          '5',      '3',    'd'     )," +
-        "( 'rojos',                  34,         '5',          '3',      '5',    'e'     )," +
-        "( 'manzana',                32,         '2',          '4',      '1',    'f'     )," +
-        "( 'banana',                 28,         '4',          '2',      '5',    'g'     )," +
-        "( 'pera',                   24,         '3',          '4',      '5',    'h'     )," +
-        "( 'sandia',                 38,         '1',          '5',      '1',    'i'     )," +
-        "( 'uva',                    22,         '2',          '2',      '3',    'j'     )," +
-        "( 'piña',                   39,         '5',          '3',      '2',    'k'     )," +
-        "( 'mandarina',              40,         '2',          '2',      '2',    'l'     )," +
-        "( 'limon',                  36,         '3',          '3',      '3',    'm'     )," +
-        "( 'fresa',                  38,         '4',          '4',      '4',    'n'     )";
+        "( descripcion,      codigo,        talla,      empleado,     local,    marca, origen   ) VALUES" +
+        "( 'blancos',        1,        32,         '1',          '1',      '1',    'a'    )," +
+        "( 'negros',         1,        38,         '2',          '1',      '2',    'b'     )," +
+        "( 'azules',         1,        37,         '3',          '2',      '4',    'c'    )," +
+        "( 'naranjas',       1,        27,         '4',          '5',      '3',    'd'     )," +
+        "( 'rojos',          1,        34,         '5',          '3',      '5',    'e'     )," +
+        "( 'manzana',        2,        32,         '2',          '4',      '1',    'f'     )," +
+        "( 'banana',         2,        28,         '4',          '2',      '5',    'g'     )," +
+        "( 'pera',           2,        24,         '3',          '4',      '5',    'h'     )," +
+        "( 'sandia',         2,        38,         '1',          '5',      '1',    'i'     )," +
+        "( 'uva',            3,        22,         '2',          '2',      '3',    'j'     )," +
+        "( 'piña',           4,        39,         '5',          '3',      '2',    'k'     )," +
+        "( 'mandarina',      5,        40,         '2',          '2',      '2',    'l'     )," +
+        "( 'limon',          6,        36,         '3',          '3',      '3',    'm'     )," +
+        "( 'fresa',          7,        38,         '4',          '4',      '4',    'n'     )";
 
 
     static final String TEST_PRESTAMOS2 = "INSERT INTO prestamos " +
-            "( descripcion,              talla,      empleado,     local,    marca, origen, estado   ) VALUES" +
-            "( 'prestado',                32,         '1',          '1',      '1',    'a',   'P'    )," +
-            "( 'devuelto',                 38,         '2',          '1',      '2',    'b',   'D'     )," +
-            "( 'vendido',                 37,         '3',          '2',      '4',    'c',   'V'    )";
+            "( descripcion,        codigo,      talla,      empleado,     local,    marca, origen, estado   ) VALUES" +
+            "( 'prestado',         2,       32,         '1',          '1',      '1',    'a',   'P'    )," +
+            "( 'devuelto',         3,        38,         '2',          '1',      '2',    'b',   'D'     )," +
+            "( 'vendido',          4,       37,         '3',          '2',      '4',    'c',   'V'    )";
 
 
 
