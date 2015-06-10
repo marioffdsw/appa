@@ -808,6 +808,7 @@ public class PrestamoLstFragment extends Fragment {
         prestamoDAO.open();
         prestamoDAO.removeAll();
         prestamoDAO.close();
+
     }
     
     public String formatearHora(Calendar stamp ){
