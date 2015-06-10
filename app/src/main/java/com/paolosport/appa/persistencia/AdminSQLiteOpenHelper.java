@@ -73,8 +73,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         "codigo         TEXT," +
         "descripcion    TEXT," +
         "foto           TEXT," +    //uri de la foto
-        "talla          INTEGER     NOT NULL," +
-        "fecha          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+        "talla          TEXT     NOT NULL," +
+        "fecha          TIMESTAMP   DEFAULT (datetime('now','localtime')) NOT NULL," +
         "empleado       TEXT        NOT NULL, " +
         "local          TEXT        NOT NULL, " +
         "marca          TEXT        NOT NULL, " +
@@ -146,7 +146,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL( TEST_PERSONA );
         db.execSQL( INSERT_TABLE_LOCAL );
         db.execSQL( INSERT_TABLE_MARCA );
-        //db.execSQL( TEST_PRESTAMOS );
-        //db.execSQL( TEST_PRESTAMOS2 );
+        db.execSQL( TEST_PRESTAMOS );
+        db.execSQL( TEST_PRESTAMOS2 );
     } // end method setupTestDatabase
 }

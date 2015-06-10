@@ -11,8 +11,10 @@ import com.paolosport.appa.persistencia.entities.Marca;
 import com.paolosport.appa.persistencia.entities.Persona;
 import com.paolosport.appa.persistencia.entities.Prestamo;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 public class PrestamoDAO extends BaseDAO<Prestamo>{
@@ -57,22 +59,35 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
         try{
 
-            Log.i( TAG + " prestamo", "PrestamoDAO.create()" );
+            Log.i(TAG + " prestamo", "PrestamoDAO.create()");
 
             ContentValues initialValues = new ContentValues();
 
             initialValues.put( KEY_CODIGO, prestamo.getCodigo() );
             initialValues.put( KEY_DESCRIPCION, prestamo.getDescripcion() );
             initialValues.put( KEY_FOTO, prestamo.getFoto() );
-            initialValues.put( KEY_TALLA, prestamo.getTalla() );
-            initialValues.put( KEY_FECHA, prestamo.getFecha().toString() );
+            initialValues.put(KEY_TALLA, prestamo.getTalla());
+
+            Calendar calendar = prestamo.getFecha();
+            // 2015-06-10 03:59:35
+//            int day = calendar.get(Calendar.DAY_OF_MONTH);
+//            // int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
+//            int month = calendar.get(Calendar.MONTH);
+//            int year = calendar.get( Calendar.YEAR );
+//            int second = calendar.get( Calendar.SECOND );
+//            String hora = new SimpleDateFormat( "K:mm" ).format(calendar.getTime());
+//            String fecha = year + "-" + (month < 10 ? "0" + month : month ) + "-" + (day < 10 ? "0" + day : day) + " " + hora + ":" + (second < 10 ? "0" + second : second );
+//
+//            initialValues.put( KEY_FECHA, fecha );
             initialValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
             initialValues.put( KEY_LOCAL, prestamo.getLocal().getId() );
             initialValues.put( KEY_MARCA, prestamo.getMarca().getId() );
             initialValues.put( KEY_ORIGEN, prestamo.getOrigen() );
             initialValues.put( KEY_ESTADO, prestamo.getEstado() );
 
-            db.insert( TABLE_NAME, null, initialValues );
+            long i = db.insert( TABLE_NAME, null, initialValues );
+            if ( i == -1 )
+                throw new Exception();
         }
         catch( Exception e ){
             return Estado.ERROR_INSERTAR;
@@ -148,7 +163,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             String descripcion = cursor.getString(2);
             String foto = cursor.getString(3);
             String talla = cursor.getString(4);
-            Timestamp fecha = formatearFecha( cursor.getString( 5 ) );
+            Calendar fecha = formatearFecha( cursor.getString( 5 ) );
             personaDAO.open();
             Persona empleado = personaDAO.retrieve( cursor.getString( 6 ) );
             personaDAO.close();
@@ -214,7 +229,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
                     String descripcion = cursor.getString(2);
                     String foto = cursor.getString(3);
                     String talla = cursor.getString(4);
-                    Timestamp fecha = formatearFecha( cursor.getString( 5 ) );
+                    Calendar fecha = formatearFecha( cursor.getString( 5 ) );
 
                     personaDAO.open();
                     Persona empleado = personaDAO.retrieve( cursor.getString( 6) );
@@ -256,6 +271,22 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         return Estado.ELIMINADO;
     }
 
+
+
+    private Calendar formatearFecha( String fecha ){
+        Log.e( "fecha", fecha );
+        int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
+        int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
+        int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
+        int hora = Integer.parseInt( fecha.substring( 11, 13 ) );
+        int minutos = Integer.parseInt( fecha.substring( 14, 16 ) );
+        int segundos =Integer.parseInt(fecha.substring( 17, 19 ) );
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(anio, mes, dia, hora, minutos, segundos);
+
+        return calendar;
+    } // end method formatearFecha
+
     public Estado removeAll(){
         Cursor cursor=null;
         try
@@ -290,17 +321,6 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         }
         return Estado.ELIMINADO;
     }
-
-    private Timestamp formatearFecha( String fecha ){
-        int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
-        int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
-        int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
-        int hora = Integer.parseInt( fecha.substring( 11, 13 ) );
-        int minutos = Integer.parseInt( fecha.substring( 14, 16 ) );
-        int segundos =Integer.parseInt(fecha.substring( 17, 19 ) );
-
-        return new Timestamp( anio, mes, dia, hora, minutos, segundos, 0 );
-    } // end method formatearFecha
 
 
     public ArrayList<String> nombreLocales() {

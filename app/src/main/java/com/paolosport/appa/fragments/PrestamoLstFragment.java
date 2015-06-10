@@ -67,6 +67,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import jxl.CellView;
 import jxl.Workbook;
@@ -97,10 +98,10 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     private RelativeLayout opciones;
     String seleccion, buscarReferencia, rutaArchivo;
 
-    private PrestamoAdapter adapter;
+    public PrestamoAdapter adapter;
     private View view;
 
-    private ListView listPrestamos;
+    public ListView listPrestamos;
     private ArrayList<Prestamo> lstPrestamos;
     Dialog customDialog = null;
     ProgressDialog dialogo;
@@ -169,9 +170,8 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         Activity activity = (Activity) context;
         listPrestamos = (ListView) view.findViewById(R.id.lstPrestamos);
         listPrestamos.setSelector(R.drawable.selection_prestamos);
-        listPrestamos.setAdapter(adapter);
+        
 
-        configurarLista();
 
         opciones = (RelativeLayout) view.findViewById(R.id.opciones);
         view.findViewById(R.id.btnVendido).setOnClickListener(new View.OnClickListener() {
@@ -201,6 +201,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         });
         // Inflate the layout for this fragment
 
+        configurarLista();
 
         mDrawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -247,23 +248,52 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                 Local local = lstLocales.get(position);
                 PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
                 filter.setParameters(null);
-                filter.filtrarPorMarca = false;
-                filter.filtrarPorLocal = false;
-                filter.filtrarPorEmpleado = false;
-                filter.filtrarPorNombreLocal = true;
-                filter.filtrarPorOrigen = false;
-                filter.filtrarPorDescripcion = false;
                 filter.filter(local.getNombre());
                 deselecionarPrestamos();
                 alternarOpciones();
-                filter.filtrarPorMarca = true;
-                filter.filtrarPorLocal = true;
-                filter.filtrarPorEmpleado = true;
-                filter.filtrarPorNombreLocal = false;
-                filter.filtrarPorOrigen = true;
-                filter.filtrarPorDescripcion = true;
             }
         });
+
+        RelativeLayout flPrestados = (RelativeLayout) view.findViewById( R.id.filtro_estados_prestado );
+        RelativeLayout flDevueltos = (RelativeLayout) view.findViewById( R.id.filtro_estados_devuelto );
+        RelativeLayout flVendidos = (RelativeLayout) view.findViewById( R.id.filtro_estados_vendido );
+
+        flPrestados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e( "Error", "Prestados" );
+                PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+                filter.setParameters(null);
+                filter.filter( "Prestado" );
+                deselecionarPrestamos();
+                alternarOpciones();
+            }
+        });
+
+        flVendidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e( "Error", "Vendidos" );
+                PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+                filter.setParameters(null);
+                filter.filter( "Vendido" );
+                deselecionarPrestamos();
+                alternarOpciones();
+            }
+        });
+
+        flDevueltos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e( "Error", "Devueltos" );
+                PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+                filter.setParameters(null);
+                filter.filter( "Devuelto" );
+                deselecionarPrestamos();
+                alternarOpciones();
+            }
+        });
+
 
         return view;
     }
@@ -283,7 +313,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // TODO des-registrar el broadcast receiver
     }
 
     @Override
@@ -407,9 +436,10 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                     }
                 }
                 else{}
-                //dialogoCalendario();
-                //customDialog=new DatePickerDialog(context, mDateSetListener, mYear, mMonth,mDay);
-                //customDialog.show();
+                //generarExcel();
+                dialogoCalendario();
+//                customDialog=new DatePickerDialog(context, mDateSetListener, mYear, mMonth,mDay);
+//                customDialog.show();
         } // end switch
 
         return super.onOptionsItemSelected(item);
@@ -503,6 +533,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                 año = dp_fin.getYear();
 
                 Toast.makeText(context, mDay + "/" + mMonth + "/" + mYear + " --- " + dia + "/" + mes + "/" + año, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -782,23 +813,21 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         prestamoDAO.removeAll();
         prestamoDAO.close();
     }
-
-    public String formatearHora(Timestamp stamp) {
-
-        String hora = new SimpleDateFormat( "K:mm" ).format(stamp);
-        int amPm = Integer.parseInt(new SimpleDateFormat("H").format(stamp));
-        String amPmCadena = amPm > 12 ? "pm" : "am";
-        String formattedDate = hora + " " +amPmCadena;
+    
+    public String formatearHora(Calendar stamp ){
+        Date date = new Date(stamp.getTimeInMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm:ss a");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String formattedDate = sdf.format(date);
         return formattedDate;
     }
-
-    public String formatearFecha(Timestamp stamp) {
-        Date date = new Date(stamp.getTime());
+    
+    public String formatearFecha(Calendar stamp ){
+        Date date = new Date( stamp.getTimeInMillis() );
         SimpleDateFormat sdf = new SimpleDateFormat("dd");
         //sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(stamp);
+        Calendar cal = stamp;
 
         int año = cal.get(Calendar.YEAR);
         int dia = cal.get(Calendar.DAY_OF_MONTH);
@@ -850,13 +879,12 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                     return false;
                 }
             });
-        } else {
-            listPrestamos.setChoiceMode(ListView.CHOICE_MODE_NONE);
-            deselecionarPrestamos();
+        }
+        else {
+
             listPrestamos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 }
             });
 
@@ -866,6 +894,9 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
                     return false;
                 }
             });
+
+            adapter.notifyDataSetChanged();
+            listPrestamos.setChoiceMode(ListView.CHOICE_MODE_NONE);
         }
     }
 

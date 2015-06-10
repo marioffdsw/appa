@@ -1,6 +1,6 @@
 package com.paolosport.appa.persistencia.entities;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Prestamo {
@@ -10,14 +10,14 @@ public class Prestamo {
     private String descripcion;
     private String foto;
     private String talla;
-    private Timestamp fecha;
+    private Calendar fecha;
     private Persona empleado;
     private Local local;
     private Marca marca;
     private String origen;
     private String estado;
 
-    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen, String estado) {
+    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Calendar fecha, Persona empleado, Local local, Marca marca,String origen, String estado) {
         this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -30,7 +30,7 @@ public class Prestamo {
         this.origen = origen;
         setEstado( estado );
     }
-    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen ) {
+    public Prestamo(String id,String codigo, String descripcion,String foto, String talla, Calendar fecha, Persona empleado, Local local, Marca marca,String origen ) {
         this.id = id;
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -43,7 +43,7 @@ public class Prestamo {
         this.origen = origen;
         setEstado( estado );
     }
-    public Prestamo(String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen, String estado ) {
+    public Prestamo(String codigo, String descripcion,String foto, String talla, Calendar fecha, Persona empleado, Local local, Marca marca,String origen, String estado ) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.foto = foto;
@@ -55,7 +55,7 @@ public class Prestamo {
         this.origen = origen;
         setEstado( estado);
     }
-    public Prestamo(String codigo, String descripcion,String foto, String talla, Timestamp fecha, Persona empleado, Local local, Marca marca,String origen ) {
+    public Prestamo(String codigo, String descripcion,String foto, String talla, Calendar fecha, Persona empleado, Local local, Marca marca,String origen ) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.foto = foto;
@@ -117,11 +117,12 @@ public class Prestamo {
         this.talla = talla;
     }
 
-    public Timestamp getFecha() {
+    public Calendar getFecha() {
+
         return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(Calendar fecha) {
         this.fecha = fecha;
     }
 

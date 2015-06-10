@@ -6,6 +6,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paolosport.appa.persistencia.dao.BaseDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.ui.ItemPrestamo;
 import com.paolosport.appa.ListViewAdapters.ListViewAdapterPrestamo;
@@ -46,7 +48,9 @@ import com.paolosport.appa.spinnerPersonaPaquete.SpinnerAdapterPersonaLista;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -823,13 +827,13 @@ public class PrestamoFormFragment extends Fragment {
         localDAO.close();
         marcaDAO.close();
 
-        Date date = new Date();
-        Timestamp fecha = new Timestamp( date.getTime() );
+        Calendar calendar = new GregorianCalendar();
 
-        Prestamo prest = new Prestamo( codigo,descripcion,foto,talla, fecha, empleado, local, marca,origen );
+        Prestamo prest = new Prestamo( codigo,descripcion,foto,talla, calendar, empleado, local, marca,origen );
         prestamoDAO.open();
-        prestamoDAO.create(prest);
+        BaseDAO.Estado estado = prestamoDAO.create(prest);
         prestamoDAO.close();
+        Log.e("Estado", estado.toString() );
     }
 
     } // end method crear

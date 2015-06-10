@@ -145,58 +145,39 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             }
             if (txtFechaPrestamo != null) {
 
-                Date date = new Date( p.getFecha().getTime() );
-                Log.e( "Prestamo", date.toString() );
-
-                Calendar calendar=Calendar.getInstance();
-                int year = calendar.get( Calendar.YEAR );
-                year -= 1900;
-                date.setYear(year);
-                calendar.setTime( date );
-
-                year = calendar.get( Calendar.YEAR );
+                //Date date = new Date( p.getFecha().getTime() );
+                //Log.e( "Prestamo", date.toString() );
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTimeInMillis(p.getFecha().getTimeInMillis());
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
                 int month = calendar.get(Calendar.MONTH);
-
+                int year = calendar.get( Calendar.YEAR );
                 DateFormatSymbols simbols = new DateFormatSymbols();
+                Log.e( "Dia de la semana", String.valueOf( weekDay ) );
+                Log.e( "año", String.valueOf( year ) );
+                Log.e( "mes", String.valueOf( month ) );
 
-
-                String[] weekdays = new String[8] ;
-                weekdays[1]="vie";
-                weekdays[2]="sab";
-                weekdays[3]="dom";
-                weekdays[4]="lun";
-                weekdays[5]="mar";
-                weekdays[6]="mie";
-                weekdays[7]="jue";
-
-
+                String[] weekdays = simbols.getShortWeekdays();
                 String[] months = simbols.getMonths();
 
-                String hora = new SimpleDateFormat( "K:mm" ).format(date);
-                int amPm = Integer.parseInt(new SimpleDateFormat("H").format(date));
+                for( String wday : weekdays )
+                    Log.e( "dias de la semana", wday );
+                for( String m : months )
+                    Log.e( "meses del año", m );
+
+                String hora = new SimpleDateFormat( "K:mm" ).format( calendar.getTime() );
+                int amPm = Integer.parseInt(new SimpleDateFormat("H").format(calendar.getTime()));
 
                 String amPmCadena = amPm > 12 ? "pm" : "am";
 
-                String fechaAMostrar = weekdays[weekDay] + ", " +//dom lun mar mier juev vie sab
+                String fechaAMostrar = weekdays[weekDay] + ", " +
                     day + " de " + months[month - 1] + " de " + year +
                     "\n" + hora + " " +amPmCadena;
 
                 txtFechaPrestamo.setText( fechaAMostrar );
             }
-            /*if ( fotoEmpleado != null ){
-                Bitmap bm = null;
-                if ( p.getEmpleado().getUrl().equals( "prueba" ) ) {
-                    bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ico_persona_az);
-                }
-                else{
-                    bm = BitmapFactory.decodeFile( p.getEmpleado().getUrl() + "mini" );
-                }
-                Bitmap aux = getRoundedCornerBitmap(bm, true);
-                fotoEmpleado.setImageBitmap( aux );
 
-            }*/
             if( fotoMarca != null ){
 
                 Pattern pat = Pattern.compile(".*/.*");
@@ -415,8 +396,9 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         public boolean filtrarPorLocal = true;
         public boolean filtrarPorMarca = true;
         public boolean filtrarPorOrigen = true;
-        public boolean filtrarPorNombreLocal = false;
+        public boolean filtrarPorNombreLocal = true;
         public boolean filtrarPorDescripcion = true;
+        public boolean filtrarPorEstado = true;
 
         public void setParameters(Object[] parameters) {
             this.parameters = parameters;
@@ -437,6 +419,9 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if( filtrarPorEmpleado ){
                 component = new DecoratorEmpleadoFilterAlgorithm( component, constraint.toString() );
             }
+            if ( filtrarPorEstado ){
+                component = new DecoratorEstadoFilterAlgorithm( component, constraint.toString() );
+            }
             if( filtrarPorLocal ){
                 component = new DecoratorLocalFilterAlgorithm( component, constraint.toString() );
             }
@@ -455,6 +440,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if( filtrarPorDescripcion ){
                 component = new DecoratorDescripcionFilterAlgorithm( component, constraint.toString() );
             }
+
 
             ArrayList<Prestamo> prestamosFiltrados = component.filter();;
             results.values = prestamosFiltrados;
@@ -663,7 +649,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 String[] palabrasABuscar = searchPattern.split( " " );
                 for( Prestamo p : lstPrestamos ){
                     for( String palabra : palabrasABuscar ){
-                        if( p.getDescripcion().toUpperCase().contains( palabra.toUpperCase() ) ){
+                        if( p.getOrigen().toUpperCase().contains( palabra.toUpperCase() ) ){
                             prestamosFiltradosPorOrigen.add( p );
                             break;
                         }
@@ -676,7 +662,43 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 return lstPrestamos;
             return prestamosFiltradosPorOrigen;
         } // end method filter
-    } // end class DecoratorOrigenFilterAlgorithm
+    } // end class DecoratorDescripcionFilterAlgorithm
+
+    public class DecoratorEstadoFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        PrestamosFilterAlgorithm mFilter;
+        String searchPattern = "";
+
+        public DecoratorEstadoFilterAlgorithm( PrestamosFilterAlgorithm filter, String nombreABuscar ){
+            mFilter = filter;
+            searchPattern = nombreABuscar;
+        } // end constructor
+
+        public ArrayList<Prestamo> filter(){
+            // realizamos el filtrado en el Component
+            ArrayList<Prestamo> lstPrestamos = mFilter.filter();
+
+            // Ahora realizamos el filtrado propio del Decorator
+            ArrayList<Prestamo> prestamosFiltradosPorEstado = new ArrayList<>();
+
+            // si hay algo que filtrar, lo filtra, si no retornara null
+            if( !( searchPattern == null || searchPattern.length() == 0 ) ){
+                // ahora recorremos todos los prestamos y verificamos que tengan la
+                // cadena "patron de busqueda"
+                // String[] palabrasABuscar = searchPattern.split( " " );
+                for( Prestamo p : lstPrestamos ){
+                        if( p.getEstado().toUpperCase().contains( searchPattern.toString().toUpperCase() ) ){
+                            prestamosFiltradosPorEstado.add( p );
+                        } // end for interno
+                } // end for externo
+            } // end if
+
+            // retornamos los resultados de aplicar el filtro
+            if( prestamosFiltradosPorEstado.size() == 0 )
+                return lstPrestamos;
+            return prestamosFiltradosPorEstado;
+        } // end method filter
+    } // end class DecoratorEstadoFilterAlgorithm
 
     private class DecoratorMarcaFilterAlgorithm implements PrestamosFilterAlgorithm {
 
@@ -767,7 +789,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             int añoAFiltrar = cal.get( Calendar.YEAR );
 
             for( Prestamo p : lstPrestamos ){
-                cal.setTime( p.getFecha() );
+                cal.setTime( p.getFecha().getTime() );
                 int diaEnElMesDelPrestamo = cal.get( Calendar.DAY_OF_MONTH );
                 int mesDelPrestamo = cal.get( Calendar.MONTH );
                 int añoDelPrestamo = cal.get( Calendar.YEAR );
@@ -788,7 +810,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
             for( Prestamo p : lstPrestamos ){
                 Calendar cal = Calendar.getInstance();
-                cal.setTime( p.getFecha() );
+                cal.setTime( p.getFecha().getTime() );
                 int mesDelPrestamo = cal.get( Calendar.MONTH );
                 int añoDelPrestamo = cal.get( Calendar.YEAR );
 
@@ -821,7 +843,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                     max = min;
                     min = aux;
                 }
-                Date d = new Date( p.getFecha().getTime() );
+                Date d = new Date( p.getFecha().getTimeInMillis() );
                 if (  d.after(min) && d.before(max)  ){
                     prestamosFiltradosPorFecha.add(p);
                 }

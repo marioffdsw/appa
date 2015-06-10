@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -31,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
 
     int id=0;
     Dialog customDialog=null;
-    static Fragment mActivityFragment;
     public PrestamoLstFragment prestamoLstFragment;
 
     public boolean sesion;
@@ -136,6 +136,14 @@ public class MainActivity extends ActionBarActivity {
             case R.id.iniciar_sesion:
                 SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
                 pass = preferences.getString("pass",pass);
+
+                new Handler().postAtFrontOfQueue(new Runnable() {
+                    @Override
+                    public void run() {
+                        prestamoLstFragment.deselecionarPrestamos();
+                    }
+                });
+
                 if(sesion==true){
                     conf.setEnabled(false);
                     Toast.makeText(getApplicationContext(),"Sesión Terminada",Toast.LENGTH_SHORT).show();
@@ -145,8 +153,16 @@ public class MainActivity extends ActionBarActivity {
                     sesion=false;
                     editor.putBoolean("sesion", sesion);
                     editor.commit();
-                    prestamoLstFragment.configurarLista();
-                    prestamoLstFragment.ocultarOpciones();
+
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            prestamoLstFragment.configurarLista();
+                            prestamoLstFragment.ocultarOpciones();
+                        }
+                    });
+
+
                     break;
                 }
                 mostrar(findViewById(id), item);
@@ -251,10 +267,11 @@ public class MainActivity extends ActionBarActivity {
                     password.setText("");
                 }
 
-                prestamoLstFragment.configurarLista();
-                prestamoLstFragment.ocultarOpciones();
+                if ( prestamoLstFragment != null ) {
+                    prestamoLstFragment.configurarLista();
+                    prestamoLstFragment.ocultarOpciones();
+                }
             }
         });
     }
-
 } // fin de la activity Main
