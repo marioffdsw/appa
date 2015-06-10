@@ -591,7 +591,22 @@ public class PrestamoLstFragment extends Fragment {
             mYear = year;
             mMonth = monthOfYear;
             mDay = dayOfMonth;
-            updateDisplay();
+
+            Calendar fecha = new GregorianCalendar();
+            fecha.set(mYear, mMonth, mDay);
+
+            PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+            Object[] parameters = new Object[3];
+            parameters[0] = new Integer( 0 );
+            parameters[1] = fecha;
+            parameters[2] = null;
+            filter.setParameters( parameters );
+            filter.filter("");
+            deselecionarPrestamos();
+            alternarOpciones();
+
+
+            //updateDisplay();
         }
     };
 
