@@ -108,7 +108,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             updateValues.put( KEY_DESCRIPCION, prestamo.getDescripcion() );
             updateValues.put( KEY_FOTO, prestamo.getFoto() );
             updateValues.put( KEY_TALLA, prestamo.getTalla() );
-            updateValues.put( KEY_FECHA, prestamo.getFecha().toString() );
+            // updateValues.put( KEY_FECHA, prestamo.getFecha().toString() );
             updateValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
             updateValues.put( KEY_LOCAL, prestamo.getLocal().getId() );
             updateValues.put( KEY_MARCA, prestamo.getMarca().getId() );
@@ -279,6 +279,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         Log.e( "fecha", fecha );
         int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
         int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
+        mes -= 1;
         int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
         int hora = Integer.parseInt( fecha.substring( 11, 13 ) );
         int minutos = Integer.parseInt( fecha.substring( 14, 16 ) );
