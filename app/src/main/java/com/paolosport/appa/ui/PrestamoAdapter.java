@@ -154,10 +154,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 String[] weekdays = simbols.getShortWeekdays();
                 String[] months = simbols.getMonths();
 
-                for( String wday : weekdays )
-                    Log.e( "dias de la semana", wday );
-                for( String m : months )
-                    Log.e( "meses del año", m );
+//                for( String wday : weekdays )
+//                    Log.e( "dias de la semana", wday );
+//                for( String m : months )
+//                    Log.e( "meses del año", m );
 
                 String hora = new SimpleDateFormat( "K:mm" ).format( calendar.getTime() );
                 int amPm = Integer.parseInt(new SimpleDateFormat("H").format(calendar.getTime()));
@@ -187,7 +187,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
             }
         }
-        Log.e( "view", "adapter entrega una view" );
+        //Log.e( "view", "adapter entrega una view" );
         return v;
     }
 
@@ -308,7 +308,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         }
         else{
             mListaSeleccionados.add( mList.get( position ) );
-            Log.e( "PrestamoAdapter", "seleccionado" );
+            //Log.e( "PrestamoAdapter", "seleccionado" );
         }
     } // end method seleccionarElementos
 

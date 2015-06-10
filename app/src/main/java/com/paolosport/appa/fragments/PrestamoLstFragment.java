@@ -263,7 +263,7 @@ public class PrestamoLstFragment extends Fragment {
         flPrestados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e( "Error", "Prestados" );
+                //Log.e( "Error", "Prestados" );
                 PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
                 filter.setParameters(null);
                 filter.filter( "Prestado" );
@@ -275,7 +275,7 @@ public class PrestamoLstFragment extends Fragment {
         flVendidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e( "Error", "Vendidos" );
+                //Log.e( "Error", "Vendidos" );
                 PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
                 filter.setParameters(null);
                 filter.filter( "Vendido" );
@@ -287,7 +287,7 @@ public class PrestamoLstFragment extends Fragment {
         flDevueltos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e( "Error", "Devueltos" );
+                //Log.e( "Error", "Devueltos" );
                 PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
                 filter.setParameters(null);
                 filter.filter( "Devuelto" );
@@ -430,7 +430,7 @@ public class PrestamoLstFragment extends Fragment {
                                 .setTitle("Confirmacion")
                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Log.i("Dialogos", "Confirmación Aceptada.");
+                                        //Log.i("Dialogos", "Confirmación Aceptada.");
                                         generarExcel();
                                         enviarCorreo();
                                         refrescarList();
@@ -1024,7 +1024,7 @@ public class PrestamoLstFragment extends Fragment {
         email.putExtra(Intent.EXTRA_EMAIL, to);
         email.putExtra(Intent.EXTRA_SUBJECT, "Control Prestamos");
         email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + rutaArchivo));
-        Log.i("Dialogos", rutaArchivo);
+        //Log.i("Dialogos", rutaArchivo);
         startActivity(Intent.createChooser(email, "Elija un cliente Email: "));
     }
 
