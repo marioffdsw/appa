@@ -3,14 +3,6 @@ package com.paolosport.appa.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -23,7 +15,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,12 +24,6 @@ import com.paolosport.appa.fragments.LocalFragment;
 import com.paolosport.appa.fragments.MarcaFragment;
 import com.paolosport.appa.fragments.PersonaFragment;
 import com.paolosport.appa.R;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 public class ActivityConfiguracion extends ActionBarActivity {
 
@@ -51,7 +36,7 @@ public class ActivityConfiguracion extends ActionBarActivity {
     private LinearLayout ll_gravity;
 
     public boolean sesion;
-    public String pass ;
+    public String pass,cuenta ;
 
     Dialog customDialog=null;
     int id =0;
@@ -61,6 +46,7 @@ public class ActivityConfiguracion extends ActionBarActivity {
     static final int PERSONA_SELECTED = 3;
     static final int REGRESAR_SELECTED = 5;
     static final int CUENTA_SELECTED = 6;
+    static final int VINCULAR_SELECTED = 7;
 
 
     @Override
@@ -74,6 +60,7 @@ public class ActivityConfiguracion extends ActionBarActivity {
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         sesion=preferences.getBoolean("sesion",sesion);
         pass = preferences.getString("pass",pass);
+        cuenta = preferences.getString("cuenta",cuenta);
 
         localFragment = new LocalFragment();
         marcaFragment = new MarcaFragment();
@@ -107,6 +94,10 @@ public class ActivityConfiguracion extends ActionBarActivity {
         else if( index == CUENTA_SELECTED  ){
             contraseña(findViewById(id));
         }
+        else if( index == VINCULAR_SELECTED  ){
+            vincularCuenta(findViewById(id));
+        }
+
 
 
     } // end method onListSelection
@@ -153,7 +144,9 @@ public class ActivityConfiguracion extends ActionBarActivity {
             case R.id.item_cuenta:
                 onListSelection(CUENTA_SELECTED);
                 break;
-
+            case R.id.item_vincular:
+                onListSelection(VINCULAR_SELECTED);
+                break;
         } // end switch
     } // end method muestre
 
@@ -201,6 +194,39 @@ public class ActivityConfiguracion extends ActionBarActivity {
                         textoPass.setText("Antigua Contraseña Incorrecta");
                         oldPassword.setText("");
                     }
+                }
+
+            }
+        });
+    }
+
+    public void vincularCuenta(View v)
+    {
+        customDialog = new Dialog(this,R.style.PauseDialog);
+        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customDialog.setCancelable(true);
+        customDialog.setContentView(R.layout.dialogo_vincular_cuenta);
+        customDialog.show();
+
+        final EditText et_vincular=(EditText)customDialog.findViewById(R.id.et_vincular);
+        final TextView tv_curren_cuenta=(TextView)customDialog.findViewById(R.id.et_current_cuenta);
+
+        tv_curren_cuenta.setText(cuenta);
+
+        ((Button) customDialog.findViewById(R.id.btn_vincular)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (!et_vincular.getText().toString().isEmpty()){
+
+                    Toast.makeText(getApplicationContext(), "Cuenta Vinculada", Toast.LENGTH_SHORT).show();
+                    SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("cuenta", et_vincular.getText().toString());
+                    editor.commit();
+                    cuenta=et_vincular.getText().toString();
+                    customDialog.dismiss();
                 }
 
             }

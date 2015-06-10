@@ -337,7 +337,7 @@ public class LocalFragment extends Fragment {
                 new AlertDialog.Builder(getActivity());
 
         builder.setMessage("¿Confirma Eliminar Esta Marca?")
-                .setTitle("Confirmacion")
+                .setTitle("Confirmación")
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()  {
                     public void onClick(DialogInterface dialog, int id) {
                         Log.i("Dialogos", "Confirmacion Aceptada.");

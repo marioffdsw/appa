@@ -273,6 +273,42 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
 
     private Calendar formatearFecha( String fecha ){
         Log.e( "fecha", fecha );
+    public Estado removeAll(){
+        Cursor cursor=null;
+        try
+        {
+            cursor = db.query(TABLE_NAME,            // FROM
+                    new String[]{KEY_ID},         // SELECT
+                    null, null,         // WHERE
+                    null,                                   // GROUP BY
+                    null,                                   // HAVING
+                    null,                                   // ORDER BY
+                    null                                    // LIMIT
+            );
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Log.i(TAG, "NO HAY REGISTROS");
+        }
+        cursor.moveToFirst();
+        if ( cursor != null ){ // ha encontrado el local con la id entregada
+            cursor.moveToFirst();
+
+            // itera por todas las filas de la tabla y crea los objetos
+            try {
+                do {
+                    db.delete(TABLE_NAME, KEY_ID + "=" + cursor.getString(0), null );
+                } while (cursor.moveToNext());
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                return Estado.ERROR_ELIMINAR;
+            }
+        }
+        return Estado.ELIMINADO;
+    }
+
+    private Timestamp formatearFecha( String fecha ){
         int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
         int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
         int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
