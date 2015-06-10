@@ -271,8 +271,22 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         return Estado.ELIMINADO;
     }
 
+
+
     private Calendar formatearFecha( String fecha ){
         Log.e( "fecha", fecha );
+        int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
+        int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
+        int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
+        int hora = Integer.parseInt( fecha.substring( 11, 13 ) );
+        int minutos = Integer.parseInt( fecha.substring( 14, 16 ) );
+        int segundos =Integer.parseInt(fecha.substring( 17, 19 ) );
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(anio, mes, dia, hora, minutos, segundos);
+
+        return calendar;
+    } // end method formatearFecha
+
     public Estado removeAll(){
         Cursor cursor=null;
         try
@@ -307,19 +321,6 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         }
         return Estado.ELIMINADO;
     }
-
-    private Timestamp formatearFecha( String fecha ){
-        int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
-        int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
-        int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
-        int hora = Integer.parseInt( fecha.substring( 11, 13 ) );
-        int minutos = Integer.parseInt( fecha.substring( 14, 16 ) );
-        int segundos =Integer.parseInt(fecha.substring( 17, 19 ) );
-        Calendar calendar = new GregorianCalendar();
-        calendar.set( anio, mes, dia, hora, minutos, segundos );
-
-        return calendar;
-    } // end method formatearFecha
 
 
     public ArrayList<String> nombreLocales() {
