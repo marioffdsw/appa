@@ -60,11 +60,6 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     private static final String DEVUELTO = "Devuelto";
     private static final String PRESTADO = "Prestado";
 
-    public interface PrestamosSubject{
-        ArrayList<Prestamo> getListPrestamos();
-    }
-
-
     public PrestamoAdapter(Context context, int resource, ArrayList<Prestamo> prestamos) {
         mListPrestamos = new WeakReference<ArrayList<Prestamo>>( prestamos );
         mList = prestamos;
@@ -194,7 +189,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
             }
         }
-
+        Log.e( "view", "adapter entrega una view" );
         return v;
     }
 

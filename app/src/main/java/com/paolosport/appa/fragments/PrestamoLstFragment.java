@@ -84,7 +84,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.PrestamosSubject {
+public class PrestamoLstFragment extends Fragment {
 
     private SearchViewCompat searchView;
     private Context context;
@@ -170,7 +170,7 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         Activity activity = (Activity) context;
         listPrestamos = (ListView) view.findViewById(R.id.lstPrestamos);
         listPrestamos.setSelector(R.drawable.selection_prestamos);
-        
+        listPrestamos.setAdapter( adapter );
 
 
         opciones = (RelativeLayout) view.findViewById(R.id.opciones);
@@ -334,11 +334,6 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.prestamoLstFragment = null;
         super.onDetach();
-    }
-
-    @Override
-    public ArrayList<Prestamo> getListPrestamos() {
-        return lstPrestamos;
     }
 
     @Override
@@ -682,9 +677,9 @@ public class PrestamoLstFragment extends Fragment implements PrestamoAdapter.Pre
 
             WritableSheet sheet = workbook.createSheet("Hoja1", 0);//obtener nombre del local
 
-            lstPrestamos = getListPrestamos();
+            //lstPrestamos;
 
-            ArrayList<Prestamo> lstOrdenada = getListPrestamos();
+            ArrayList<Prestamo> lstOrdenada = lstPrestamos;
             Collections.sort(lstOrdenada, new Comparator<Prestamo>() {
                 @Override
                 public int compare(Prestamo lhs, Prestamo rhs) {
