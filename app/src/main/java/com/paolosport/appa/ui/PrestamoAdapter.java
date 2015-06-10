@@ -424,14 +424,14 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if( filtrarPorMarca ){
                 component = new DecoratorMarcaFilterAlgorithm( component, constraint.toString() );
             }
-            if( parameters != null ){
-                component = new DecoratorFechaFilterAlgorithm( component, parameters );
-            }
             if( filtrarPorOrigen ){
                 component = new DecoratorOrigenFilterAlgorithm( component, constraint.toString() );
             }
             if( filtrarPorDescripcion ){
                 component = new DecoratorDescripcionFilterAlgorithm( component, constraint.toString() );
+            }
+            if( parameters != null ){
+                component = new DecoratorFechaFilterAlgorithm( component, parameters );
             }
 
 
@@ -751,13 +751,13 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
             //TODO cambiar esta instruccion por la equivalente para la Enumeration
             switch( ((Integer) objParameters[0]).intValue() ){
-                case 1:
+                case 0:
                     prestamosFiltradosPorFecha = filtrarPorDia(lstPrestamos);
                     break;
-                case 2:
+                case 1:
                     prestamosFiltradosPorFecha = filtrarPorMes(lstPrestamos);
                     break;
-                case 3:
+                case 2:
                     prestamosFiltradosPorFecha  = filtrarPorRango(lstPrestamos);
                     break;
             } // end switch
@@ -826,18 +826,18 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
             for( Prestamo p : lstPrestamos ){
 
-                Date min, max;   // assume these are set to something
-                max = ( Date ) objParameters[1];
-                min = ( Date ) objParameters[2];
+                Calendar min, max;   // assume these are set to something
+                max = ( Calendar ) objParameters[1];
+                min = ( Calendar ) objParameters[2];
 
                 // los ordenamos
                 if( max.before( min ) ){
-                    Date aux = max;
+                    Calendar aux = max;
                     max = min;
                     min = aux;
                 }
                 Date d = new Date( p.getFecha().getTimeInMillis() );
-                if (  d.after(min) && d.before(max)  ){
+                if (  d.after( new Date( min.getTimeInMillis()) ) && d.before( new Date( max.getTimeInMillis() ) )  ){
                     prestamosFiltradosPorFecha.add(p);
                 }
             } // end for

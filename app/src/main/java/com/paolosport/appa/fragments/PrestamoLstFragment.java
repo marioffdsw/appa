@@ -65,6 +65,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -257,6 +258,7 @@ public class PrestamoLstFragment extends Fragment {
         RelativeLayout flPrestados = (RelativeLayout) view.findViewById( R.id.filtro_estados_prestado );
         RelativeLayout flDevueltos = (RelativeLayout) view.findViewById( R.id.filtro_estados_devuelto );
         RelativeLayout flVendidos = (RelativeLayout) view.findViewById( R.id.filtro_estados_vendido );
+        RelativeLayout flFecha = (RelativeLayout) view.findViewById( R.id.filtro_fecha );
 
         flPrestados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,6 +293,14 @@ public class PrestamoLstFragment extends Fragment {
                 filter.filter( "Devuelto" );
                 deselecionarPrestamos();
                 alternarOpciones();
+            }
+        });
+
+        flFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialogoCalendario();
             }
         });
 
@@ -527,11 +537,51 @@ public class PrestamoLstFragment extends Fragment {
                 mes = dp_fin.getMonth();
                 año = dp_fin.getYear();
 
+                filtrarPorFechas();
+
+                reestablecerFiltro();
+
                 Toast.makeText(context, mDay + "/" + mMonth + "/" + mYear + " --- " + dia + "/" + mes + "/" + año, Toast.LENGTH_SHORT).show();
 
             }
         });
     }
+
+    public void reestablecerFiltro(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep( 2000 );
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+                            filter.setParameters( null );
+                        }
+                    });
+                }
+                catch ( Exception e ){}
+            }
+        });
+    }
+
+    private void  filtrarPorFechas(){
+        Calendar fechaInicio = new GregorianCalendar();
+        fechaInicio.set(mYear, mMonth, mDay);
+        Calendar fechaFin = new GregorianCalendar();
+        fechaFin.set(año, mes, dia);
+
+        PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
+        Object[] parameters = new Object[3];
+        parameters[0] = new Integer( 2 );
+        parameters[1] = fechaInicio;
+        parameters[2] = fechaFin;
+        filter.setParameters( parameters );
+        filter.filter("");
+        deselecionarPrestamos();
+        alternarOpciones();
+    };
 
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
