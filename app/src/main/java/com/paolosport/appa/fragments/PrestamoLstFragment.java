@@ -877,10 +877,11 @@ public class PrestamoLstFragment extends Fragment {
     }
     
     public String formatearHora(Calendar stamp ){
-        Date date = new Date(stamp.getTimeInMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm:ss a");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String formattedDate = sdf.format(date);
+        String hora = new SimpleDateFormat( "K:mm" ).format( stamp.getTime() );
+        int amPm = Integer.parseInt(new SimpleDateFormat("H").format(stamp.getTime()));
+
+        String amPmCadena = amPm > 12 ? "pm" : "am";
+        String formattedDate = hora + " " +amPmCadena;
         return formattedDate;
     }
     
@@ -895,19 +896,19 @@ public class PrestamoLstFragment extends Fragment {
         int dia = cal.get(Calendar.DAY_OF_MONTH);
         int mes = cal.get(Calendar.MONTH);
 
-        String[] meses = new String[13];
-        meses[1] = "Ene";
-        meses[2] = "Feb";
-        meses[3] = "Mar";
-        meses[4] = "Abr";
-        meses[5] = "May";
-        meses[6] = "Jun";
-        meses[7] = "Jul";
-        meses[8] = "Ago";
-        meses[9] = "Sep";
-        meses[10] = "Oct";
-        meses[11] = "Nov";
-        meses[12] = "Dic";
+        String[] meses = new String[12];
+        meses[0] = "Ene";
+        meses[1] = "Feb";
+        meses[2] = "Mar";
+        meses[3] = "Abr";
+        meses[4] = "May";
+        meses[5] = "Jun";
+        meses[6] = "Jul";
+        meses[7] = "Ago";
+        meses[8] = "Sep";
+        meses[9] = "Oct";
+        meses[10] = "Nov";
+        meses[11] = "Dic";
 
         String formattedDate = dia + "/" + meses[mes] + "/" + año;
         return formattedDate;
