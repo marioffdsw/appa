@@ -400,6 +400,10 @@ public class PrestamoLstFragment extends Fragment {
                 alternarOpciones();
                 break;
             case R.id.calendario:
+                dialogoCalendario();
+                break;
+
+            case R.id.excel:
                 SharedPreferences preferences = getActivity().getSharedPreferences("datos",
                         Context.MODE_PRIVATE);
                 boolean sesion = false;
@@ -431,10 +435,7 @@ public class PrestamoLstFragment extends Fragment {
                     }
                 }
                 else{}
-                //generarExcel();
-                dialogoCalendario();
-//                customDialog=new DatePickerDialog(context, mDateSetListener, mYear, mMonth,mDay);
-//                customDialog.show();
+                break;
         } // end switch
 
         return super.onOptionsItemSelected(item);
