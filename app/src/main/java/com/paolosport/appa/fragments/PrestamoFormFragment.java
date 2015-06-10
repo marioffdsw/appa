@@ -112,20 +112,11 @@ public class PrestamoFormFragment extends Fragment {
     @Override
     public void onCreate( Bundle savedInstanceState )
     {
-        super.onCreate( savedInstanceState );
-    }
-
-    @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState ) {
-
         helper     = new AdminSQLiteOpenHelper( getActivity().getApplicationContext() );
         localDAO   = new LocalDAO( getActivity().getApplicationContext(), helper );
         marcaDAO   = new MarcaDAO( getActivity().getApplicationContext(), helper );
         personaDAO = new PersonaDAO( getActivity().getApplicationContext(), helper );
         prestamoDAO = new PrestamoDAO( getActivity().getApplicationContext(), helper );
-
-
-        view= inflater.inflate(R.layout.fragment_prestamo_form, container, false);
 
         mp_click = MediaPlayer.create(getActivity(),R.raw.a_click);
         mp_click2 = MediaPlayer.create(getActivity(), R.raw.a_click2);
@@ -135,6 +126,14 @@ public class PrestamoFormFragment extends Fragment {
         mp_registro_item2 = MediaPlayer.create(getActivity(), R.raw.a_registro_item2);
         mp_otro = MediaPlayer.create(getActivity(), R.raw.a_otro);
         mp_registro_pedido = MediaPlayer.create(getActivity(), R.raw.a_regitro_pedido);
+
+        super.onCreate( savedInstanceState );
+    }
+
+    @Override
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState ) {
+
+        view= inflater.inflate(R.layout.fragment_prestamo_form, container, false);
 
         et_codigo_item      =(EditText)view.findViewById(R.id.et_codigo_item);
         et_descripcion_item =(EditText)view.findViewById(R.id.et_descripcion_item);
