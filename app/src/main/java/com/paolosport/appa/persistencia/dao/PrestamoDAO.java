@@ -108,7 +108,7 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
             updateValues.put( KEY_DESCRIPCION, prestamo.getDescripcion() );
             updateValues.put( KEY_FOTO, prestamo.getFoto() );
             updateValues.put( KEY_TALLA, prestamo.getTalla() );
-            //updateValues.put( KEY_FECHA, prestamo.getFecha().toString() );
+            // updateValues.put( KEY_FECHA, prestamo.getFecha().toString() );
             updateValues.put( KEY_EMPLEADO, prestamo.getEmpleado().getCedula() );
             updateValues.put( KEY_LOCAL, prestamo.getLocal().getId() );
             updateValues.put( KEY_MARCA, prestamo.getMarca().getId() );

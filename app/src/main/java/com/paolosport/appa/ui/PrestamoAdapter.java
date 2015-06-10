@@ -147,11 +147,9 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
                 int month = calendar.get(Calendar.MONTH);
+                month = month + 1;
                 int year = calendar.get( Calendar.YEAR );
                 DateFormatSymbols simbols = new DateFormatSymbols();
-                Log.e( "Dia de la semana", String.valueOf( weekDay ) );
-                Log.e( "año", String.valueOf( year ) );
-                Log.e( "mes", String.valueOf( month ) );
 
                 String[] weekdays = simbols.getShortWeekdays();
                 String[] months = simbols.getMonths();
