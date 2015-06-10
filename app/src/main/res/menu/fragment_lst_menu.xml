@@ -61,9 +61,17 @@
 
     <item
         android:id="@+id/calendario"
-        android:icon="@drawable/ic_action_upload"
+        android:icon="@drawable/ic_action_go_to_today"
         android:orderInCategory="100"
         android:title="Calendario"
         yourapp:showAsAction="always" >
         </item>
+
+    <item
+        android:id="@+id/excel"
+        android:icon="@drawable/ic_action_upload"
+        android:orderInCategory="100"
+        android:title="Excel"
+        yourapp:showAsAction="always" >
+    </item>
 </menu>

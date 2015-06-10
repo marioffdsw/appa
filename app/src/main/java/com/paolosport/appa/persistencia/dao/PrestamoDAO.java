@@ -279,7 +279,6 @@ public class PrestamoDAO extends BaseDAO<Prestamo>{
         Log.e( "fecha", fecha );
         int anio = Integer.parseInt(fecha.substring( 0, 4 ) );
         int mes = Integer.parseInt( fecha.substring( 5, 7 ) );
-        mes -= 1;
         int dia = Integer.parseInt( fecha.substring( 8, 10 ) );
         int hora = Integer.parseInt( fecha.substring( 11, 13 ) );
         int minutos = Integer.parseInt( fecha.substring( 14, 16 ) );
