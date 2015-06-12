@@ -137,10 +137,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:text="Locales" />
+                android:text="Locales"
+                android:textStyle="italic" />
 
             <ListView
                 android:id="@+id/filtro_locales"
@@ -153,10 +154,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:text="Estados" />
+                android:text="Estados"
+                android:textStyle="italic" />
 
             <RelativeLayout
                 android:orientation="horizontal"
