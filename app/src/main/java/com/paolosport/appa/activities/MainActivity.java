@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -276,5 +277,10 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 } // fin de la activity Main
