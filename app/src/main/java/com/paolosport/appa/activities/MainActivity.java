@@ -137,12 +137,14 @@ public class MainActivity extends ActionBarActivity {
                 SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
                 pass = preferences.getString("pass",pass);
 
-                new Handler().postAtFrontOfQueue(new Runnable() {
-                    @Override
-                    public void run() {
-                        prestamoLstFragment.deselecionarPrestamos();
-                    }
-                });
+                if ( prestamoLstFragment != null ) {
+                    new Handler().postAtFrontOfQueue(new Runnable() {
+                        @Override
+                        public void run() {
+                            prestamoLstFragment.deselecionarPrestamos();
+                        }
+                    });
+                }
 
                 if(sesion==true){
                     conf.setEnabled(false);
@@ -154,14 +156,15 @@ public class MainActivity extends ActionBarActivity {
                     editor.putBoolean("sesion", sesion);
                     editor.commit();
 
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            prestamoLstFragment.configurarLista();
-                            prestamoLstFragment.ocultarOpciones();
-                        }
-                    });
-
+                    if ( prestamoLstFragment != null ) {
+                        new Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                prestamoLstFragment.configurarLista();
+                                prestamoLstFragment.ocultarOpciones();
+                            }
+                        });
+                    }
 
                     break;
                 }
