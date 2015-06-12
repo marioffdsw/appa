@@ -318,6 +318,7 @@ public class PrestamoLstFragment extends Fragment {
     public void onResume() {
         super.onResume();
         configurarLista();
+        alternarOpciones();
     } // end method onResume
 
     @Override
