@@ -105,6 +105,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         "( 'fresa',          7,        38,         '4',          '4',      '4',    'n'     )";
 
 
+
     static final String TEST_PRESTAMOS2 = "INSERT INTO prestamos " +
             "( descripcion,        codigo,      talla,      empleado,     local,    marca, origen, estado   ) VALUES" +
             "( 'prestado',         2,       32,         '1',          '1',      '1',    'a',   'P'    )," +
