@@ -393,6 +393,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         public boolean filtrarPorDescripcion = true;
         public boolean filtrarPorEstado = true;
 
+        // esta variable se usa para usar o no la mListaPrestamos (con datos de la db)
+        // al realizar el filtrado o, si filtrar sobre lo que ya esta filtrado previamente
+        public boolean usarListaBase = true;
+
         public void setParameters(Object[] parameters) {
             this.parameters = parameters;
         }
@@ -407,11 +411,13 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             // or its length is 0, it's empty
             // then we just set the 'values' property to the
             // original listPrestamos which contains all of them
-            PrestamosFilterAlgorithm component = new ComponentFilterAlgorithm();
+            PrestamosFilterAlgorithm component = new ComponentFilterAlgorithm( usarListaBase );
 
             if( filtrarPorEmpleado ){
                 component = new DecoratorEmpleadoFilterAlgorithm( component, constraint.toString() );
             }
+
+
             if ( filtrarPorEstado ){
                 component = new DecoratorEstadoFilterAlgorithm( component, constraint.toString() );
             }
@@ -455,7 +461,20 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     }
 
     private class ComponentFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        private boolean useBaseList = true;
+
+        public ComponentFilterAlgorithm( boolean useBase ){
+            this.useBaseList = useBase;
+        } // end constructor
+
         public ArrayList<Prestamo> filter(){
+
+            // si no hay que usar el base
+            if( useBaseList == false ){
+                return mList;
+            } // end if
+
             return mListPrestamos.get();
         } // end method filter
     } // end class ComponentFilterAlgorithm

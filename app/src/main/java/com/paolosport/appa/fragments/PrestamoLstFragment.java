@@ -87,7 +87,7 @@ import jxl.write.biff.RowsExceededException;
 
 public class PrestamoLstFragment extends Fragment {
 
-    private SearchViewCompat searchView;
+    private View searchView;
     private Context context;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -355,7 +355,7 @@ public class PrestamoLstFragment extends Fragment {
         item.setIcon(android.R.drawable.ic_menu_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        View searchView = SearchViewCompat.newSearchView(getActivity());
+        searchView = SearchViewCompat.newSearchView(getActivity());
         if (searchView != null) {
             SearchViewCompat.setOnQueryTextListener(searchView, new SearchViewCompat.OnQueryTextListenerCompat() {
                 @Override
