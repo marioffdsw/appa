@@ -617,16 +617,13 @@ public class PrestamoLstFragment extends Fragment {
             PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
             Object[] parameters = new Object[3];
 
-            parameters[0] = filtroPorMes ? new Integer( 1 ) : new Integer( 2 );
+            parameters[0] = filtroPorMes ? new Integer( 1 ) : new Integer( 0 );
             parameters[1] = fecha;
             parameters[2] = null;
             filter.setParameters( parameters );
             filter.filter("");
             deselecionarPrestamos();
             alternarOpciones();
-
-
-            //updateDisplay();
         }
     };
 

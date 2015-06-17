@@ -68,7 +68,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mList != null ? mList.size() : 0;
     }
 
     @Override
@@ -441,7 +441,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             }
 
 
-            ArrayList<Prestamo> prestamosFiltrados = component.filter();;
+            ArrayList<Prestamo> prestamosFiltrados = component.filter();
             results.values = prestamosFiltrados;
             results.count = prestamosFiltrados.size();
 
