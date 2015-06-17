@@ -274,7 +274,7 @@ public class PrestamoLstFragment extends Fragment {
         RelativeLayout flPrestados = (RelativeLayout) view.findViewById( R.id.filtro_estados_prestado );
         RelativeLayout flDevueltos = (RelativeLayout) view.findViewById( R.id.filtro_estados_devuelto );
         RelativeLayout flVendidos = (RelativeLayout) view.findViewById( R.id.filtro_estados_vendido );
-        RelativeLayout flFecha = (RelativeLayout) view.findViewById( R.id.filtro_fecha );
+        RelativeLayout borrarSeleccion = (RelativeLayout) view.findViewById( R.id.borrarSeleccion );
 
         flPrestados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,11 +312,10 @@ public class PrestamoLstFragment extends Fragment {
             }
         });
 
-        flFecha.setOnClickListener(new View.OnClickListener() {
+        borrarSeleccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                dialogoCalendario();
+                SearchViewCompat.setQuery(searchView, "", false );
             }
         });
 
