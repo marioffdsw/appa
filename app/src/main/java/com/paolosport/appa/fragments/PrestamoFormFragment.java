@@ -2,7 +2,6 @@ package com.paolosport.appa.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
@@ -17,8 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -30,7 +27,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.paolosport.appa.persistencia.dao.BaseDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
@@ -50,10 +46,8 @@ import com.paolosport.appa.spinnerLocalPaquete.SpinnerAdapterLocal;
 import com.paolosport.appa.spinnerMarcaPaquete.SpinnerAdapterMarca;
 import com.paolosport.appa.spinnerPersonaPaquete.SpinnerAdapterPersonaLista;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
@@ -71,7 +65,7 @@ public class PrestamoFormFragment extends Fragment {
                    btn_aceptar_pedido,
                    btn_cancelar_pedido;
 
-    private EditText  et_descripcion_item;
+    private AutoCompleteTextView  et_descripcion_item;
     private AutoCompleteTextView et_codigo_item;
     private TextView et_talla_item;
     private ListView lv_prestamo;
@@ -93,7 +87,9 @@ public class PrestamoFormFragment extends Fragment {
                 mp_registro_pedido;
 
     ArrayList<String> listaCodigosAnteriores;
-    ArrayAdapter<String> adapter;
+    ArrayList<String> listaDescripciones;
+    ArrayAdapter<String> adapterCodigos;
+    ArrayAdapter<String> adapterDescripciones;
 
     Boolean tarjeta_result = false;
     List listaItems = new ArrayList();
@@ -148,21 +144,36 @@ public class PrestamoFormFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_prestamo_form, container, false);
 
         et_codigo_item      =(AutoCompleteTextView) view.findViewById(R.id.et_codigo_item);
-        et_descripcion_item =(EditText)view.findViewById(R.id.et_descripcion_item);
+        et_descripcion_item =(AutoCompleteTextView) view.findViewById(R.id.et_descripcion_item);
         et_talla_item       =(TextView)view.findViewById(R.id.et_talla_item);
 
         /* llenar los autocomplete view con datos de la db */
         // String[] codigosAnteriores
 
         Cursor cursor = null;
+        Cursor cd = null;
 
         listaCodigosAnteriores = new ArrayList<String>();
+        listaDescripciones = new ArrayList<String>();
 
         try{
             SQLiteDatabase db = helper.getWritableDatabase();
 
-            cursor = db.query( "prestamos",                 // FROM table_name
+            cursor = db.query(
+                    true,                                   // distinct
+                    "prestamos",                 // FROM table_name
                     new String[]{ "codigo" },       // SELECT
+                    null, null,                             // WHERE
+                    null,                                   // GROUP BY
+                    null,                                   // HAVING
+                    null,                                   // ORDER BY
+                    null                                    // LIMIT
+            );
+
+            cd = db.query(
+                    true,                                   // distinct
+                    "prestamos",                 // FROM table_name
+                    new String[]{ "descripcion" },       // SELECT
                     null, null,                             // WHERE
                     null,                                   // GROUP BY
                     null,                                   // HAVING
@@ -178,20 +189,31 @@ public class PrestamoFormFragment extends Fragment {
 
             } // end if
 
+            if ( cd != null && cd.moveToFirst() ){
+
+                do{
+                    listaDescripciones.add(cd.getString(0));
+                } while( cd.moveToNext() );
+
+            } // end if
+
         } // end try
         catch( Exception e ){
             e.printStackTrace();
         } // end catch
 
-        listaCodigosAnteriores.toArray( new String[ cursor.getCount() ] );
-
         // Create an ArrayAdapter containing country names
-        adapter = new ArrayAdapter<String>( getActivity(),
+        adapterCodigos = new ArrayAdapter<String>( getActivity(),
                 R.layout.list_codigo_item, listaCodigosAnteriores );
+        adapterDescripciones = new ArrayAdapter<String>( getActivity(),
+                R.layout.list_codigo_item, listaDescripciones);
 
 
-        // Set the adapter for the AutoCompleteTextView
-        et_codigo_item.setAdapter(adapter);
+        // Set the adapterCodigos for the AutoCompleteTextView
+        et_codigo_item.setAdapter(adapterCodigos);
+        et_descripcion_item.setAdapter( adapterDescripciones );
+        et_codigo_item.setThreshold( 1 );
+        et_descripcion_item.setThreshold( 1 );
 
 
         btn_registrar_item  = (Button)view.findViewById(R.id.btn_registrar_item);
@@ -886,13 +908,16 @@ public class PrestamoFormFragment extends Fragment {
             prestamoDAO.close();
 
             Cursor cursor = null;
+            Cursor cd = null;
 
             listaCodigosAnteriores = new ArrayList<String>();
+            listaDescripciones = new ArrayList<String>();
 
             try{
                 SQLiteDatabase db = helper.getWritableDatabase();
 
-                cursor = db.query( "prestamos",                 // FROM table_name
+                cursor = db.query( true,                // distinct
+                        "prestamos",                 // FROM table_name
                         new String[]{ "codigo" },       // SELECT
                         null, null,                             // WHERE
                         null,                                   // GROUP BY
@@ -900,6 +925,19 @@ public class PrestamoFormFragment extends Fragment {
                         null,                                   // ORDER BY
                         null                                    // LIMIT
                 );
+
+
+                cd = db.query(
+                        true,                                   // distinct
+                        "prestamos",                 // FROM table_name
+                        new String[]{ "descripcion" },       // SELECT
+                        null, null,                             // WHERE
+                        null,                                   // GROUP BY
+                        null,                                   // HAVING
+                        null,                                   // ORDER BY
+                        null                                    // LIMIT
+                );
+
 
                 if ( cursor != null && cursor.moveToFirst() ){
 
@@ -909,20 +947,29 @@ public class PrestamoFormFragment extends Fragment {
 
                 } // end if
 
+
+                if ( cd != null && cd.moveToFirst() ){
+
+                    do{
+                        listaDescripciones.add( cd.getString( 0 ) );
+                    } while( cd.moveToNext() );
+
+                } // end if
+
             } // end try
             catch( Exception e ){
                 e.printStackTrace();
             } // end catch
 
-            listaCodigosAnteriores.toArray(new String[cursor.getCount()]);
-
             // Create an ArrayAdapter containing country names
-            adapter = new ArrayAdapter<String>( getActivity(),
+            adapterCodigos = new ArrayAdapter<String>( getActivity(),
                     R.layout.list_codigo_item, listaCodigosAnteriores );
+            adapterDescripciones = new ArrayAdapter<String>( getActivity(),
+                    R.layout.list_codigo_item, listaDescripciones );
 
-
-            // Set the adapter for the AutoCompleteTextView
-            et_codigo_item.setAdapter(adapter);
+            // Set the adapterCodigos for the AutoCompleteTextView
+            et_codigo_item.setAdapter(adapterCodigos);
+            et_descripcion_item.setAdapter( adapterDescripciones );
 
             Log.e("Estado", estado.toString() );
         } // end for

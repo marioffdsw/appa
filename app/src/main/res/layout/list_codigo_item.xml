@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:padding="10dp"
     android:textSize="24sp"
-    android:textColor="#000">
+    android:textColor="#ff444444"
+    android:background="@color/white">
 
 </TextView>
