@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- The main content view -->
+
+
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -121,18 +123,17 @@
     <!-- The navigation drawer -->
     <FrameLayout
         android:id="@+id/frame_filtros"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:divider="@color/material_blue_grey_900"
-
         android:background="@color/gray_light"
         android:dividerHeight="0dp">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -149,7 +150,6 @@
                 android:layout_height="wrap_content">
 
             </ListView>
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -174,20 +174,20 @@
                     android:layout_width="10dp"
                     android:layout_height="60dp"
                     android:background="@color/sombra_titulo_rojo"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentLeft="true"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:text="Prestados"
-                    android:layout_toLeftOf="@id/colorPrestado"
-                    android:layout_alignParentLeft="true"
+                    android:layout_toRightOf="@id/colorPrestado"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:paddingLeft="20dp"
                     />
 
             </RelativeLayout>
@@ -205,20 +205,21 @@
                     android:layout_width="10dp"
                     android:layout_height="60dp"
                     android:background="@color/sombra_titulo"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentLeft="true"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:text="Vendidos"
-                    android:layout_toLeftOf="@id/colorVendido"
-                    android:layout_alignParentLeft="true"
+                    android:layout_toRightOf="@id/colorVendido"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:paddingLeft="20dp"
                     />
 
             </RelativeLayout>
@@ -236,20 +237,21 @@
                     android:layout_width="10dp"
                     android:layout_height="60dp"
                     android:background="@color/sombra_titulo_verde"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentLeft="true"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:text="Devueltos"
-                    android:layout_toLeftOf="@id/colorDevuelto"
-                    android:layout_alignParentLeft="true"
+                    android:layout_toRightOf="@id/colorDevuelto"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:paddingLeft="20dp"
                     />
 
             </RelativeLayout>
@@ -284,7 +286,6 @@
                 android:text="Borrar Seleccion" />
 
         </LinearLayout>
-
     </FrameLayout>
 
 </android.support.v4.widget.DrawerLayout>

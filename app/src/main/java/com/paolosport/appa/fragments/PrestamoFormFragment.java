@@ -3,6 +3,8 @@ package com.paolosport.appa.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,8 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -67,7 +71,8 @@ public class PrestamoFormFragment extends Fragment {
                    btn_aceptar_pedido,
                    btn_cancelar_pedido;
 
-    private EditText  et_codigo_item,et_descripcion_item;
+    private EditText  et_descripcion_item;
+    private AutoCompleteTextView et_codigo_item;
     private TextView et_talla_item;
     private ListView lv_prestamo;
     public boolean estado_teclado=true;
@@ -86,6 +91,9 @@ public class PrestamoFormFragment extends Fragment {
                 mp_registro_item2,
                 mp_otro,
                 mp_registro_pedido;
+
+    ArrayList<String> listaCodigosAnteriores;
+    ArrayAdapter<String> adapter;
 
     Boolean tarjeta_result = false;
     List listaItems = new ArrayList();
@@ -139,9 +147,52 @@ public class PrestamoFormFragment extends Fragment {
 
         view= inflater.inflate(R.layout.fragment_prestamo_form, container, false);
 
-        et_codigo_item      =(EditText)view.findViewById(R.id.et_codigo_item);
+        et_codigo_item      =(AutoCompleteTextView) view.findViewById(R.id.et_codigo_item);
         et_descripcion_item =(EditText)view.findViewById(R.id.et_descripcion_item);
         et_talla_item       =(TextView)view.findViewById(R.id.et_talla_item);
+
+        /* llenar los autocomplete view con datos de la db */
+        // String[] codigosAnteriores
+
+        Cursor cursor = null;
+
+        listaCodigosAnteriores = new ArrayList<String>();
+
+        try{
+            SQLiteDatabase db = helper.getWritableDatabase();
+
+            cursor = db.query( "prestamos",                 // FROM table_name
+                    new String[]{ "codigo" },       // SELECT
+                    null, null,                             // WHERE
+                    null,                                   // GROUP BY
+                    null,                                   // HAVING
+                    null,                                   // ORDER BY
+                    null                                    // LIMIT
+            );
+
+            if ( cursor != null && cursor.moveToFirst() ){
+
+                do{
+                    listaCodigosAnteriores.add( cursor.getString( 0 ) );
+                } while( cursor.moveToNext() );
+
+            } // end if
+
+        } // end try
+        catch( Exception e ){
+            e.printStackTrace();
+        } // end catch
+
+        listaCodigosAnteriores.toArray( new String[ cursor.getCount() ] );
+
+        // Create an ArrayAdapter containing country names
+        adapter = new ArrayAdapter<String>( getActivity(),
+                R.layout.list_codigo_item, listaCodigosAnteriores );
+
+
+        // Set the adapter for the AutoCompleteTextView
+        et_codigo_item.setAdapter(adapter);
+
 
         btn_registrar_item  = (Button)view.findViewById(R.id.btn_registrar_item);
         btn_cancelar_item   = (Button)view.findViewById(R.id.btn_cancelar_item);
@@ -803,42 +854,81 @@ public class PrestamoFormFragment extends Fragment {
 
     public void crearPedido(){
 
-    for(int i=0;i<listaItems.size();i++){
+        for(int i=0;i<listaItems.size();i++){
 
-        Persona empleado;
-        Local local;
-        Marca marca;
+            Persona empleado;
+            Local local;
+            Marca marca;
 
-        String codigo = ((ItemPrestamo) listaItems.get(i)).getCodigo();
-        String descripcion = ((ItemPrestamo) listaItems.get(i)).getDescripcion();
-        String talla = ((ItemPrestamo) listaItems.get(i)).getTalla();
-        String origen= ((ItemPrestamo) listaItems.get(i)).getOrigen();
-        String foto="";
+            String codigo = ((ItemPrestamo) listaItems.get(i)).getCodigo();
+            String descripcion = ((ItemPrestamo) listaItems.get(i)).getDescripcion();
+            String talla = ((ItemPrestamo) listaItems.get(i)).getTalla();
+            String origen= ((ItemPrestamo) listaItems.get(i)).getOrigen();
+            String foto="";
 
-        personaDAO.open();
-        localDAO.open();
-        marcaDAO.open();
+            personaDAO.open();
+            localDAO.open();
+            marcaDAO.open();
 
-        empleado = personaDAO.retrieve(((ItemPrestamo) listaItems.get(i)).getPersonaId());
-        local = localDAO.retrieve(((ItemPrestamo) listaItems.get(i)).getDestinoId());
-        marca = marcaDAO.retrieve(((ItemPrestamo) listaItems.get(i)).getMarcaId());
+            empleado = personaDAO.retrieve(((ItemPrestamo) listaItems.get(i)).getPersonaId());
+            local = localDAO.retrieve(((ItemPrestamo) listaItems.get(i)).getDestinoId());
+            marca = marcaDAO.retrieve(((ItemPrestamo) listaItems.get(i)).getMarcaId());
 
-        personaDAO.close();
-        localDAO.close();
-        marcaDAO.close();
+            personaDAO.close();
+            localDAO.close();
+            marcaDAO.close();
 
-        Calendar calendar = new GregorianCalendar();
+            Calendar calendar = new GregorianCalendar();
 
-        Prestamo prest = new Prestamo( codigo,descripcion,foto,talla, calendar, empleado, local, marca,origen );
-        prestamoDAO.open();
-        BaseDAO.Estado estado = prestamoDAO.create(prest);
-        prestamoDAO.close();
-        Log.e("Estado", estado.toString() );
-    }
+            Prestamo prest = new Prestamo( codigo,descripcion,foto,talla, calendar, empleado, local, marca,origen );
+            prestamoDAO.open();
+            BaseDAO.Estado estado = prestamoDAO.create(prest);
+            prestamoDAO.close();
 
+            Cursor cursor = null;
+
+            listaCodigosAnteriores = new ArrayList<String>();
+
+            try{
+                SQLiteDatabase db = helper.getWritableDatabase();
+
+                cursor = db.query( "prestamos",                 // FROM table_name
+                        new String[]{ "codigo" },       // SELECT
+                        null, null,                             // WHERE
+                        null,                                   // GROUP BY
+                        null,                                   // HAVING
+                        null,                                   // ORDER BY
+                        null                                    // LIMIT
+                );
+
+                if ( cursor != null && cursor.moveToFirst() ){
+
+                    do{
+                        listaCodigosAnteriores.add( cursor.getString( 0 ) );
+                    } while( cursor.moveToNext() );
+
+                } // end if
+
+            } // end try
+            catch( Exception e ){
+                e.printStackTrace();
+            } // end catch
+
+            listaCodigosAnteriores.toArray(new String[cursor.getCount()]);
+
+            // Create an ArrayAdapter containing country names
+            adapter = new ArrayAdapter<String>( getActivity(),
+                    R.layout.list_codigo_item, listaCodigosAnteriores );
+
+
+            // Set the adapter for the AutoCompleteTextView
+            et_codigo_item.setAdapter(adapter);
+
+            Log.e("Estado", estado.toString() );
+        } // end for
     } // end method crear
 
-}
+} // end class
 
 
 

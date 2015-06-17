@@ -697,9 +697,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if( !( searchPattern == null || searchPattern.length() == 0 ) ){
                 // ahora recorremos todos los prestamos y verificamos que tengan la
                 // cadena "patron de busqueda"
-                // String[] palabrasABuscar = searchPattern.split( " " );
+                String[] palabrasABuscar = searchPattern.split( " " );
                 for( Prestamo p : lstPrestamos ){
-                        if( p.getEstado().toUpperCase().contains( searchPattern.toString().toUpperCase() ) ){
+                    for( String palabra : palabrasABuscar )
+                        if( p.getEstado().toUpperCase().contains( palabra.toString().toUpperCase() ) ){
                             prestamosFiltradosPorEstado.add( p );
                         } // end for interno
                 } // end for externo
