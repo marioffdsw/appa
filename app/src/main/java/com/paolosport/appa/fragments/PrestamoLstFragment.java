@@ -111,6 +111,8 @@ public class PrestamoLstFragment extends Fragment {
     int progress;
     String cuenta;
 
+    private boolean filtroPorMes;
+
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -506,6 +508,7 @@ public class PrestamoLstFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 customDialog.dismiss();
+                filtroPorMes = false;
                 customDialog = new DatePickerDialog(getActivity(), mDateSetListener, mYear, mMonth, mDay);
                 customDialog.show();
             }
@@ -514,6 +517,7 @@ public class PrestamoLstFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 customDialog.dismiss();
+                filtroPorMes = true;
                 customDialog = new DatePickerDialog(getActivity(), mDateSetListener, mYear, mMonth, mDay);
                 customDialog.show();
             }
@@ -612,7 +616,8 @@ public class PrestamoLstFragment extends Fragment {
 
             PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
             Object[] parameters = new Object[3];
-            parameters[0] = new Integer( 0 );
+
+            parameters[0] = filtroPorMes ? new Integer( 1 ) : new Integer( 2 );
             parameters[1] = fecha;
             parameters[2] = null;
             filter.setParameters( parameters );

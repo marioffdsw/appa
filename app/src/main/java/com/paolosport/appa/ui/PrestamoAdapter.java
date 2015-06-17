@@ -793,7 +793,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
             Calendar cal = Calendar.getInstance();
             if( objParameters[1] != null )
-                cal.setTime( (Date) objParameters[1] );
+                cal = (Calendar) objParameters[1];
             else
                 cal.setTime( new java.util.Date() ); // filtrara el dia con el presente dia (hoy)
 
@@ -821,18 +821,23 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         private ArrayList<Prestamo> filtrarPorMes( ArrayList<Prestamo> lstPrestamos ){
 
             ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
+
+            Calendar cal = Calendar.getInstance();
+            if( objParameters[1] != null )
+                cal = (Calendar) objParameters[1];
+            else
+                cal.setTime( new java.util.Date() ); // filtrara el dia con el presente dia (hoy)
+
+            int mesAFiltrar = cal.get( Calendar.MONTH );
+            int añoAFiltrar = cal.get( Calendar.YEAR );
+
             for( Prestamo p : lstPrestamos ){
-                Calendar cal = Calendar.getInstance();
                 cal.setTime( p.getFecha().getTime() );
                 int mesDelPrestamo = cal.get( Calendar.MONTH );
                 int añoDelPrestamo = cal.get( Calendar.YEAR );
 
-                cal.setTime( (Date) objParameters[1] );
-                int mesAFiltrar = cal.get( Calendar.MONTH );
-                int añoAFiltrar = cal.get( Calendar.YEAR );
-
                 if ( mesDelPrestamo == mesAFiltrar &&
-                        añoDelPrestamo == añoAFiltrar ){
+                     añoDelPrestamo == añoAFiltrar ){
                     prestamosFiltradosPorFecha.add(p);
                 }
             } // end for
