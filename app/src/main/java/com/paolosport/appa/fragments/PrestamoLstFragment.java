@@ -55,6 +55,7 @@ import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.persistencia.entities.Local;
 import com.paolosport.appa.persistencia.entities.Prestamo;
+import com.paolosport.appa.ui.Helper;
 import com.paolosport.appa.ui.PrestamoAdapter;
 
 import java.io.File;
@@ -263,10 +264,12 @@ public class PrestamoLstFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Local local = lstLocales.get(position);
-                SearchViewCompat.setQuery( searchView, local.getNombre() + " ", true );
+                SearchViewCompat.setQuery(searchView, local.getNombre() + " ", true);
                 searchView.requestFocus();
             }
         });
+
+        Helper.getListViewSize( filtroLocales );
 
         RelativeLayout flPrestados = (RelativeLayout) view.findViewById( R.id.filtro_estados_prestado );
         RelativeLayout flDevueltos = (RelativeLayout) view.findViewById( R.id.filtro_estados_devuelto );
