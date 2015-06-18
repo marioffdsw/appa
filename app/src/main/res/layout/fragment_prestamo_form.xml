@@ -151,6 +151,23 @@
 
                             android:layout_gravity="center_vertical|right" />
 
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/et_codigo_item"
+                            android:layout_weight="1"
+                            android:inputType="textCapWords"
+                            android:background="@android:drawable/editbox_background_normal"
+                            android:textColor="@color/black"
+                            android:textCursorDrawable="@null"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:imeOptions="actionNext"
+                            />
+<!--
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -164,7 +181,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="4dp"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
-
+-->
                         <ImageButton
                             android:layout_width="15dp"
                             android:layout_height="wrap_content"
@@ -193,6 +210,21 @@
                             android:typeface="sans"
                             android:layout_gravity="center_vertical|right" />
 
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/et_descripcion_item"
+                            android:layout_weight="1"
+                            android:inputType="textCapWords"
+                            android:background="@android:drawable/editbox_background_normal"
+                            android:textColor="@color/black"
+                            android:textCursorDrawable="@null"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            />
+<!--
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -206,7 +238,7 @@
                             android:layout_marginTop="4dp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:clickable="false" />
-
+-->
                         <ImageButton
                             android:layout_width="15dp"
                             android:layout_height="wrap_content"

@@ -72,7 +72,8 @@ public class LocalDAO extends  BaseDAO<Local>{
         );
         }
         catch (Exception e){
-            Log.i(TAG, "NO HAY REGISTROS");}
+            Log.i(TAG, "NO HAY REGISTROS");
+        }
 
         Local local = null;
 
@@ -116,7 +117,9 @@ public class LocalDAO extends  BaseDAO<Local>{
                     listaLocales.add(local);
                 } while (cursor.moveToNext());
             }
-            catch (Exception e){}
+            catch (Exception e){
+
+            } // end catch
         }
 
         return listaLocales;

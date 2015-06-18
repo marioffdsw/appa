@@ -68,7 +68,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mList != null ? mList.size() : 0;
     }
 
     @Override
@@ -393,6 +393,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         public boolean filtrarPorDescripcion = true;
         public boolean filtrarPorEstado = true;
 
+        // esta variable se usa para usar o no la mListaPrestamos (con datos de la db)
+        // al realizar el filtrado o, si filtrar sobre lo que ya esta filtrado previamente
+        public boolean usarListaBase = true;
+
         public void setParameters(Object[] parameters) {
             this.parameters = parameters;
         }
@@ -407,11 +411,13 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             // or its length is 0, it's empty
             // then we just set the 'values' property to the
             // original listPrestamos which contains all of them
-            PrestamosFilterAlgorithm component = new ComponentFilterAlgorithm();
+            PrestamosFilterAlgorithm component = new ComponentFilterAlgorithm( usarListaBase );
 
             if( filtrarPorEmpleado ){
                 component = new DecoratorEmpleadoFilterAlgorithm( component, constraint.toString() );
             }
+
+
             if ( filtrarPorEstado ){
                 component = new DecoratorEstadoFilterAlgorithm( component, constraint.toString() );
             }
@@ -435,7 +441,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             }
 
 
-            ArrayList<Prestamo> prestamosFiltrados = component.filter();;
+            ArrayList<Prestamo> prestamosFiltrados = component.filter();
             results.values = prestamosFiltrados;
             results.count = prestamosFiltrados.size();
 
@@ -455,7 +461,20 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
     }
 
     private class ComponentFilterAlgorithm implements PrestamosFilterAlgorithm {
+
+        private boolean useBaseList = true;
+
+        public ComponentFilterAlgorithm( boolean useBase ){
+            this.useBaseList = useBase;
+        } // end constructor
+
         public ArrayList<Prestamo> filter(){
+
+            // si no hay que usar el base
+            if( useBaseList == false ){
+                return mList;
+            } // end if
+
             return mListPrestamos.get();
         } // end method filter
     } // end class ComponentFilterAlgorithm
@@ -678,9 +697,10 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
             if( !( searchPattern == null || searchPattern.length() == 0 ) ){
                 // ahora recorremos todos los prestamos y verificamos que tengan la
                 // cadena "patron de busqueda"
-                // String[] palabrasABuscar = searchPattern.split( " " );
+                String[] palabrasABuscar = searchPattern.split( " " );
                 for( Prestamo p : lstPrestamos ){
-                        if( p.getEstado().toUpperCase().contains( searchPattern.toString().toUpperCase() ) ){
+                    for( String palabra : palabrasABuscar )
+                        if( p.getEstado().toUpperCase().contains( palabra.toString().toUpperCase() ) ){
                             prestamosFiltradosPorEstado.add( p );
                         } // end for interno
                 } // end for externo
@@ -773,7 +793,7 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
 
             Calendar cal = Calendar.getInstance();
             if( objParameters[1] != null )
-                cal.setTime( (Date) objParameters[1] );
+                cal = (Calendar) objParameters[1];
             else
                 cal.setTime( new java.util.Date() ); // filtrara el dia con el presente dia (hoy)
 
@@ -801,18 +821,23 @@ public class PrestamoAdapter extends BaseAdapter implements Filterable {
         private ArrayList<Prestamo> filtrarPorMes( ArrayList<Prestamo> lstPrestamos ){
 
             ArrayList<Prestamo> prestamosFiltradosPorFecha = new ArrayList<>();
+
+            Calendar cal = Calendar.getInstance();
+            if( objParameters[1] != null )
+                cal = (Calendar) objParameters[1];
+            else
+                cal.setTime( new java.util.Date() ); // filtrara el dia con el presente dia (hoy)
+
+            int mesAFiltrar = cal.get( Calendar.MONTH );
+            int añoAFiltrar = cal.get( Calendar.YEAR );
+
             for( Prestamo p : lstPrestamos ){
-                Calendar cal = Calendar.getInstance();
                 cal.setTime( p.getFecha().getTime() );
                 int mesDelPrestamo = cal.get( Calendar.MONTH );
                 int añoDelPrestamo = cal.get( Calendar.YEAR );
 
-                cal.setTime( (Date) objParameters[1] );
-                int mesAFiltrar = cal.get( Calendar.MONTH );
-                int añoAFiltrar = cal.get( Calendar.YEAR );
-
                 if ( mesDelPrestamo == mesAFiltrar &&
-                        añoDelPrestamo == añoAFiltrar ){
+                     añoDelPrestamo == añoAFiltrar ){
                     prestamosFiltradosPorFecha.add(p);
                 }
             } // end for

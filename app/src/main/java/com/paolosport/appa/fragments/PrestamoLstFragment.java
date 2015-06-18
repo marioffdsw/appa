@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -54,6 +55,7 @@ import com.paolosport.appa.persistencia.dao.PersonaDAO;
 import com.paolosport.appa.persistencia.dao.PrestamoDAO;
 import com.paolosport.appa.persistencia.entities.Local;
 import com.paolosport.appa.persistencia.entities.Prestamo;
+import com.paolosport.appa.ui.Helper;
 import com.paolosport.appa.ui.PrestamoAdapter;
 
 import java.io.File;
@@ -87,7 +89,7 @@ import jxl.write.biff.RowsExceededException;
 
 public class PrestamoLstFragment extends Fragment {
 
-    private SearchViewCompat searchView;
+    private View searchView;
     private Context context;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -109,6 +111,8 @@ public class PrestamoLstFragment extends Fragment {
     int progress;
     String cuenta;
 
+    private boolean filtroPorMes;
+
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -127,6 +131,8 @@ public class PrestamoLstFragment extends Fragment {
         setHasOptionsMenu(true);
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,6 +179,14 @@ public class PrestamoLstFragment extends Fragment {
         listPrestamos.setSelector(R.drawable.selection_prestamos);
         listPrestamos.setAdapter( adapter );
 
+//        listPrestamos.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                v.getParent().requestDisallowInterceptTouchEvent( true );
+//
+//                return false;
+//            }
+//        });
 
         opciones = (RelativeLayout) view.findViewById(R.id.opciones);
         view.findViewById(R.id.btnVendido).setOnClickListener(new View.OnClickListener() {
@@ -183,6 +197,7 @@ public class PrestamoLstFragment extends Fragment {
                 alternarOpciones();
             }
         });
+
         view.findViewById(R.id.btnDevuelto).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,6 +244,9 @@ public class PrestamoLstFragment extends Fragment {
             }
         };
 
+        
+
+
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -243,22 +261,22 @@ public class PrestamoLstFragment extends Fragment {
 
         ListView filtroLocales = (ListView) view.findViewById(R.id.filtro_locales);
         filtroLocales.setAdapter(new ListViewAdapterLocal(context, R.layout.local_item_lv, lstLocales));
+
         filtroLocales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Local local = lstLocales.get(position);
-                PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
-                filter.setParameters(null);
-                filter.filter(local.getNombre());
-                deselecionarPrestamos();
-                alternarOpciones();
+                SearchViewCompat.setQuery(searchView, local.getNombre() + " ", true);
+                searchView.requestFocus();
             }
         });
+
+        Helper.getListViewSize( filtroLocales );
 
         RelativeLayout flPrestados = (RelativeLayout) view.findViewById( R.id.filtro_estados_prestado );
         RelativeLayout flDevueltos = (RelativeLayout) view.findViewById( R.id.filtro_estados_devuelto );
         RelativeLayout flVendidos = (RelativeLayout) view.findViewById( R.id.filtro_estados_vendido );
-        RelativeLayout flFecha = (RelativeLayout) view.findViewById( R.id.filtro_fecha );
+        RelativeLayout borrarSeleccion = (RelativeLayout) view.findViewById( R.id.borrarSeleccion );
 
         flPrestados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,11 +314,10 @@ public class PrestamoLstFragment extends Fragment {
             }
         });
 
-        flFecha.setOnClickListener(new View.OnClickListener() {
+        borrarSeleccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                dialogoCalendario();
+                SearchViewCompat.setQuery(searchView, "", false );
             }
         });
 
@@ -355,11 +372,10 @@ public class PrestamoLstFragment extends Fragment {
         item.setIcon(android.R.drawable.ic_menu_search);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        View searchView = SearchViewCompat.newSearchView(getActivity());
+        searchView = SearchViewCompat.newSearchView(getActivity());
         if (searchView != null) {
             SearchViewCompat.setOnQueryTextListener(searchView, new SearchViewCompat.OnQueryTextListenerCompat() {
                 @Override
-                /** This is a demo of how to use the filter, REMEMBER setFilter() to create a new filter  */
                 public boolean onQueryTextChange(String newText) {
                     PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
                     filter.setParameters(null);
@@ -494,6 +510,7 @@ public class PrestamoLstFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 customDialog.dismiss();
+                filtroPorMes = false;
                 customDialog = new DatePickerDialog(getActivity(), mDateSetListener, mYear, mMonth, mDay);
                 customDialog.show();
             }
@@ -502,6 +519,7 @@ public class PrestamoLstFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 customDialog.dismiss();
+                filtroPorMes = true;
                 customDialog = new DatePickerDialog(getActivity(), mDateSetListener, mYear, mMonth, mDay);
                 customDialog.show();
             }
@@ -600,16 +618,14 @@ public class PrestamoLstFragment extends Fragment {
 
             PrestamoAdapter.FilterWithOptions filter = (PrestamoAdapter.FilterWithOptions) adapter.getFilter();
             Object[] parameters = new Object[3];
-            parameters[0] = new Integer( 0 );
+
+            parameters[0] = filtroPorMes ? new Integer( 1 ) : new Integer( 0 );
             parameters[1] = fecha;
             parameters[2] = null;
             filter.setParameters( parameters );
             filter.filter("");
             deselecionarPrestamos();
             alternarOpciones();
-
-
-            //updateDisplay();
         }
     };
 
