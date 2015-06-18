@@ -445,7 +445,9 @@ public class PrestamoLstFragment extends Fragment {
                         builder.show();
                     }
         }
-                else{}
+                else{
+                    Toast.makeText(context,"Primero Inciar Sesión",Toast.LENGTH_SHORT).show();
+                }
                 break;
         } // end switch
 

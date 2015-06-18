@@ -60,12 +60,15 @@ public class PrestamoFormFragment extends Fragment {
     View view;
     TimerTask timerTask;
     Dialog customDialog = null;
-    String destino_item,marca_item,persona_item,origen_tarjeta;
+    String destino_item,marca_item,persona_item,origen_tarjeta,origenItem="";
     private Spinner sp_marca,   sp_local, sp_persona;
     private Button btn_registrar_item,
                    btn_cancelar_item,
                    btn_aceptar_pedido,
                    btn_cancelar_pedido;
+
+    private RadioGroup rg;
+    private RadioButton rb_1,rb_2,rb_3;
 
     private EditText  et_codigo_item,et_descripcion_item;
     private TextView et_talla_item;
@@ -152,6 +155,10 @@ public class PrestamoFormFragment extends Fragment {
         sp_local= (android.widget.Spinner)view.findViewById(R.id.sp_local_prestamo);
         sp_persona= (android.widget.Spinner)view.findViewById(R.id.sp_persona_prestamo);
 
+        rg   = (RadioGroup) view.findViewById(R.id.rg);
+        rb_1 = (RadioButton) view.findViewById(R.id.rb_1);
+        rb_2 = (RadioButton) view.findViewById(R.id.rb_2);
+        rb_3 = (RadioButton) view.findViewById(R.id.rb_3);
 
         lv_prestamo   = (ListView)view.findViewById(R.id.lv_prestamo);
         lv_prestamo.setSoundEffectsEnabled(false);
@@ -194,8 +201,15 @@ public class PrestamoFormFragment extends Fragment {
         btn_registrar_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mp_registro_item2.start();
-                registrarItem();
+                if(origenItem!=""){
+                    mp_registro_item2.start();
+                    registrarItem();
+                    rg.clearCheck();
+                    origenItem="";
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(),"Ingrese Origen",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -204,6 +218,8 @@ public class PrestamoFormFragment extends Fragment {
             public void onClick(View v) {
                 mp_click2.start();
                 cancelarItem();
+                rg.clearCheck();
+                origenItem="";
             }
         });
         btn_aceptar_pedido.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +253,23 @@ public class PrestamoFormFragment extends Fragment {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (rb_1.isChecked() == true) {
+                    mp_click.start();
+                    origenItem="L.124";
+                } else if (rb_2.isChecked() == true) {
+                    mp_click.start();
+                    origenItem="L.126";
+                } else if (rb_3.isChecked() == true) {
+                    mp_click.start();
+                    origenItem="Bodega";
+                }
             }
         });
 
@@ -339,7 +372,7 @@ public class PrestamoFormFragment extends Fragment {
         String marca = marca_item.toString();
         String destino = destino_item.toString();
         String persona = persona_item.toString();
-        String origen = "";
+        String origen = origenItem;
 
 
         if(( codigo == null) || ( codigo.equals(""))){codigo = "Sin Codigo";}
@@ -414,12 +447,25 @@ public class PrestamoFormFragment extends Fragment {
         final RadioButton r2 = (RadioButton) customDialog.findViewById(R.id.r2);
         final RadioButton r3 = (RadioButton) customDialog.findViewById(R.id.r3);
 
+
+
         tv_persona_tarjeta.setText(item_tarjeta.getPersona().toString());
         tv_marca_tarjeta.setText(item_tarjeta.getMarca().toString() + "  " + item_tarjeta.getDescripcion().toString());
         tv_codigo_tarjeta.setText(item_tarjeta.getCodigo().toString());
         tv_destino_tarjeta.setText(item_tarjeta.getDestino().toString());
         tv_talla_tarjeta.setText(item_tarjeta.getTalla().toString());
         tv_origen_tarjeta.setText(item_tarjeta.getOrigen().toString());
+
+        if (item_tarjeta.getOrigen().toString().equals("L.124")) {
+            r1.setChecked(true);
+            tv_origen_tarjeta.setText("L.124");
+        } else if (item_tarjeta.getOrigen().toString().equals("L.126")) {
+            r2.setChecked(true);
+            tv_origen_tarjeta.setText("L.126");
+        } else if (item_tarjeta.getOrigen().toString().equals("Bodega")) {
+            r3.setChecked(true);
+            tv_origen_tarjeta.setText("Bodega");
+        }
 
         rg_origen_tarjeta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

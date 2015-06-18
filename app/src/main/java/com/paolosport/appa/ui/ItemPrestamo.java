@@ -42,7 +42,7 @@ public class ItemPrestamo {
         this.talla = talla;
         this.context = context;
         this.descripcion = descripcion;
-        this.origen = "";
+        this.origen = origen;
 
         helper     = new AdminSQLiteOpenHelper(context);
         localDAO   = new LocalDAO( context.getApplicationContext(), helper );
