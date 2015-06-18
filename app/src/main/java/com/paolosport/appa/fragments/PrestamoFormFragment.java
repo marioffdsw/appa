@@ -3,6 +3,8 @@ package com.paolosport.appa.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -70,7 +72,7 @@ public class PrestamoFormFragment extends Fragment {
     private RadioGroup rg;
     private RadioButton rb_1,rb_2,rb_3;
 
-    private EditText  et_codigo_item,et_descripcion_item;
+    //private EditText  et_codigo_item,et_descripcion_item;
     private TextView et_talla_item;
     private ListView lv_prestamo;
     public boolean estado_teclado=true;
@@ -336,13 +338,13 @@ public class PrestamoFormFragment extends Fragment {
 
                 if (rb_1.isChecked() == true) {
                     mp_click.start();
-                    origenItem="L.124";
+                    origenItem = "L.124";
                 } else if (rb_2.isChecked() == true) {
                     mp_click.start();
-                    origenItem="L.126";
+                    origenItem = "L.126";
                 } else if (rb_3.isChecked() == true) {
                     mp_click.start();
-                    origenItem="Bodega";
+                    origenItem = "Bodega";
                 }
             }
         });
