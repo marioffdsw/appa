@@ -46,6 +46,7 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.paolosport.appa.ListViewAdapters.ListViewAdapterLocal;
+import com.paolosport.appa.ListViewAdapters.ListViewAdapterLocalDrawer;
 import com.paolosport.appa.R;
 import com.paolosport.appa.activities.MainActivity;
 import com.paolosport.appa.persistencia.AdminSQLiteOpenHelper;
@@ -260,7 +261,7 @@ public class PrestamoLstFragment extends Fragment {
         localDAO.close();
 
         ListView filtroLocales = (ListView) view.findViewById(R.id.filtro_locales);
-        filtroLocales.setAdapter(new ListViewAdapterLocal(context, R.layout.local_item_lv, lstLocales));
+        filtroLocales.setAdapter(new ListViewAdapterLocalDrawer(context, R.layout.drawer_local, lstLocales));
 
         filtroLocales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

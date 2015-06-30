@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -247,6 +248,7 @@ public class MainActivity extends ActionBarActivity {
 
         final MenuItem i_sesion = item;
         final EditText password=(EditText)customDialog.findViewById(R.id.et_password);
+
         ((Button) customDialog.findViewById(R.id.btn_aceptar_sesion)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -273,6 +275,42 @@ public class MainActivity extends ActionBarActivity {
                     prestamoLstFragment.configurarLista();
                     prestamoLstFragment.ocultarOpciones();
                 }
+
+
+            }
+        });
+
+        password.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if(keyCode == KeyEvent.KEYCODE_ENTER ){
+                    //your necessary codes...
+                    if (pass.equals(password.getText().toString())) {
+                        Toast.makeText(getApplicationContext(), "Sesión Iniciada", Toast.LENGTH_SHORT).show();
+                        i_sesion.setTitle("Cerrar Sesión");
+                        i_sesion.setIcon(R.drawable.ico_sesion_gr);
+                        conf.setEnabled(true);
+
+                        customDialog.dismiss();
+                        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        sesion = true;
+                        editor.putBoolean("sesion", sesion);
+                        editor.commit();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Contraseña Incorrecta", Toast.LENGTH_SHORT).show();
+                        password.setText("");
+                    }
+
+                    if ( prestamoLstFragment != null ) {
+                        prestamoLstFragment.configurarLista();
+                        prestamoLstFragment.ocultarOpciones();
+                    }
+                    return true;
+                }
+                return false;
             }
         });
     }

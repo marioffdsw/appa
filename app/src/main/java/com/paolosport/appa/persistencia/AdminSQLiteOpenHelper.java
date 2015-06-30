@@ -62,6 +62,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         "('Cat','cat'),"+
         "('Merrell','merrell'),"+
         "('HH','hh'),"+
+        "('Joma','joma'),"+
+        "('Salomon','salomon'),"+
         "('Dolomite','dolomite'),"+
         "('Swiss Brand','swiss');";
 

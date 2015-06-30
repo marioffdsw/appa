@@ -3,9 +3,11 @@ package com.paolosport.appa.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -60,12 +63,14 @@ public class PrestamoFormFragment extends Fragment {
     View view;
     TimerTask timerTask;
     Dialog customDialog = null;
-    String destino_item,marca_item,persona_item,origen_tarjeta,origenItem="";
+    String destino_item,marca_item,persona_item,origen_tarjeta,origenItem="",buscarMarca;
     private Spinner sp_marca,   sp_local, sp_persona;
     private Button btn_registrar_item,
                    btn_cancelar_item,
                    btn_aceptar_pedido,
                    btn_cancelar_pedido;
+
+    private ImageButton ib_busqueda;
 
     private AutoCompleteTextView  et_descripcion_item;
     private AutoCompleteTextView et_codigo_item;
@@ -227,6 +232,8 @@ public class PrestamoFormFragment extends Fragment {
         btn_aceptar_pedido  = (Button)view.findViewById(R.id.btn_aceptar_pedido);
         btn_cancelar_pedido = (Button)view.findViewById(R.id.btn_cancelar_pedido);
 
+        ib_busqueda = (ImageButton)view.findViewById(R.id.ib_busqueda);
+
         sp_marca= (android.widget.Spinner)view.findViewById(R.id.sp_marca_prestamo);
         sp_local= (android.widget.Spinner)view.findViewById(R.id.sp_local_prestamo);
         sp_persona= (android.widget.Spinner)view.findViewById(R.id.sp_persona_prestamo);
@@ -273,6 +280,19 @@ public class PrestamoFormFragment extends Fragment {
         });
 
         DatosPorDefecto();
+
+        ib_busqueda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!et_codigo_item.getText().toString().isEmpty()) {
+                    String buscarReferencia = buscarMarca+ "+" + et_codigo_item.getText().toString();
+                    Intent i = new Intent("android.intent.action.VIEW",
+                            Uri.parse("http://www.google.com" + "/search?q=" + buscarReferencia + "&source=lnms&tbm=isch&sa=X&ei=YDtZVaCgGNLHsQTGrIHwDQ&ved=0CAcQ_AUoAQ&biw=1247&bih=580"));
+                    startActivity(i);
+                }
+            }
+        });
 
         btn_registrar_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -382,6 +402,7 @@ public class PrestamoFormFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
             {
                 marca_item=((Marca) adapterView.getItemAtPosition(position)).getId();
+                buscarMarca=((Marca) adapterView.getItemAtPosition(position)).getNombre();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){
